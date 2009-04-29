@@ -16,6 +16,7 @@
 #include "hancock.h"
 
 #include "MainFrm.h"
+#include <map>
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -23,6 +24,13 @@
 
 // Message IDS for my custom actions
 #define WM_GOODWARE (WM_USER + 100)
+#define WM_MODEL (WM_USER + 101)
+#define WM_INDEX (WM_USER + 102)
+#define WM_MALWARE (WM_USER + 103)
+#define WM_CLUSTER (WM_USER + 104)
+#define WM_STUBMAP (WM_USER + 105)
+#define WM_FINDSIGS (WM_USER + 106)
+#define WM_UNCLASSIFIED (WM_USER + 107)
 
 // CMainFrame
 
@@ -32,14 +40,21 @@ BEGIN_MESSAGE_MAP(CMainFrame, CFrameWndEx)
 	ON_WM_CREATE()
 	ON_WM_SETFOCUS()
 	ON_COMMAND(WM_GOODWARE, &CMainFrame::OnViewGoodware)
+	ON_COMMAND(WM_MODEL, &CMainFrame::OnViewModel)
 	ON_UPDATE_COMMAND_UI(WM_GOODWARE, &CMainFrame::OnUpdateViewFiles)
+	ON_UPDATE_COMMAND_UI(WM_MODEL, &CMainFrame::OnUpdateViewFiles)
+	ON_UPDATE_COMMAND_UI(WM_INDEX, &CMainFrame::OnUpdateViewFiles)
+	ON_UPDATE_COMMAND_UI(WM_MALWARE, &CMainFrame::OnUpdateViewFiles)
+	ON_UPDATE_COMMAND_UI(WM_CLUSTER, &CMainFrame::OnUpdateViewFiles)
+	ON_UPDATE_COMMAND_UI(WM_STUBMAP, &CMainFrame::OnUpdateViewFiles)
+	ON_UPDATE_COMMAND_UI(WM_FINDSIGS, &CMainFrame::OnUpdateViewFiles)
+	ON_UPDATE_COMMAND_UI(WM_UNCLASSIFIED, &CMainFrame::OnUpdateViewFiles)
 END_MESSAGE_MAP()
 
 // CMainFrame construction/destruction
 
 CMainFrame::CMainFrame()
 {
-	goodwareSelected = false;
 	// TODO: add member initialization code here
 }
 
@@ -220,42 +235,42 @@ void CMainFrame::InitializeRibbon()
 
 	bNameValid = strTemp.LoadString(IDS_RIBBON_GOODWARE);
 	ASSERT(bNameValid);
-	CMFCRibbonButton* pBtnGoodware = new CMFCRibbonCheckBox(WM_GOODWARE, strTemp);
+	CMFCRibbonButton* pBtnGoodware = new CMFCRibbonButton(WM_GOODWARE, strTemp, 0, 0);
 	pPanelView->Add(pBtnGoodware);
 
 	bNameValid = strTemp.LoadString(IDS_RIBBON_MODELS);
 	ASSERT(bNameValid);
-	CMFCRibbonButton* pBtnModels = new CMFCRibbonCheckBox(ID_VIEW_STATUS_BAR, strTemp);
+	CMFCRibbonButton* pBtnModels = new CMFCRibbonButton(WM_MODEL, strTemp, 0, 1);
 	pPanelView->Add(pBtnModels);
 
 	bNameValid = strTemp.LoadString(IDS_RIBBON_INDECES);
 	ASSERT(bNameValid);
-	CMFCRibbonButton* pBtnIndeces = new CMFCRibbonCheckBox(ID_VIEW_STATUS_BAR, strTemp);
+	CMFCRibbonButton* pBtnIndeces = new CMFCRibbonButton(WM_INDEX, strTemp, 1, 0);
 	pPanelView->Add(pBtnIndeces);
 
 	bNameValid = strTemp.LoadString(IDS_RIBBON_MALWARE);
 	ASSERT(bNameValid);
-	CMFCRibbonButton* pBtnMalware = new CMFCRibbonCheckBox(ID_VIEW_STATUS_BAR, strTemp);
+	CMFCRibbonButton* pBtnMalware = new CMFCRibbonButton(WM_MALWARE, strTemp, 1, 1);
 	pPanelView->Add(pBtnMalware);
 
 	bNameValid = strTemp.LoadString(IDS_RIBBON_CLUSTERINGS);
 	ASSERT(bNameValid);
-	CMFCRibbonButton* pBtnClusterings = new CMFCRibbonCheckBox(ID_VIEW_STATUS_BAR, strTemp);
+	CMFCRibbonButton* pBtnClusterings = new CMFCRibbonButton(WM_CLUSTER, strTemp, 2, 0);
 	pPanelView->Add(pBtnClusterings);
 
 	bNameValid = strTemp.LoadString(IDS_RIBBON_STUBMAPS);
 	ASSERT(bNameValid);
-	CMFCRibbonButton* pBtnStubmaps = new CMFCRibbonCheckBox(ID_VIEW_STATUS_BAR, strTemp);
+	CMFCRibbonButton* pBtnStubmaps = new CMFCRibbonButton(WM_STUBMAP, strTemp, 2, 1);
 	pPanelView->Add(pBtnStubmaps);
 
 	bNameValid = strTemp.LoadString(IDS_RIBBON_FINDOUTPUT);
 	ASSERT(bNameValid);
-	CMFCRibbonButton* pBtnFOutput = new CMFCRibbonCheckBox(ID_VIEW_STATUS_BAR, strTemp);
+	CMFCRibbonButton* pBtnFOutput = new CMFCRibbonButton(WM_FINDSIGS, strTemp, 3, 0);
 	pPanelView->Add(pBtnFOutput);
 
 	bNameValid = strTemp.LoadString(IDS_RIBBON_UNLABELED);
 	ASSERT(bNameValid);
-	CMFCRibbonButton* pBtnUnlabeled = new CMFCRibbonCheckBox(ID_VIEW_STATUS_BAR, strTemp);
+	CMFCRibbonButton* pBtnUnlabeled = new CMFCRibbonButton(WM_UNCLASSIFIED, strTemp, 3, 1);
 	pPanelView->Add(pBtnUnlabeled);
 
 	// Add quick access toolbar commands:
@@ -352,17 +367,34 @@ void CMainFrame::OnSetFocus(CWnd* /*pOldWnd*/)
 	m_wndView.SetFocus();
 }
 
+// Toggle viewing of Goodware files
 void CMainFrame::OnViewGoodware()
 {
 	CString msg;
 	msg.LoadStringW(IDS_RIBBON_GOODWARE);
-	goodwareSelected = !goodwareSelected;
-	MessageBox(msg);
+	if(m_selectedItems.find(WM_GOODWARE) == m_selectedItems.end())
+		m_selectedItems[WM_GOODWARE] = TRUE;
+	else
+		m_selectedItems[WM_GOODWARE] = !m_selectedItems[WM_GOODWARE];
+	//MessageBox(msg);
 }
 
+void CMainFrame::OnViewModel()
+{
+	CString msg;
+	msg.LoadStringW(IDS_RIBBON_MODELS);
+	if(m_selectedItems.find(WM_MODEL) == m_selectedItems.end())
+		m_selectedItems[WM_MODEL] = TRUE;
+	else
+		m_selectedItems[WM_MODEL] = !m_selectedItems[WM_MODEL];
+	//MessageBox(msg);
+}
+
+// For now, this is responsible for keeping the boxes checked
 void CMainFrame::OnUpdateViewFiles(CCmdUI* pCmdUI)
 {
-	pCmdUI->SetCheck(goodwareSelected);
+	if(m_selectedItems.find(pCmdUI->m_nID) != m_selectedItems.end())
+		pCmdUI->SetCheck(m_selectedItems[pCmdUI->m_nID]);
 }
 
 BOOL CMainFrame::OnCmdMsg(UINT nID, int nCode, void* pExtra, AFX_CMDHANDLERINFO* pHandlerInfo)

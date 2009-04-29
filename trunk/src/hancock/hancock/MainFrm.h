@@ -16,6 +16,7 @@
 #include "ChildView.h"
 #include "CalendarBar.h"
 #include "Resource.h"
+#include <map>
 
 class COutlookBar : public CMFCOutlookBar
 {
@@ -65,6 +66,7 @@ protected:
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	afx_msg void OnSetFocus(CWnd *pOldWnd);
 	void OnViewGoodware();
+	void OnViewModel();
 	void OnUpdateViewFiles(CCmdUI* pCmdUI);
 	DECLARE_MESSAGE_MAP()
 
@@ -77,7 +79,7 @@ protected:
 	CMFCOutlookBarTabCtrl* m_pCurrOutlookWnd;
 	CMFCOutlookBarPane*    m_pCurrOutlookPage;
 private:
-	bool goodwareSelected;
+	std::map<UINT, BOOL> m_selectedItems;
 };
 
 
