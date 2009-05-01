@@ -27,10 +27,31 @@
 #define WM_MODEL (WM_USER + 101)
 #define WM_INDEX (WM_USER + 102)
 #define WM_MALWARE (WM_USER + 103)
+#define WM_PREMALWARE (WM_USER + 121)
 #define WM_CLUSTER (WM_USER + 104)
 #define WM_STUBMAP (WM_USER + 105)
 #define WM_FINDSIGS (WM_USER + 106)
 #define WM_UNCLASSIFIED (WM_USER + 107)
+#define WM_MAKEMODEL (WM_USER + 108)
+#define WM_EXTRBUFFERS (WM_USER + 109)
+#define WM_MAKEINDEX (WM_USER + 110)
+#define WM_LABELGOOD (WM_USER + 111)
+#define WM_PRUNE (WM_USER + 112)
+#define WM_MERGE (WM_USER + 113)
+#define WM_COMPILE (WM_USER + 114)
+#define WM_MAKESTUB (WM_USER + 115)
+#define WM_LABELMODEL (WM_USER + 116)
+#define WM_LOCSIGS (WM_USER + 117)
+#define WM_LABELINDEX (WM_USER + 118)
+#define WM_PREPROC (WM_USER + 119)
+#define WM_LABELMALWARE (WM_USER + 120)
+#define WM_CLSTFILES (WM_USER + 122)
+#define WM_LABELPREMALWARE (WM_USER + 123)
+#define WM_LABELCLUSTER (WM_USER + 124)
+#define WM_LABELSTUBMAP (WM_USER + 125)
+#define WM_LABELFINDSIGS (WM_USER + 126)
+
+//next = 127
 
 // CMainFrame
 
@@ -41,10 +62,18 @@ BEGIN_MESSAGE_MAP(CMainFrame, CFrameWndEx)
 	ON_WM_SETFOCUS()
 	ON_COMMAND(WM_GOODWARE, &CMainFrame::OnViewGoodware)
 	ON_COMMAND(WM_MODEL, &CMainFrame::OnViewModel)
+	ON_COMMAND(WM_INDEX, &CMainFrame::OnViewIndex)
+	ON_COMMAND(WM_MALWARE, &CMainFrame::OnViewMalware)
+	ON_COMMAND(WM_PREMALWARE, &CMainFrame::OnViewPreMalware)
+	ON_COMMAND(WM_CLUSTER, &CMainFrame::OnViewCluster)
+	ON_COMMAND(WM_STUBMAP, &CMainFrame::OnViewStubMap)
+	ON_COMMAND(WM_FINDSIGS, &CMainFrame::OnViewFindSigs)
+	ON_COMMAND(WM_UNCLASSIFIED, &CMainFrame::OnViewOther)
 	ON_UPDATE_COMMAND_UI(WM_GOODWARE, &CMainFrame::OnUpdateViewFiles)
 	ON_UPDATE_COMMAND_UI(WM_MODEL, &CMainFrame::OnUpdateViewFiles)
 	ON_UPDATE_COMMAND_UI(WM_INDEX, &CMainFrame::OnUpdateViewFiles)
 	ON_UPDATE_COMMAND_UI(WM_MALWARE, &CMainFrame::OnUpdateViewFiles)
+	ON_UPDATE_COMMAND_UI(WM_PREMALWARE, &CMainFrame::OnUpdateViewFiles)
 	ON_UPDATE_COMMAND_UI(WM_CLUSTER, &CMainFrame::OnUpdateViewFiles)
 	ON_UPDATE_COMMAND_UI(WM_STUBMAP, &CMainFrame::OnUpdateViewFiles)
 	ON_UPDATE_COMMAND_UI(WM_FINDSIGS, &CMainFrame::OnUpdateViewFiles)
@@ -208,8 +237,8 @@ void CMainFrame::InitializeRibbon()
 	ASSERT(bNameValid);
 	CMFCRibbonCategory* pCategoryTools = m_wndRibbonBar.AddCategory(strTemp, IDB_WRITESMALL, IDB_WRITELARGE);
 
-	// Create "File Types" panel:
-	bNameValid = strTemp.LoadString(IDS_RIBBON_FILETYPES);
+	// Create "View" panel:
+	bNameValid = strTemp.LoadString(IDS_RIBBON_VIEW);
 	ASSERT(bNameValid);
 	CMFCRibbonPanel* pPanelClipboard = pCategoryHome->AddPanel(strTemp, m_PanelImages.ExtractIcon(27));
 
@@ -228,46 +257,196 @@ void CMainFrame::InitializeRibbon()
 	ASSERT(bNameValid);
 	pPanelClipboard->Add(new CMFCRibbonButton(ID_EDIT_SELECT_ALL, strTemp, -1));
 
-	// Create and add a "View" panel:
-	bNameValid = strTemp.LoadString(IDS_RIBBON_VIEW);
+	// Create and add a "File Types" panel:
+	bNameValid = strTemp.LoadString(IDS_RIBBON_FILETYPES);
 	ASSERT(bNameValid);
 	CMFCRibbonPanel* pPanelView = pCategoryHome->AddPanel(strTemp, m_PanelImages.ExtractIcon (7));
 
+	// Add goodware selection button
 	bNameValid = strTemp.LoadString(IDS_RIBBON_GOODWARE);
 	ASSERT(bNameValid);
-	CMFCRibbonButton* pBtnGoodware = new CMFCRibbonButton(WM_GOODWARE, strTemp, 0, 0);
+	CMFCRibbonButton* pBtnGoodware = new CMFCRibbonButton(WM_GOODWARE, strTemp, 0, 1);
+
+	// Can extract buffers from goodware
+	bNameValid = strTemp.LoadString(IDS_RIBBON_EXTRBUFFERS);
+	ASSERT(bNameValid);
+	CMFCRibbonButton* pBtnExtractBuffers = new CMFCRibbonButton(WM_EXTRBUFFERS, strTemp);
+	pBtnGoodware->AddSubItem(pBtnExtractBuffers);
+
+	// Can make a model from goodware
+	bNameValid = strTemp.LoadString(IDS_RIBBON_MAKEMODEL);
+	ASSERT(bNameValid);
+	CMFCRibbonButton* pBtnMakeModel = new CMFCRibbonButton(WM_MAKEMODEL, strTemp);
+	pBtnGoodware->AddSubItem(pBtnMakeModel);
+
+	// Can make an index from goodware
+	bNameValid = strTemp.LoadString(IDS_RIBBON_MAKEINDEX);
+	ASSERT(bNameValid);
+	CMFCRibbonButton* pBtnMakeIndex = new CMFCRibbonButton(WM_MAKEINDEX, strTemp);
+	pBtnGoodware->AddSubItem(pBtnMakeIndex);
+
+	// Can label as goodware
+	bNameValid = strTemp.LoadString(IDS_RIBBON_LABELGOOD);
+	ASSERT(bNameValid);
+	CMFCRibbonButton* pBtnLabelGood = new CMFCRibbonButton(WM_LABELGOOD, strTemp);
+	pBtnGoodware->AddSubItem(pBtnLabelGood);
+
+	// Add Goodware button to panel
 	pPanelView->Add(pBtnGoodware);
 
+	// Add Model selection button
 	bNameValid = strTemp.LoadString(IDS_RIBBON_MODELS);
 	ASSERT(bNameValid);
 	CMFCRibbonButton* pBtnModels = new CMFCRibbonButton(WM_MODEL, strTemp, 0, 1);
+
+	// Can prune a model
+	bNameValid = strTemp.LoadString(IDS_RIBBON_PRUNE);
+	ASSERT(bNameValid);
+	CMFCRibbonButton* pBtnPrune = new CMFCRibbonButton(WM_PRUNE, strTemp);
+	pBtnModels->AddSubItem(pBtnPrune);
+
+	// Can merge 2 models
+	bNameValid = strTemp.LoadString(IDS_RIBBON_MERGE);
+	ASSERT(bNameValid);
+	CMFCRibbonButton* pBtnMerge = new CMFCRibbonButton(WM_MERGE, strTemp);
+	pBtnModels->AddSubItem(pBtnMerge);
+
+	// Can compile a model
+	bNameValid = strTemp.LoadString(IDS_RIBBON_COMPILE);
+	ASSERT(bNameValid);
+	CMFCRibbonButton* pBtnCompile = new CMFCRibbonButton(WM_COMPILE, strTemp);
+	pBtnModels->AddSubItem(pBtnCompile);
+
+	// Can make a stub map
+	bNameValid = strTemp.LoadString(IDS_RIBBON_MAKESTUB);
+	ASSERT(bNameValid);
+	CMFCRibbonButton* pBtnMakeStubMap = new CMFCRibbonButton(WM_MAKESTUB, strTemp);
+	pBtnModels->AddSubItem(pBtnMakeStubMap);
+
+	// Can label as a model
+	bNameValid = strTemp.LoadString(IDS_RIBBON_LABELMODEL);
+	ASSERT(bNameValid);
+	CMFCRibbonButton* pBtnLabelModel = new CMFCRibbonButton(WM_LABELMODEL, strTemp);
+	pBtnModels->AddSubItem(pBtnLabelModel);
+
+	// Add Model button to panel
 	pPanelView->Add(pBtnModels);
 
+	// Add index selection button
 	bNameValid = strTemp.LoadString(IDS_RIBBON_INDECES);
 	ASSERT(bNameValid);
-	CMFCRibbonButton* pBtnIndeces = new CMFCRibbonButton(WM_INDEX, strTemp, 1, 0);
+	CMFCRibbonButton* pBtnIndeces = new CMFCRibbonButton(WM_INDEX, strTemp, 1, 1);
+
+	// Can find signatures from an index
+	bNameValid = strTemp.LoadString(IDS_RIBBON_LOCSIGS);
+	ASSERT(bNameValid);
+	CMFCRibbonButton* pBtnLocSigs = new CMFCRibbonButton(WM_LOCSIGS, strTemp);
+	pBtnIndeces->AddSubItem(pBtnLocSigs);
+
+	// Can label as an index
+	bNameValid = strTemp.LoadString(IDS_RIBBON_LABELINDEX);
+	ASSERT(bNameValid);
+	CMFCRibbonButton* pBtnLabelIndex = new CMFCRibbonButton(WM_LABELINDEX, strTemp);
+	pBtnIndeces->AddSubItem(pBtnLabelIndex);
+
+	// Add index button to panel
 	pPanelView->Add(pBtnIndeces);
 
+	// Add malware selection button
 	bNameValid = strTemp.LoadString(IDS_RIBBON_MALWARE);
 	ASSERT(bNameValid);
 	CMFCRibbonButton* pBtnMalware = new CMFCRibbonButton(WM_MALWARE, strTemp, 1, 1);
+
+	// Can preprocess malware
+	bNameValid = strTemp.LoadString(IDS_RIBBON_PREPROC);
+	ASSERT(bNameValid);
+	CMFCRibbonButton* pBtnPreprocess = new CMFCRibbonButton(WM_PREPROC, strTemp);
+	pBtnMalware->AddSubItem(pBtnPreprocess);
+
+	// Can label as malware
+	bNameValid = strTemp.LoadString(IDS_RIBBON_LABELMALWARE);
+	ASSERT(bNameValid);
+	CMFCRibbonButton* pBtnLabelMalware = new CMFCRibbonButton(WM_LABELMALWARE, strTemp);
+	pBtnMalware->AddSubItem(pBtnLabelMalware);
+
+	// Add malware button to panel
 	pPanelView->Add(pBtnMalware);
 
+	// Add preprocessed malware selection button
+	bNameValid = strTemp.LoadString(IDS_RIBBON_PREMALWARE);
+	ASSERT(bNameValid);
+	CMFCRibbonButton* pBtnPreMalware = new CMFCRibbonButton(WM_PREMALWARE, strTemp, 2, 1);
+
+	// Can create a clustering
+	bNameValid = strTemp.LoadString(IDS_RIBBON_CLSTFILES);
+	ASSERT(bNameValid);
+	CMFCRibbonButton* pBtnClusterFiles = new CMFCRibbonButton(WM_CLSTFILES, strTemp);
+	pBtnPreMalware->AddSubItem(pBtnClusterFiles);
+
+	// Can label as preprocessed malware
+	bNameValid = strTemp.LoadString(IDS_RIBBON_LABELPREMALWARE);
+	ASSERT(bNameValid);
+	CMFCRibbonButton* pBtnLabelPreMalware = new CMFCRibbonButton(WM_LABELPREMALWARE, strTemp);
+	pBtnPreMalware->AddSubItem(pBtnLabelPreMalware);
+
+	// Add preprocessed malware button to panel
+	pPanelView->Add(pBtnPreMalware);
+
+	// Add clustering selection button
 	bNameValid = strTemp.LoadString(IDS_RIBBON_CLUSTERINGS);
 	ASSERT(bNameValid);
-	CMFCRibbonButton* pBtnClusterings = new CMFCRibbonButton(WM_CLUSTER, strTemp, 2, 0);
+	CMFCRibbonButton* pBtnClusterings = new CMFCRibbonButton(WM_CLUSTER, strTemp, 2, 1);
+
+	// Can create stub maps from clusterings
+	bNameValid = strTemp.LoadString(IDS_RIBBON_MAKESTUB);
+	ASSERT(bNameValid);
+	CMFCRibbonButton* pBtnMakeStubMapClst = new CMFCRibbonButton(WM_MAKESTUB, strTemp);
+	pBtnClusterings->AddSubItem(pBtnMakeStubMapClst);
+
+	// Can label as a clustering
+	bNameValid = strTemp.LoadString(IDS_RIBBON_LABELCLUSTER);
+	ASSERT(bNameValid);
+	CMFCRibbonButton* pBtnLabelCluster = new CMFCRibbonButton(WM_LABELCLUSTER, strTemp);
+	pBtnClusterings->AddSubItem(pBtnLabelCluster);
+
+	// Add clustering button to panel
 	pPanelView->Add(pBtnClusterings);
 
+	// Add stub map selection button
 	bNameValid = strTemp.LoadString(IDS_RIBBON_STUBMAPS);
 	ASSERT(bNameValid);
 	CMFCRibbonButton* pBtnStubmaps = new CMFCRibbonButton(WM_STUBMAP, strTemp, 2, 1);
+
+	// Can find signatures from stub maps
+	bNameValid = strTemp.LoadString(IDS_RIBBON_LOCSIGS);
+	ASSERT(bNameValid);
+	CMFCRibbonButton* pBtnLocSigsSM = new CMFCRibbonButton(WM_LOCSIGS, strTemp);
+	pBtnStubmaps->AddSubItem(pBtnLocSigsSM);
+
+	// Can label as a stub map
+	bNameValid = strTemp.LoadString(IDS_RIBBON_LABELSTUBMAP);
+	ASSERT(bNameValid);
+	CMFCRibbonButton* pBtnLabelStubmap = new CMFCRibbonButton(WM_LABELSTUBMAP, strTemp);
+	pBtnStubmaps->AddSubItem(pBtnLabelStubmap);
+
+	// Add stub map button to panel
 	pPanelView->Add(pBtnStubmaps);
 
+	// Add find signature output selection button
 	bNameValid = strTemp.LoadString(IDS_RIBBON_FINDOUTPUT);
 	ASSERT(bNameValid);
-	CMFCRibbonButton* pBtnFOutput = new CMFCRibbonButton(WM_FINDSIGS, strTemp, 3, 0);
+	CMFCRibbonButton* pBtnFOutput = new CMFCRibbonButton(WM_FINDSIGS, strTemp, 3, 1);
+
+	// Can label as find signatures output
+	bNameValid = strTemp.LoadString(IDS_RIBBON_LABELFINDSIGS);
+	ASSERT(bNameValid);
+	CMFCRibbonButton* pBtnLabelFindSigs = new CMFCRibbonButton(WM_LABELFINDSIGS, strTemp);
+	pBtnFOutput->AddSubItem(pBtnLabelFindSigs);
+
+	// Add find signature output button to panel
 	pPanelView->Add(pBtnFOutput);
 
+	// Add unclassified files selection button
 	bNameValid = strTemp.LoadString(IDS_RIBBON_UNLABELED);
 	ASSERT(bNameValid);
 	CMFCRibbonButton* pBtnUnlabeled = new CMFCRibbonButton(WM_UNCLASSIFIED, strTemp, 3, 1);
@@ -370,24 +549,56 @@ void CMainFrame::OnSetFocus(CWnd* /*pOldWnd*/)
 // Toggle viewing of Goodware files
 void CMainFrame::OnViewGoodware()
 {
-	CString msg;
-	msg.LoadStringW(IDS_RIBBON_GOODWARE);
-	if(m_selectedItems.find(WM_GOODWARE) == m_selectedItems.end())
-		m_selectedItems[WM_GOODWARE] = TRUE;
-	else
-		m_selectedItems[WM_GOODWARE] = !m_selectedItems[WM_GOODWARE];
-	//MessageBox(msg);
+	OnViewType(WM_GOODWARE);
 }
 
 void CMainFrame::OnViewModel()
 {
-	CString msg;
-	msg.LoadStringW(IDS_RIBBON_MODELS);
-	if(m_selectedItems.find(WM_MODEL) == m_selectedItems.end())
-		m_selectedItems[WM_MODEL] = TRUE;
+	OnViewType(WM_MODEL);
+}
+
+void CMainFrame::OnViewIndex()
+{
+	OnViewType(WM_INDEX);
+}
+
+void CMainFrame::OnViewMalware()
+{
+	OnViewType(WM_MALWARE);
+}
+
+void CMainFrame::OnViewPreMalware()
+{
+	OnViewType(WM_PREMALWARE);
+}
+
+void CMainFrame::OnViewCluster()
+{
+	OnViewType(WM_CLUSTER);
+}
+
+void CMainFrame::OnViewStubMap()
+{
+	OnViewType(WM_STUBMAP);
+}
+
+void CMainFrame::OnViewFindSigs()
+{
+	OnViewType(WM_FINDSIGS);
+}
+
+void CMainFrame::OnViewOther()
+{
+	OnViewType(WM_UNCLASSIFIED);
+}
+
+void CMainFrame::OnViewType(UINT nID)
+{
+	if(m_selectedItems.find(nID) == m_selectedItems.end())
+		m_selectedItems[nID] = TRUE;
 	else
-		m_selectedItems[WM_MODEL] = !m_selectedItems[WM_MODEL];
-	//MessageBox(msg);
+		m_selectedItems[nID] = !m_selectedItems[nID];
+	//MessageBox(_T("Clicked!"));
 }
 
 // For now, this is responsible for keeping the boxes checked

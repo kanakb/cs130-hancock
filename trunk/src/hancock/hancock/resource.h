@@ -2,16 +2,34 @@
 // Microsoft Visual C++ generated include file.
 // Used by hancock.rc
 //
-#define IDI_GW                          5
 #define IDI_GW_TEXT                     5
 #define IDD_ABOUTBOX                    100
 #define IDP_OLE_INIT_FAILED             100
+#define IDS_RIBBON_MAKEMODEL            101
+#define IDS_RIBBON_EXTRBUFFERS          102
+#define IDS_RIBBON_MAKEINDEX            103
+#define IDS_RIBBON_LABELGOOD            104
+#define IDS_RIBBON_PRUNE                105
+#define IDS_RIBBON_MERGE                106
+#define IDS_RIBBON_COMPILE              107
+#define IDS_RIBBON_MAKESTUB             108
+#define IDS_RIBBON_LABELMODEL           109
 #define IDB_WRITESMALL                  110
+#define IDS_RIBBON_LOCSIGS              110
 #define IDB_WRITELARGE                  111
+#define IDS_RIBBON_LABELINDEX           111
 #define IDB_MAIN                        112
+#define IDS_RIBBON_PREPROC              112
 #define IDB_BUTTONS                     113
+#define IDS_RIBBON_LABELMALWARE         113
 #define IDB_FILELARGE                   114
+#define IDS_RIBBON_CLSTFILES            114
 #define IDB_FILESMALL                   115
+#define IDS_RIBBON_LABELPREMALWARE      115
+#define IDS_RIBBON_LABELCLUSTER         116
+#define IDS_RIBBON_LABELSTUBMAP         117
+#define IDS_LABELFINDSIGS               118
+#define IDS_RIBBON_LABELFINDSIGS        118
 #define IDR_POPUP_EDIT                  119
 #define ID_STATUSBAR_PANE1              120
 #define ID_STATUSBAR_PANE2              121

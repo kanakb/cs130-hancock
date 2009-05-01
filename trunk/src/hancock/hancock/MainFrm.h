@@ -67,6 +67,14 @@ protected:
 	afx_msg void OnSetFocus(CWnd *pOldWnd);
 	void OnViewGoodware();
 	void OnViewModel();
+	void OnViewIndex();
+	void OnViewMalware();
+	void OnViewPreMalware();
+	void OnViewCluster();
+	void OnViewStubMap();
+	void OnViewFindSigs();
+	void OnViewOther();
+	void OnViewType(UINT nID);
 	void OnUpdateViewFiles(CCmdUI* pCmdUI);
 	DECLARE_MESSAGE_MAP()
 
