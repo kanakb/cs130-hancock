@@ -65,6 +65,8 @@ protected:  // control bar embedded members
 protected:
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	afx_msg void OnSetFocus(CWnd *pOldWnd);
+
+	// Action handling functions
 	void OnViewGoodware();
 	void OnViewModel();
 	void OnViewIndex();
@@ -74,6 +76,24 @@ protected:
 	void OnViewStubMap();
 	void OnViewFindSigs();
 	void OnViewOther();
+	void OnMakeModel();
+	void OnExtractBuffers();
+	void OnMakeIndex();
+	void OnLabelGood();
+	void OnPrune();
+	void OnMerge();
+	void OnModelCompile();
+	void OnMakeStub();
+	void OnLabelModel();
+	void OnFindSigs();
+	void OnLabelIndex();
+	void OnPreprocess();
+	void OnLabelMalware();
+	void OnClusterFiles();
+	void OnLabelPreMalware();
+	void OnLabelCluster();
+	void OnLabelStubMap();
+	void OnLabelFindSigs();
 	void OnViewType(UINT nID);
 	void OnUpdateViewFiles(CCmdUI* pCmdUI);
 	DECLARE_MESSAGE_MAP()

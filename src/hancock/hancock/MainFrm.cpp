@@ -69,6 +69,24 @@ BEGIN_MESSAGE_MAP(CMainFrame, CFrameWndEx)
 	ON_COMMAND(WM_STUBMAP, &CMainFrame::OnViewStubMap)
 	ON_COMMAND(WM_FINDSIGS, &CMainFrame::OnViewFindSigs)
 	ON_COMMAND(WM_UNCLASSIFIED, &CMainFrame::OnViewOther)
+	ON_COMMAND(WM_MAKEMODEL, &CMainFrame::OnMakeModel)
+	ON_COMMAND(WM_EXTRBUFFERS, &CMainFrame::OnExtractBuffers)
+	ON_COMMAND(WM_MAKEINDEX, &CMainFrame::OnMakeIndex)
+	ON_COMMAND(WM_LABELGOOD, &CMainFrame::OnLabelGood)
+	ON_COMMAND(WM_PRUNE, &CMainFrame::OnPrune)
+	ON_COMMAND(WM_MERGE, &CMainFrame::OnMerge)
+	ON_COMMAND(WM_COMPILE, &CMainFrame::OnModelCompile)
+	ON_COMMAND(WM_MAKESTUB, &CMainFrame::OnMakeStub)
+	ON_COMMAND(WM_LABELMODEL, &CMainFrame::OnLabelModel)
+	ON_COMMAND(WM_LOCSIGS, &CMainFrame::OnFindSigs)
+	ON_COMMAND(WM_LABELINDEX, &CMainFrame::OnLabelIndex)
+	ON_COMMAND(WM_PREPROC, &CMainFrame::OnPreprocess)
+	ON_COMMAND(WM_LABELMALWARE, &CMainFrame::OnLabelMalware)
+	ON_COMMAND(WM_CLSTFILES, &CMainFrame::OnClusterFiles)
+	ON_COMMAND(WM_LABELPREMALWARE, &CMainFrame::OnLabelPreMalware)
+	ON_COMMAND(WM_LABELCLUSTER, &CMainFrame::OnLabelCluster)
+	ON_COMMAND(WM_LABELSTUBMAP, &CMainFrame::OnLabelStubMap)
+	ON_COMMAND(WM_LABELFINDSIGS, &CMainFrame::OnLabelFindSigs)
 	ON_UPDATE_COMMAND_UI(WM_GOODWARE, &CMainFrame::OnUpdateViewFiles)
 	ON_UPDATE_COMMAND_UI(WM_MODEL, &CMainFrame::OnUpdateViewFiles)
 	ON_UPDATE_COMMAND_UI(WM_INDEX, &CMainFrame::OnUpdateViewFiles)
@@ -238,7 +256,7 @@ void CMainFrame::InitializeRibbon()
 	CMFCRibbonCategory* pCategoryTools = m_wndRibbonBar.AddCategory(strTemp, IDB_WRITESMALL, IDB_WRITELARGE);
 
 	// Create "View" panel:
-	bNameValid = strTemp.LoadString(IDS_RIBBON_VIEW);
+	/*bNameValid = strTemp.LoadString(IDS_RIBBON_VIEW);
 	ASSERT(bNameValid);
 	CMFCRibbonPanel* pPanelClipboard = pCategoryHome->AddPanel(strTemp, m_PanelImages.ExtractIcon(27));
 
@@ -255,7 +273,7 @@ void CMainFrame::InitializeRibbon()
 	pPanelClipboard->Add(new CMFCRibbonButton(ID_EDIT_COPY, strTemp, 2));
 	bNameValid = strTemp.LoadString(IDS_RIBBON_SELECTALL);
 	ASSERT(bNameValid);
-	pPanelClipboard->Add(new CMFCRibbonButton(ID_EDIT_SELECT_ALL, strTemp, -1));
+	pPanelClipboard->Add(new CMFCRibbonButton(ID_EDIT_SELECT_ALL, strTemp, -1));*/
 
 	// Create and add a "File Types" panel:
 	bNameValid = strTemp.LoadString(IDS_RIBBON_FILETYPES);
@@ -600,6 +618,26 @@ void CMainFrame::OnViewType(UINT nID)
 		m_selectedItems[nID] = !m_selectedItems[nID];
 	//MessageBox(_T("Clicked!"));
 }
+
+// Action functions
+void CMainFrame::OnMakeModel() { }
+void CMainFrame::OnExtractBuffers() { }
+void CMainFrame::OnMakeIndex() { }
+void CMainFrame::OnLabelGood() { }
+void CMainFrame::OnPrune() { }
+void CMainFrame::OnMerge() { }
+void CMainFrame::OnModelCompile() { }
+void CMainFrame::OnMakeStub() { }
+void CMainFrame::OnLabelModel() { }
+void CMainFrame::OnFindSigs() { MessageBox(_T("Finding Signatures")); }
+void CMainFrame::OnLabelIndex() { }
+void CMainFrame::OnPreprocess() { }
+void CMainFrame::OnLabelMalware() { }
+void CMainFrame::OnClusterFiles() { }
+void CMainFrame::OnLabelPreMalware() { }
+void CMainFrame::OnLabelCluster() { }
+void CMainFrame::OnLabelStubMap() { }
+void CMainFrame::OnLabelFindSigs() { }
 
 // For now, this is responsible for keeping the boxes checked
 void CMainFrame::OnUpdateViewFiles(CCmdUI* pCmdUI)
