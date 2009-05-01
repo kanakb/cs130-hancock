@@ -201,15 +201,15 @@ END
 // Dialog
 //
 
-IDD_ABOUTBOX DIALOGEX 0, 0, 170, 62
+IDD_ABOUTBOX DIALOGEX 0, 0, 196, 67
 STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
-CAPTION "About hancock"
+CAPTION "About"
 FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     ICON            IDR_MAINFRAME,IDC_STATIC,14,14,21,20
-    LTEXT           "hancock, Version 1.0",IDC_STATIC,42,14,114,8,SS_NOPREFIX
-    LTEXT           "Copyright (C) 2009",IDC_STATIC,42,26,114,8
-    DEFPUSHBUTTON   "OK",IDOK,113,41,50,14,WS_GROUP
+    LTEXT           "Project Hancock Software Manager, Version 1.0",IDC_STATIC,42,14,136,16,SS_NOPREFIX
+    LTEXT           "Copyright (C) 2009",IDC_STATIC,42,35,114,8
+    DEFPUSHBUTTON   "OK",IDOK,139,46,50,14,WS_GROUP
 END
 
 
@@ -235,11 +235,11 @@ BEGIN
     BEGIN
         BLOCK "040904e4"
         BEGIN
-            VALUE "CompanyName", "TODO: <Company name>"
-            VALUE "FileDescription", "TODO: <File description>"
+            VALUE "CompanyName", "UCLA CS 130 Group 6"
+            VALUE "FileDescription", "Project Hancock Software Manager"
             VALUE "FileVersion", "1.0.0.1"
             VALUE "InternalName", "hancock.exe"
-            VALUE "LegalCopyright", "TODO: (c) <Company name>.  All rights reserved."
+            VALUE "LegalCopyright", "(c) UCLA CS 130 Group 6.  All rights reserved."
             VALUE "OriginalFilename", "hancock.exe"
             VALUE "ProductName", "TODO: <Product name>"
             VALUE "ProductVersion", "1.0.0.1"
@@ -263,9 +263,9 @@ BEGIN
     IDD_ABOUTBOX, DIALOG
     BEGIN
         LEFTMARGIN, 7
-        RIGHTMARGIN, 163
+        RIGHTMARGIN, 189
         TOPMARGIN, 7
-        BOTTOMMARGIN, 55
+        BOTTOMMARGIN, 60
     END
 END
 #endif    // APSTUDIO_INVOKED
@@ -279,6 +279,17 @@ END
 STRINGTABLE 
 BEGIN
     IDP_OLE_INIT_FAILED     "OLE initialization failed.  Make sure that the OLE libraries are the correct version."
+    IDS_RIBBON_MAKEMODEL    "Create a Model"
+    IDS_RIBBON_EXTRBUFFERS  "Extract Buffers"
+    IDS_RIBBON_MAKEINDEX    "Create an Index"
+    IDS_RIBBON_LABELGOOD    "Label as Goodware"
+    IDS_RIBBON_PRUNE        "Prune  Model"
+    IDS_RIBBON_MERGE        "Merge Models"
+    IDS_RIBBON_COMPILE      "Compile Model"
+    IDS_RIBBON_MAKESTUB     "Create Stub Map"
+    IDS_RIBBON_LABELMODEL   "Label as Model"
+    IDS_RIBBON_LOCSIGS      "Find Signatures"
+    IDS_RIBBON_LABELINDEX   "Label as Index"
 END
 
 STRINGTABLE 
@@ -359,6 +370,13 @@ END
 
 STRINGTABLE 
 BEGIN
+    IDS_RIBBON_PREPROC      "Preprocess Malware"
+    IDS_RIBBON_LABELMALWARE "Label as Malware"
+    IDS_RIBBON_CLSTFILES    "Cluster Files"
+    IDS_RIBBON_LABELPREMALWARE "Label as Preprocessed Malware"
+    IDS_RIBBON_LABELCLUSTER "Label as Clustering"
+    IDS_RIBBON_LABELSTUBMAP "Label as Stub Map"
+    IDS_RIBBON_LABELFINDSIGS "Label as Find Signatures Output"
     IDS_STATUS_PANE1        "Pane 1"
     IDS_STATUS_PANE2        "Pane 2"
 END
@@ -416,15 +434,15 @@ END
 STRINGTABLE 
 BEGIN
     IDS_EDIT_MENU           "Edit"
-    IDS_RIBBON_GOODWARE     "Goodware"
-    IDS_RIBBON_MODELS       "Models"
-    IDS_RIBBON_INDECES      "Indeces"
-    IDS_RIBBON_MALWARE      "Malware"
-    IDS_RIBBON_PREMALWARE   "Preprocessed Malware"
-    IDS_RIBBON_CLUSTERINGS  "Clusterings"
-    IDS_RIBBON_STUBMAPS     "Stub Maps"
-    IDS_RIBBON_FINDOUTPUT   "Find Signatures Output"
-    IDS_RIBBON_UNLABELED    "Unclassified Types"
+    IDS_RIBBON_GOODWARE     "Goodware\ng"
+    IDS_RIBBON_MODELS       "Models\nm"
+    IDS_RIBBON_INDECES      "Indeces\ni"
+    IDS_RIBBON_MALWARE      "Malware\na"
+    IDS_RIBBON_PREMALWARE   "Preprocessed Malware\np"
+    IDS_RIBBON_CLUSTERINGS  "Clusterings\nc"
+    IDS_RIBBON_STUBMAPS     "Stub Maps\ns"
+    IDS_RIBBON_FINDOUTPUT   "Find Signatures Output\nf"
+    IDS_RIBBON_UNLABELED    "Unclassified Types\nu"
 END
 
 #endif    // English (U.S.) resources
