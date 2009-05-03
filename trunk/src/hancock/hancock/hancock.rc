@@ -72,7 +72,6 @@ END
 
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
-IDI_GW_TEXT             ICON                    "res\\icon1.ico"
 IDR_MAINFRAME           ICON                    "res\\hancock.ico"
 
 /////////////////////////////////////////////////////////////////////////////
@@ -377,8 +376,13 @@ BEGIN
     IDS_RIBBON_LABELCLUSTER "Label as Clustering"
     IDS_RIBBON_LABELSTUBMAP "Label as Stub Map"
     IDS_RIBBON_LABELFINDSIGS "Label as Find Signatures Output"
+    IDS_RIBBON_SCHEDULER    "Scheduler"
+    IDS_RIBBON_LOGGING      "Logging"
+    IDS_RIBBON_VIEWSCHED    "View Scheduler"
     IDS_STATUS_PANE1        "Pane 1"
     IDS_STATUS_PANE2        "Pane 2"
+    IDS_RIBBON_VIEWLOG      "View Log UI"
+    IDS_RIBBON_LOGSAVE      "Save Logs To..."
 END
 
 STRINGTABLE 

@@ -50,8 +50,11 @@
 #define WM_LABELCLUSTER (WM_USER + 124)
 #define WM_LABELSTUBMAP (WM_USER + 125)
 #define WM_LABELFINDSIGS (WM_USER + 126)
+#define WM_VIEWSCHED (WM_USER + 127)
+#define WM_VIEWLOG (WM_USER + 128)
+#define WM_LOGSAVE (WM_USER + 129)
 
-//next = 127
+//next = 130
 
 // CMainFrame
 
@@ -87,6 +90,9 @@ BEGIN_MESSAGE_MAP(CMainFrame, CFrameWndEx)
 	ON_COMMAND(WM_LABELCLUSTER, &CMainFrame::OnLabelCluster)
 	ON_COMMAND(WM_LABELSTUBMAP, &CMainFrame::OnLabelStubMap)
 	ON_COMMAND(WM_LABELFINDSIGS, &CMainFrame::OnLabelFindSigs)
+	ON_COMMAND(WM_VIEWSCHED, &CMainFrame::OnViewScheduler)
+	ON_COMMAND(WM_VIEWLOG, &CMainFrame::OnViewLogger)
+	ON_COMMAND(WM_LOGSAVE, &CMainFrame::OnSaveLog)
 	ON_UPDATE_COMMAND_UI(WM_GOODWARE, &CMainFrame::OnUpdateViewFiles)
 	ON_UPDATE_COMMAND_UI(WM_MODEL, &CMainFrame::OnUpdateViewFiles)
 	ON_UPDATE_COMMAND_UI(WM_INDEX, &CMainFrame::OnUpdateViewFiles)
@@ -201,45 +207,45 @@ void CMainFrame::InitializeRibbon()
 	m_wndRibbonBar.SetApplicationButton(&m_MainButton, CSize (45, 45));
 	CMFCRibbonMainPanel* pMainPanel = m_wndRibbonBar.AddMainCategory(strTemp, IDB_FILESMALL, IDB_FILELARGE);
 
-	bNameValid = strTemp.LoadString(IDS_RIBBON_NEW);
-	ASSERT(bNameValid);
-	pMainPanel->Add(new CMFCRibbonButton(ID_FILE_NEW, strTemp, 0, 0));
-	bNameValid = strTemp.LoadString(IDS_RIBBON_OPEN);
-	ASSERT(bNameValid);
-	pMainPanel->Add(new CMFCRibbonButton(ID_FILE_OPEN, strTemp, 1, 1));
-	bNameValid = strTemp.LoadString(IDS_RIBBON_SAVE);
-	ASSERT(bNameValid);
-	pMainPanel->Add(new CMFCRibbonButton(ID_FILE_SAVE, strTemp, 2, 2));
-	bNameValid = strTemp.LoadString(IDS_RIBBON_SAVEAS);
-	ASSERT(bNameValid);
-	pMainPanel->Add(new CMFCRibbonButton(ID_FILE_SAVE_AS, strTemp, 3, 3));
+	//bNameValid = strTemp.LoadString(IDS_RIBBON_NEW);
+	//ASSERT(bNameValid);
+	//pMainPanel->Add(new CMFCRibbonButton(ID_FILE_NEW, strTemp, 0, 0));
+	//bNameValid = strTemp.LoadString(IDS_RIBBON_OPEN);
+	//ASSERT(bNameValid);
+	//pMainPanel->Add(new CMFCRibbonButton(ID_FILE_OPEN, strTemp, 1, 1));
+	//bNameValid = strTemp.LoadString(IDS_RIBBON_SAVE);
+	//ASSERT(bNameValid);
+	//pMainPanel->Add(new CMFCRibbonButton(ID_FILE_SAVE, strTemp, 2, 2));
+	//bNameValid = strTemp.LoadString(IDS_RIBBON_SAVEAS);
+	//ASSERT(bNameValid);
+	//pMainPanel->Add(new CMFCRibbonButton(ID_FILE_SAVE_AS, strTemp, 3, 3));
 
-	bNameValid = strTemp.LoadString(IDS_RIBBON_PRINT);
-	ASSERT(bNameValid);
-	CMFCRibbonButton* pBtnPrint = new CMFCRibbonButton(ID_FILE_PRINT, strTemp, 6, 6);
-	pBtnPrint->SetKeys(_T("p"), _T("w"));
-	bNameValid = strTemp.LoadString(IDS_RIBBON_PRINT_LABEL);
-	ASSERT(bNameValid);
-	pBtnPrint->AddSubItem(new CMFCRibbonLabel(strTemp));
-	bNameValid = strTemp.LoadString(IDS_RIBBON_PRINT_QUICK);
-	ASSERT(bNameValid);
-	pBtnPrint->AddSubItem(new CMFCRibbonButton(ID_FILE_PRINT_DIRECT, strTemp, 7, 7, TRUE));
-	bNameValid = strTemp.LoadString(IDS_RIBBON_PRINT_PREVIEW);
-	ASSERT(bNameValid);
-	pBtnPrint->AddSubItem(new CMFCRibbonButton(ID_FILE_PRINT_PREVIEW, strTemp, 8, 8, TRUE));
-	bNameValid = strTemp.LoadString(IDS_RIBBON_PRINT_SETUP);
-	ASSERT(bNameValid);
-	pBtnPrint->AddSubItem(new CMFCRibbonButton(ID_FILE_PRINT_SETUP, strTemp, 11, 11, TRUE));
-	pMainPanel->Add(pBtnPrint);
-	pMainPanel->Add(new CMFCRibbonSeparator(TRUE));
+	//bNameValid = strTemp.LoadString(IDS_RIBBON_PRINT);
+	//ASSERT(bNameValid);
+	//CMFCRibbonButton* pBtnPrint = new CMFCRibbonButton(ID_FILE_PRINT, strTemp, 6, 6);
+	//pBtnPrint->SetKeys(_T("p"), _T("w"));
+	//bNameValid = strTemp.LoadString(IDS_RIBBON_PRINT_LABEL);
+	//ASSERT(bNameValid);
+	//pBtnPrint->AddSubItem(new CMFCRibbonLabel(strTemp));
+	//bNameValid = strTemp.LoadString(IDS_RIBBON_PRINT_QUICK);
+	//ASSERT(bNameValid);
+	//pBtnPrint->AddSubItem(new CMFCRibbonButton(ID_FILE_PRINT_DIRECT, strTemp, 7, 7, TRUE));
+	//bNameValid = strTemp.LoadString(IDS_RIBBON_PRINT_PREVIEW);
+	//ASSERT(bNameValid);
+	//pBtnPrint->AddSubItem(new CMFCRibbonButton(ID_FILE_PRINT_PREVIEW, strTemp, 8, 8, TRUE));
+	//bNameValid = strTemp.LoadString(IDS_RIBBON_PRINT_SETUP);
+	//ASSERT(bNameValid);
+	//pBtnPrint->AddSubItem(new CMFCRibbonButton(ID_FILE_PRINT_SETUP, strTemp, 11, 11, TRUE));
+	//pMainPanel->Add(pBtnPrint);
+	//pMainPanel->Add(new CMFCRibbonSeparator(TRUE));
 
 	bNameValid = strTemp.LoadString(IDS_RIBBON_CLOSE);
 	ASSERT(bNameValid);
 	pMainPanel->Add(new CMFCRibbonButton(ID_FILE_CLOSE, strTemp, 9, 9));
 
-	bNameValid = strTemp.LoadString(IDS_RIBBON_RECENT_DOCS);
-	ASSERT(bNameValid);
-	pMainPanel->AddRecentFilesList(strTemp);
+	//bNameValid = strTemp.LoadString(IDS_RIBBON_RECENT_DOCS);
+	//ASSERT(bNameValid);
+	//pMainPanel->AddRecentFilesList(strTemp);
 
 	bNameValid = strTemp.LoadString(IDS_RIBBON_EXIT);
 	ASSERT(bNameValid);
@@ -470,6 +476,34 @@ void CMainFrame::InitializeRibbon()
 	CMFCRibbonButton* pBtnUnlabeled = new CMFCRibbonButton(WM_UNCLASSIFIED, strTemp, 3, 1);
 	pPanelView->Add(pBtnUnlabeled);
 
+	// Create and add a "Scheduler" panel:
+	bNameValid = strTemp.LoadString(IDS_RIBBON_SCHEDULER);
+	ASSERT(bNameValid);
+	CMFCRibbonPanel* pPanelScheduler = pCategoryTools->AddPanel(strTemp, m_PanelImages.ExtractIcon (7));
+
+	// Add "View Scheduler" button
+	bNameValid = strTemp.LoadString(IDS_RIBBON_VIEWSCHED);
+	ASSERT(bNameValid);
+	CMFCRibbonButton* pBtnViewSched = new CMFCRibbonButton(WM_VIEWSCHED, strTemp, 0, 1);
+	pPanelScheduler->Add(pBtnViewSched);
+
+	// Create and add a "Logging" panel:
+	bNameValid = strTemp.LoadString(IDS_RIBBON_LOGGING);
+	ASSERT(bNameValid);
+	CMFCRibbonPanel* pPanelLogging = pCategoryTools->AddPanel(strTemp, m_PanelImages.ExtractIcon (7));
+
+	// Add "View Log UI" button
+	bNameValid = strTemp.LoadString(IDS_RIBBON_VIEWLOG);
+	ASSERT(bNameValid);
+	CMFCRibbonButton* pBtnViewLog = new CMFCRibbonButton(WM_VIEWLOG, strTemp, 0, 1);
+	pPanelLogging->Add(pBtnViewLog);
+
+	// Add "Log Save Directory" button
+	bNameValid = strTemp.LoadString(IDS_RIBBON_LOGSAVE);
+	ASSERT(bNameValid);
+	CMFCRibbonButton* pBtnSaveLog = new CMFCRibbonButton(WM_LOGSAVE, strTemp, 0, 1);
+	pPanelLogging->Add(pBtnSaveLog);
+
 	// Add quick access toolbar commands:
 	CList<UINT, UINT> lstQATCmds;
 
@@ -638,6 +672,11 @@ void CMainFrame::OnLabelPreMalware() { }
 void CMainFrame::OnLabelCluster() { }
 void CMainFrame::OnLabelStubMap() { }
 void CMainFrame::OnLabelFindSigs() { }
+
+// Functions to bring up scheduling and logging GUI
+void CMainFrame::OnViewScheduler() { MessageBox(_T("Schedule UI")); }
+void CMainFrame::OnViewLogger() { MessageBox(_T("Log UI")); }
+void CMainFrame::OnSaveLog() { }
 
 // For now, this is responsible for keeping the boxes checked
 void CMainFrame::OnUpdateViewFiles(CCmdUI* pCmdUI)

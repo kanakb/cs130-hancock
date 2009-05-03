@@ -2,7 +2,6 @@
 // Microsoft Visual C++ generated include file.
 // Used by hancock.rc
 //
-#define IDI_GW_TEXT                     5
 #define IDD_ABOUTBOX                    100
 #define IDP_OLE_INIT_FAILED             100
 #define IDS_RIBBON_MAKEMODEL            101
@@ -31,10 +30,15 @@
 #define IDS_LABELFINDSIGS               118
 #define IDS_RIBBON_LABELFINDSIGS        118
 #define IDR_POPUP_EDIT                  119
+#define IDS_RIBBON_SCHEDULER            119
 #define ID_STATUSBAR_PANE1              120
+#define IDS_RIBBON_LOGGING              120
 #define ID_STATUSBAR_PANE2              121
+#define IDS_RIBBON_VIEWSCHED            121
 #define IDS_STATUS_PANE1                122
 #define IDS_STATUS_PANE2                123
+#define IDS_RIBBON_VIEWLOG              124
+#define IDS_RIBBON_LOGSAVE              125
 #define IDR_MAINFRAME                   128
 #define IDR_MAINFRAME_256               129
 #define IDR_hancockTYPE                 130

@@ -94,6 +94,9 @@ protected:
 	void OnLabelCluster();
 	void OnLabelStubMap();
 	void OnLabelFindSigs();
+	void OnViewScheduler();
+	void OnViewLogger();
+	void OnSaveLog();
 	void OnViewType(UINT nID);
 	void OnUpdateViewFiles(CCmdUI* pCmdUI);
 	DECLARE_MESSAGE_MAP()
