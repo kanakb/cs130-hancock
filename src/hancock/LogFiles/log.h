@@ -1,3 +1,6 @@
+#ifndef LOG_H
+#define LOG_H
+
 #include <string>
 #include <iostream>
 #include <fstream>
@@ -85,8 +88,4 @@ string Log::dispLog(const char* filename){
 
 }
 
-
-int main()
-{
-	return 0;
-}
+#endif

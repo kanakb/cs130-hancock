@@ -1,4 +1,6 @@
-#include "log.cpp"
+#include "log.h"
+#include <string>
+using namespace std;
 
 int main(char argc, char** argv)
 {
