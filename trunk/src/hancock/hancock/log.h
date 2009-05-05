@@ -6,7 +6,8 @@
 #include <Windows.h>
 #include <stdio.h>
 
-const char DIR[256] = "";
+const char DIR[256] = "Logs\\";
+// feature request: create directory if it doesn't exist
 
 using namespace std;
 
