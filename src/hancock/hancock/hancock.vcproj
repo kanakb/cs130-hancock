@@ -198,6 +198,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\log.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\MainFrm.cpp"
 				>
 			</File>
@@ -237,6 +241,10 @@
 			</File>
 			<File
 				RelativePath=".\hancock.h"
+				>
+			</File>
+			<File
+				RelativePath=".\log.h"
 				>
 			</File>
 			<File

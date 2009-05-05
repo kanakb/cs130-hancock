@@ -13,6 +13,7 @@
 //
 
 #pragma once
+#include "log.h"
 #include "ChildView.h"
 #include "CalendarBar.h"
 #include "Resource.h"
@@ -111,6 +112,7 @@ protected:
 	CMFCOutlookBarPane*    m_pCurrOutlookPage;
 private:
 	std::map<UINT, BOOL> m_selectedItems;
+	HancockLog m_log;
 };
 
 
