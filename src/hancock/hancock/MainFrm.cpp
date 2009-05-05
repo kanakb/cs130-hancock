@@ -669,7 +669,15 @@ void CMainFrame::OnPreprocess() { }
 void CMainFrame::OnLabelMalware() { }
 void CMainFrame::OnClusterFiles() { }
 void CMainFrame::OnLabelPreMalware() { }
-void CMainFrame::OnLabelCluster() { }
+void CMainFrame::OnLabelCluster()
+{
+	// TODO: replace this code; it just prints the current directory
+	CString teststr;
+	m_wndTree.GetItemPath(teststr);
+	//CMFCShellListCtrl* treeList = m_wndTree.GetRelatedList();
+	//treeList->GetCurrentFolder(teststr);
+	MessageBox(teststr);
+}
 void CMainFrame::OnLabelStubMap() { }
 void CMainFrame::OnLabelFindSigs() { }
 
