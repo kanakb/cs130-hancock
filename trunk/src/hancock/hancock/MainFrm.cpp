@@ -13,6 +13,7 @@
 //
 
 #include "stdafx.h"
+#include "log.h"
 #include "hancock.h"
 
 #include "MainFrm.h"
@@ -682,8 +683,8 @@ void CMainFrame::OnLabelStubMap() { }
 void CMainFrame::OnLabelFindSigs() { }
 
 // Functions to bring up scheduling and logging GUI
-void CMainFrame::OnViewScheduler() { MessageBox(_T("Schedule UI")); }
-void CMainFrame::OnViewLogger() { MessageBox(_T("Log UI")); }
+void CMainFrame::OnViewScheduler() { m_log.write("Opened Scheduler UI."); }
+void CMainFrame::OnViewLogger() { m_log.write("Opened Log UI"); }
 void CMainFrame::OnSaveLog() { }
 
 // For now, this is responsible for keeping the boxes checked
