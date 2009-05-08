@@ -41,6 +41,9 @@ public:
 	// Generated message map functions
 protected:
 	afx_msg void OnPaint();
+	LRESULT OnChangeFolder(WPARAM,LPARAM);
 	DECLARE_MESSAGE_MAP()
+
+private:
 };
 

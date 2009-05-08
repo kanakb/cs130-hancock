@@ -61,4 +61,3 @@ void CChildView::OnPaint()
 	
 	// Do not call CWnd::OnPaint() for painting messages
 }
-
