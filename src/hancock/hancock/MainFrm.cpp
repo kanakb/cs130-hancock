@@ -54,8 +54,9 @@
 #define WM_VIEWSCHED (WM_USER + 127)
 #define WM_VIEWLOG (WM_USER + 128)
 #define WM_LOGSAVE (WM_USER + 129)
+#define ID_CMFCTREECTRL (WM_USER + 130)
 
-//next = 130
+//next = 131
 
 // CMainFrame
 
@@ -103,6 +104,7 @@ BEGIN_MESSAGE_MAP(CMainFrame, CFrameWndEx)
 	ON_UPDATE_COMMAND_UI(WM_STUBMAP, &CMainFrame::OnUpdateViewFiles)
 	ON_UPDATE_COMMAND_UI(WM_FINDSIGS, &CMainFrame::OnUpdateViewFiles)
 	ON_UPDATE_COMMAND_UI(WM_UNCLASSIFIED, &CMainFrame::OnUpdateViewFiles)
+	ON_NOTIFY(TVN_SELCHANGED, ID_CMFCTREECTRL, &CMainFrame::OnChangeFolder)
 END_MESSAGE_MAP()
 
 // CMainFrame construction/destruction
@@ -573,6 +575,8 @@ BOOL CMainFrame::CreateOutlookBar(CMFCOutlookBar& bar, UINT uiID, CMFCShellTreeC
 
 	bar.SetButtonsFont(&afxGlobalData.fontBold);
 
+	m_wndTree.SetDlgCtrlID(ID_CMFCTREECTRL);
+
 	return TRUE;
 }
 
@@ -670,15 +674,7 @@ void CMainFrame::OnPreprocess() { }
 void CMainFrame::OnLabelMalware() { }
 void CMainFrame::OnClusterFiles() { }
 void CMainFrame::OnLabelPreMalware() { }
-void CMainFrame::OnLabelCluster()
-{
-	// TODO: replace this code; it just prints the current directory
-	CString teststr;
-	m_wndTree.GetItemPath(teststr);
-	//CMFCShellListCtrl* treeList = m_wndTree.GetRelatedList();
-	//treeList->GetCurrentFolder(teststr);
-	MessageBox(teststr);
-}
+void CMainFrame::OnLabelCluster() { }
 void CMainFrame::OnLabelStubMap() { }
 void CMainFrame::OnLabelFindSigs() { }
 
@@ -702,4 +698,15 @@ BOOL CMainFrame::OnCmdMsg(UINT nID, int nCode, void* pExtra, AFX_CMDHANDLERINFO*
 
 	// otherwise, do default handling
 	return CFrameWnd::OnCmdMsg(nID, nCode, pExtra, pHandlerInfo);
+}
+
+// very important: this tells ChildView that the folder has changed
+void CMainFrame::OnChangeFolder(NMHDR * pNotifyStruct, LRESULT * result)
+{
+	CString teststr;
+	m_wndTree.GetItemPath(teststr);
+	//CMFCShellListCtrl* treeList = m_wndTree.GetRelatedList();
+	//treeList->GetCurrentFolder(teststr);
+	MessageBox(teststr);
+	*result = 0;
 }
