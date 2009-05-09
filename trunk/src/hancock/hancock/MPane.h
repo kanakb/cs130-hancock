@@ -66,6 +66,7 @@ private:
 
 	void AssocToDirInternal(string path, string extension);	// implementation of above interface method: AssocToDir
 	int determineType(string filename);		// reads the .cnf specified by filename and returns the type of the file
+	void updateFilteredMap();				// updates the filtered map using the flags in the m_flags set
 };
 
 #endif // MPANE_H DEFINED
