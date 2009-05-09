@@ -27,6 +27,8 @@
 
 using namespace std;
 
+class Item;
+
 class MPane 
 {
 
@@ -58,8 +60,11 @@ private:
 	{
 		int type;			// the type of file (eg malware, goodware, unknown, etc...)
 		string filename;	// name of the file that this config file represents
-		multimap<string,list<file_t>> action_list;	// the list of actions that have been performed on this file
+		multimap<string,list<file_info>> action_list;	// the list of actions that have been performed on this file
 	}cnf_info_t;
+
+	void AssocToDirInternal(string path, string extension);	// implementation of above interface method: AssocToDir
+	int determineType(string filename);		// reads the .cnf specified by filename and returns the type of the file
 };
 
 #endif // MPANE_H DEFINED
