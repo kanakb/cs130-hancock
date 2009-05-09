@@ -4,6 +4,7 @@
 #include <shlobj.h> //for directory functions
 #include <map>
 #include <string>
+#include <algorithm>
 #include <fstream>
 #include <list>
 #include <iostream>

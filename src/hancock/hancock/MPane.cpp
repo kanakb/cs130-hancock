@@ -17,7 +17,10 @@ void MPane::addFlag(int type)
 		fit = m_filteredMap.find(type); // search for key in filtered map
 		if(fit != m_filteredMap.end())	// if key already exists, replace its value pair
 		{
-			fit->second->clear();		// clear previous values
+			fit->second = NULL;			// set the value (set<string>*) pointer to NULL
+										// so that the pointer is not accidentally deleted
+										// since it points directly to the value set in the master map
+
 			fit->second = mit->second;	// point the set of values in filtered map to the values contained in master map
 		}
 		else	// add the new set of values into the filtered map
@@ -48,6 +51,7 @@ void MPane::removeFlag(int type)
 // populate the master map with the contents of that directory
 void MPane::AssocToDir(string path)
 {
+
 	/* If this test succeeds, then this is not the first call to AssocToDir.
 	 * Therefore we must clear the current map of files that we have before
 	 * associating the map to a new directory.
@@ -77,12 +81,8 @@ void MPane::AssocToDirInternal(string path, string extension)
 	// list of all the files and directories.  You can limit this if you wish
 	// to just file with specific extensions, for example "*.txt".  If you do that
 	// then finder will not return any directory names.
-	string fname;
+	string fname = path + "\\*." + extension;
 
-	if(!extension.empty())
-		fname = path + "\\*." + extension; //this will find the .cnf files
-	else
-		fname = path;
 	// start the finder -- on error _findfirsti64() will return -1, otherwise if no
 	// error it returns a handle greater than -1.
 	long h = _findfirsti64(fname.c_str(),&data);
@@ -155,9 +155,9 @@ int MPane::determineType(string filename)
 			if(tagloc != string::npos)	// type tag was found, extract type and return it
 			{				
 				string::size_type typeEnd = line.find_last_of('<');
-				string type = line.erase(0,6);
-				type = type.erase(typeEnd,7);
-				fileType = atoi(type.c_str());
+				string type = line.erase(0,6);		// erase "<type>" from the line
+				type = type.erase(typeEnd,7);		// erase "</type>" from the line
+				fileType = atoi(type.c_str());		// convert the string remaining into an integer
 			}
 		}
 	}
