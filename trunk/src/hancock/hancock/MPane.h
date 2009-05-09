@@ -12,6 +12,8 @@
 #include <vector>
 #include <set>
 #include <stdlib.h>
+#include <stdio.h>
+
 
 /* Various file types */
 #define UNKNOWN 100
@@ -39,12 +41,17 @@ public:
 	void addFlag(int type);						// Add a flag to filter the directory files 
 	void removeFlag(int type);					// Remove a flag previously used to filter files
 	map<int,set<string>*>* getFileList();		// Return the filtered list of files
-	void labelFileAsFlag(int type, Item* it);	/* Label an unknown file type as type specified in type argument
-												 * This function will also add the file to the appropriate
-												 * set in the master map, remove it from the set that it was
-												 * found.
-												 */
-	void updateConfig( /* action info structure */ );	// place holder
+	bool labelFileAsFlag(int type, string item_path);	/* Label an unknown file type as type specified in type argument
+														 * This function will also add the file to the appropriate
+														 * set in the master map, remove it from the set that it was
+														 * found.
+														 */
+
+	struct cnf_info;	//Temporary declaration. See below for actual
+
+	bool updateConfig(cnf_info cnf_action_info);	/* Given a cnf_info struct (see below), we append to the cnf file
+													 * for a particular file (indicated in cnf_info) with the actions performed
+													 */
 
 private:
 	map<int,set<string>*> m_masterMap;			// the master map contains all directory files
@@ -60,13 +67,12 @@ private:
 	struct cnf_info
 	{
 		int type;			// the type of file (eg malware, goodware, unknown, etc...)
-		string filename;	// name of the file that this config file represents
+		string filename;	// name of the file that this config file represents (include full directory path)
 		multimap<string,list<file_info>> action_list;	// the list of actions that have been performed on this file
 	}cnf_info_t;
 
 	void AssocToDirInternal(string path, string extension);	// implementation of above interface method: AssocToDir
 	int determineType(string filename);		// reads the .cnf specified by filename and returns the type of the file
-	void updateFilteredMap();				// updates the filtered map using the flags in the m_flags set
 };
 
 #endif // MPANE_H DEFINED
