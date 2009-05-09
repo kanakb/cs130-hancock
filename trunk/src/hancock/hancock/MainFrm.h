@@ -19,6 +19,43 @@
 #include "Resource.h"
 #include <map>
 
+
+
+// Message IDS for my custom actions
+#define WM_GOODWARE (WM_USER + 100)
+#define WM_MODEL (WM_USER + 101)
+#define WM_INDEX (WM_USER + 102)
+#define WM_MALWARE (WM_USER + 103)
+#define WM_PREMALWARE (WM_USER + 121)
+#define WM_CLUSTER (WM_USER + 104)
+#define WM_STUBMAP (WM_USER + 105)
+#define WM_FINDSIGS (WM_USER + 106)
+#define WM_UNCLASSIFIED (WM_USER + 107)
+#define WM_MAKEMODEL (WM_USER + 108)
+#define WM_EXTRBUFFERS (WM_USER + 109)
+#define WM_MAKEINDEX (WM_USER + 110)
+#define WM_LABELGOOD (WM_USER + 111)
+#define WM_PRUNE (WM_USER + 112)
+#define WM_MERGE (WM_USER + 113)
+#define WM_COMPILE (WM_USER + 114)
+#define WM_MAKESTUB (WM_USER + 115)
+#define WM_LABELMODEL (WM_USER + 116)
+#define WM_LOCSIGS (WM_USER + 117)
+#define WM_LABELINDEX (WM_USER + 118)
+#define WM_PREPROC (WM_USER + 119)
+#define WM_LABELMALWARE (WM_USER + 120)
+#define WM_CLSTFILES (WM_USER + 122)
+#define WM_LABELPREMALWARE (WM_USER + 123)
+#define WM_LABELCLUSTER (WM_USER + 124)
+#define WM_LABELSTUBMAP (WM_USER + 125)
+#define WM_LABELFINDSIGS (WM_USER + 126)
+#define WM_VIEWSCHED (WM_USER + 127)
+#define WM_VIEWLOG (WM_USER + 128)
+#define WM_LOGSAVE (WM_USER + 129)
+#define ID_CMFCTREECTRL (WM_USER + 130)
+
+//next = 131
+
 class COutlookBar : public CMFCOutlookBar
 {
 	virtual BOOL AllowShowOnPaneMenu() const { return TRUE; }

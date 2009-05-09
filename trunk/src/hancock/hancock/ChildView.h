@@ -15,6 +15,7 @@
 
 #pragma once
 
+#define ID_LIST_1 (WM_USER + 300)
 
 // CChildView window
 
@@ -33,6 +34,8 @@ public:
 // Overrides
 	protected:
 	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
+	int OnCreate(LPCREATESTRUCT lpCreateStruct);
+	void OnSize(UINT nType, int cx, int cy);
 
 // Implementation
 public:
@@ -41,9 +44,10 @@ public:
 	// Generated message map functions
 protected:
 	afx_msg void OnPaint();
-	LRESULT OnChangeFolder(WPARAM,LPARAM);
 	DECLARE_MESSAGE_MAP()
 
 private:
+	CMFCListCtrl m_wndWatch;
+
 };
 
