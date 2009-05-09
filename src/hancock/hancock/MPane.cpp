@@ -128,7 +128,7 @@ void MPane::AssocToDirInternal(string path, string extension)
 				{
 					set<string>* strset = new set<string>;
 					strset->insert(data.name);
-					m_masterMap.insert(make_pair(DIR,strset));
+					m_masterMap.insert(make_pair(type,strset));
 				}
 			}
 		}while( _findnexti64(h,&data) == 0);
@@ -153,15 +153,67 @@ int MPane::determineType(string filename)
 		{
 			string::size_type tagloc = line.find("<type>");	// search for the type tag in the line
 			if(tagloc != string::npos)	// type tag was found, extract type and return it
-			{				
-				string::size_type typeEnd = line.find_last_of('<');
+			{								
 				string type = line.erase(0,6);		// erase "<type>" from the line
+				string::size_type typeEnd = line.find_last_of('<');
 				type = type.erase(typeEnd,7);		// erase "</type>" from the line
 				fileType = atoi(type.c_str());		// convert the string remaining into an integer
+				break;
 			}
 		}
 	}
 	return fileType;
+}
+
+// Updates m_filteredMap with the new files using the flags currently present in the m_flags set
+void MPane::updateFilteredMap()
+{
+	if(!m_flags.empty())
+	{
+		set<int>::iterator sit;		// m_flags set iterator
+		for(sit = m_flags.begin(); sit != m_flags.end(); sit++)	// iterate through m_flags
+		{
+			map<int,set<string>*>::iterator mit;	// m_masterMap iterator to search for presence of current flag
+			mit = m_masterMap.find(*sit);	// search through m_masterMap for current flag
+			if(mit != m_masterMap.end())	// the set exists, proceed to add the set from m_masterMap to m_filteredMap
+			{
+				map<int,set<string>*>::iterator fit;	// m_filteredMap iterator to search for presence of current flag
+				fit = m_filteredMap.find(*sit);		// search through m_filteredMap for current flag
+				if(fit != m_filteredMap.end())		// set exists, replace its Item/string set with the new one
+				{
+					fit->second = mit->second;
+				}
+				else		// flag does not exist in filtered map, add it
+				{
+					set<string>* strset = new set<string>;
+					strset = mit->second;
+					m_filteredMap.insert(make_pair(*sit,strset));
+				}
+			}
+		}
+	}
+	else	// there currently no filter flags active, add the UNKNOWN set from master map to filtered map
+	{
+		
+		map<int,set<string>*>::iterator mit;	// m_masterMap iterator to search for presence of current flag
+		mit = m_masterMap.find(UNKNOWN);	// search through m_masterMap for UNKNOWN flag
+		if(mit != m_masterMap.end())		// check to ensure that m_masterMap contains an UNKNOWN set
+		{
+			set<string>* strset = new set<string>;
+			map<int,set<string>*>::iterator fit;	// m_filteredMap iterator to search for presence of current flag
+			fit = m_filteredMap.find(UNKNOWN);		// search through m_filteredMap for UNKNOWN flag
+			if(fit != m_filteredMap.end())		// set exists, replace m_filteredMap Item/string set with m_masterMap's
+			{
+				fit->second = mit->second;
+			}
+			else		// flag does not exist in filtered map, add it
+			{
+				set<string>* strset = new set<string>;
+				strset = mit->second;
+				m_filteredMap.insert(make_pair(UKNOWN,strset));
+			}
+		}
+	}
 }
 
 map<int,set<string>*>* MPane::getFileList()
