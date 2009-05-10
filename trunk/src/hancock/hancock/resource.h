@@ -89,12 +89,16 @@
 #define IDS_RIBBON_GOODWARE             310
 #define IDS_RIBBON_MODELS               311
 #define IDS_RIBBON_INDECES              312
+#define IDD_LOGUI                       312
 #define IDS_RIBBON_MALWARE              313
 #define IDS_RIBBON_PREMALWARE           314
 #define IDS_RIBBON_CLUSTERINGS          315
 #define IDS_RIBBON_STUBMAPS             316
 #define IDS_RIBBON_FINDOUTPUT           317
 #define IDS_RIBBON_UNLABELED            318
+#define IDC_LOGLIST                     1001
+#define IDC_EDIT1                       1002
+#define IDC_LOGTEXT                     1002
 #define ID_WRITE_PASTEASHYPERLINK       32770
 #define ID_VIEW_GROAR                   32771
 #define ID_VIEW_GOODWARE                32772
@@ -119,9 +123,9 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        312
+#define _APS_NEXT_RESOURCE_VALUE        313
 #define _APS_NEXT_COMMAND_VALUE         32789
-#define _APS_NEXT_CONTROL_VALUE         1000
+#define _APS_NEXT_CONTROL_VALUE         1003
 #define _APS_NEXT_SYMED_VALUE           310
 #endif
 #endif
