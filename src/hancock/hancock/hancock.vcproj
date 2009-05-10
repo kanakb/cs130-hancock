@@ -202,6 +202,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\LogUI.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\MainFrm.cpp"
 				>
 			</File>
@@ -245,6 +249,10 @@
 			</File>
 			<File
 				RelativePath=".\log.h"
+				>
+			</File>
+			<File
+				RelativePath=".\LogUI.h"
 				>
 			</File>
 			<File
