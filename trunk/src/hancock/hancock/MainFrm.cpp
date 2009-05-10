@@ -75,6 +75,7 @@ END_MESSAGE_MAP()
 // CMainFrame construction/destruction
 
 CMainFrame::CMainFrame()
+: m_wndView(&m_log)
 {
 	// TODO: add member initialization code here
 }
@@ -679,8 +680,6 @@ void CMainFrame::OnChangeFolder(NMHDR * pNotifyStruct, LRESULT * result)
 {
 	CString teststr;
 	m_wndTree.GetItemPath(teststr);
-	//CMFCShellListCtrl* treeList = m_wndTree.GetRelatedList();
-	//treeList->GetCurrentFolder(teststr);
-	MessageBox(teststr);
+	m_wndView.updateFolder(teststr);
 	*result = 0;
 }

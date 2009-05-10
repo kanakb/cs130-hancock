@@ -26,7 +26,8 @@
 
 // CChildView
 
-CChildView::CChildView()
+CChildView::CChildView(HancockLog *log)
+: m_log(log)
 {
 }
 
@@ -62,15 +63,17 @@ int CChildView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_wndWatch.InsertColumn(0, _T("File/Folder"), LVCFMT_LEFT, 100);
 	m_wndWatch.InsertColumn(1, _T("Type"), LVCFMT_LEFT, 100);
 
-	// TODO: get rid of this and replace with something more dynamic
-	m_wndWatch.InsertItem(0, _T("test"));
-	m_wndWatch.SetItemText(0, 1, _T("Goodware"));
-	m_wndWatch.InsertItem(1, _T("test2"));
-	m_wndWatch.SetItemText(1, 1, _T("Goodware"));
-	m_wndWatch.InsertItem(2, _T("hello.m"));
-	m_wndWatch.SetItemText(2, 1, _T("Model"));
-	m_wndWatch.InsertItem(3, _T("hello2.m"));
-	m_wndWatch.SetItemText(3, 1, _T("Model"));
+	// TODO: get rid of this and replace with something that updates when the folder changes
+	CString fn = _T("File");
+	CString tp = _T("Type");
+	for (int i = 0; i < 5; i++)
+	{
+		char ch = '0' + i;
+		CString fntemp = fn + ch;
+		CString tptemp = tp + ch;
+		m_wndWatch.InsertItem(i, fntemp);
+		m_wndWatch.SetItemText(i, 1, tptemp);
+	}
 
 	return 0;
 }
@@ -114,4 +117,11 @@ void CChildView::OnSize(UINT nType, int cx, int cy)
 	GetClientRect(rc);
 
 	m_wndWatch.SetWindowPos(NULL, rc.left + 1, rc.top + 1, rc.Width() - 2, rc.Height() - 2, SWP_NOACTIVATE | SWP_NOZORDER);
+}
+
+// Update list of files with new folder name
+void CChildView::updateFolder(CString newFolder)
+{
+	// TODO: replace with an actual list update
+	MessageBox(newFolder);
 }
