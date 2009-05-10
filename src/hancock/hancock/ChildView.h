@@ -15,6 +15,7 @@
 
 #pragma once
 
+#include "log.h"
 #define ID_LIST_1 (WM_USER + 300)
 
 // CChildView window
@@ -23,7 +24,7 @@ class CChildView : public CWnd
 {
 // Construction
 public:
-	CChildView();
+	CChildView(HancockLog *log);
 
 // Attributes
 public:
@@ -39,6 +40,7 @@ public:
 
 // Implementation
 public:
+	void updateFolder(CString newFolder);
 	virtual ~CChildView();
 
 	// Generated message map functions
@@ -48,6 +50,7 @@ protected:
 
 private:
 	CMFCListCtrl m_wndWatch;
+	HancockLog *m_log;
 
 };
 
