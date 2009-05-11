@@ -53,7 +53,27 @@ public:
 													 * for a particular file (indicated in cnf_info) with the actions performed
 													 */
 
+	string getCnfFullPath(string filename);		/* This function takes a string filename, and it returns a string
+												 * containing the full path to the .cnf file associated with the input.
+												 * ie. getCnfPath(gwd1.gwd) returns C:\\Temp\\cnf_files\\gwd1.gwd.cnf
+												 */
+	string getFileFullPath(string filename);	/* This function takes a string filename, and it returns a string
+											 * containing the full path to the file.
+											 * ie. getFileFullPath(gwd1.gwd) returns C:\\Temp\\gwd1.gwd
+											 */
+	bool checkCnfExists(string full_cnf_path);	/* Given the full path to a cnf file, this function checks 
+												 * if the file exists
+												 */
+
+	bool changeMasterMapFlag(int old_type, int new_type, string filename);	/* Given the filename, update m_masterMap 
+																			 * from old_type to new_type
+																			 */
+
+
 private:
+
+	string m_working_dir;				// The path of the current working directory. ie C:\\Windows\\Temp\\
+
 	map<int,set<string>*> m_masterMap;			// the master map contains all directory files
 	map<int,set<string>*> m_filteredMap;			// filtered map contains only entries matching the flags
 	set<int> m_flags;							// this set contains the list of flags used to filter master map
