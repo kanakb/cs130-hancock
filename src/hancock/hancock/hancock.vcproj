@@ -194,6 +194,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\FolderDlg.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\hancock.cpp"
 				>
 			</File>
@@ -241,6 +245,10 @@
 			</File>
 			<File
 				RelativePath=".\ChildView.h"
+				>
+			</File>
+			<File
+				RelativePath=".\FolderDlg.h"
 				>
 			</File>
 			<File

@@ -18,6 +18,8 @@
 #include "log.h"
 #define ID_LIST_1 (WM_USER + 300)
 
+//next = 301
+
 // CChildView window
 
 class CChildView : public CWnd
@@ -37,6 +39,7 @@ public:
 	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
 	int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	void OnSize(UINT nType, int cx, int cy);
+	afx_msg void OnChangeFileList(NMHDR * pNotifyStruct, LRESULT * result);
 
 // Implementation
 public:
@@ -51,6 +54,7 @@ protected:
 private:
 	CMFCListCtrl m_wndWatch;
 	HancockLog *m_log;
-
+	CString m_curDir;
+	CString m_curFile;
 };
 
