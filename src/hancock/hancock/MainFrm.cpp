@@ -655,7 +655,15 @@ void CMainFrame::OnLabelFindSigs() { }
 
 // Functions to bring up scheduling and logging GUI
 void CMainFrame::OnViewScheduler() { m_log.write("Opened Scheduler UI."); }
-void CMainFrame::OnViewLogger() { m_log.write("Opened Log UI"); }
+void CMainFrame::OnViewLogger()
+{
+	m_log.write("Opened Log UI");
+	m_logUI = new LogUI(&m_log, this);
+
+	// working on switching to modeless
+	//m_logUI->Create(IDD_LOGUI, this);
+	m_logUI->DoModal();
+}
 void CMainFrame::OnSaveLog() { }
 
 // For now, this is responsible for keeping the boxes checked

@@ -1,5 +1,6 @@
 #pragma once
 #include "afxwin.h"
+#include "log.h"
 
 
 // LogUI dialog
@@ -9,7 +10,9 @@ class LogUI : public CDialog
 	DECLARE_DYNAMIC(LogUI)
 
 public:
-	LogUI(CWnd* pParent = NULL);   // standard constructor
+	LogUI(HancockLog *hlog, CWnd* pParent = NULL);   // standard constructor
+	BOOL Create(UINT nID, CWnd * pWnd);
+	virtual void LogUI::PostNcDestroy();
 	virtual ~LogUI();
 
 // Dialog Data
@@ -26,4 +29,5 @@ private:
 	CButton m_closeBtn;
 	CListBox m_logList;
 	CEdit m_logText;
+	HancockLog *m_log;
 };

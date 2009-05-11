@@ -10,8 +10,8 @@
 
 IMPLEMENT_DYNAMIC(LogUI, CDialog)
 
-LogUI::LogUI(CWnd* pParent /*=NULL*/)
-	: CDialog(LogUI::IDD, pParent)
+LogUI::LogUI(HancockLog *hlog, CWnd* pParent /*=NULL*/)
+	: CDialog(LogUI::IDD, pParent), m_log(hlog)
 {
 
 }
@@ -57,4 +57,14 @@ void LogUI::OnBnClickedOk()
 {
 	// TODO: Add your control notification handler code here
 	OnOK();
+	DestroyWindow();
+}
+
+BOOL LogUI::Create(UINT nID, CWnd * pWnd)
+{
+	return CDialog::Create(nID,pWnd);
+}
+
+void LogUI::PostNcDestroy() {
+	//delete this;
 }
