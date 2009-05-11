@@ -14,6 +14,7 @@
 
 #include "stdafx.h"
 #include "log.h"
+#include "FolderDlg.h"
 #include "hancock.h"
 
 #include "MainFrm.h"
@@ -664,7 +665,18 @@ void CMainFrame::OnViewLogger()
 	//m_logUI->Create(IDD_LOGUI, this);
 	m_logUI->DoModal();
 }
-void CMainFrame::OnSaveLog() { }
+
+// Uses CFolderDialog from CodeProject to pick a directory to save the logs
+void CMainFrame::OnSaveLog()
+{
+	CString defPath = _T("C:\\");
+	CString resPath = _T("");
+
+	CFolderDialog chooseLogSave(_T("Save Logs To..."), defPath, this, BIF_RETURNONLYFSDIRS | BIF_NEWDIALOGSTYLE);
+	if (chooseLogSave.DoModal() == IDOK)
+		resPath = chooseLogSave.GetFolderPath();
+	//MessageBox(resPath);
+}
 
 // For now, this is responsible for keeping the boxes checked
 void CMainFrame::OnUpdateViewFiles(CCmdUI* pCmdUI)

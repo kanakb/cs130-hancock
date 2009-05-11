@@ -22,12 +22,10 @@
 
 
 
-//next = 301
-
 // CChildView
 
 CChildView::CChildView(HancockLog *log)
-: m_log(log)
+: m_log(log), m_curDir(_T("")), m_curFile(_T(""))
 {
 }
 
@@ -40,6 +38,7 @@ BEGIN_MESSAGE_MAP(CChildView, CWnd)
 	ON_WM_CREATE()
 	ON_WM_SIZE()
 	ON_WM_PAINT()
+	ON_NOTIFY(LVN_ITEMCHANGED, ID_LIST_1, &CChildView::OnChangeFileList)
 END_MESSAGE_MAP()
 
 
@@ -123,5 +122,13 @@ void CChildView::OnSize(UINT nType, int cx, int cy)
 void CChildView::updateFolder(CString newFolder)
 {
 	// TODO: replace with an actual list update
-	MessageBox(newFolder);
+	m_curDir = newFolder;
+	//MessageBox(newFolder);
+}
+
+void CChildView::OnChangeFileList(NMHDR * pNotifyStruct, LRESULT * result)
+{
+	// TODO: replace with an actual file update
+	//MessageBox(_T("Test"));
+	*result = 0;
 }
