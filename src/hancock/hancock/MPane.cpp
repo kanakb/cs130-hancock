@@ -62,6 +62,11 @@ void MPane::AssocToDir(string path)
 		m_masterMap.clear();
 	}
 
+	if(!m_filteredMap.empty())
+	{
+		m_filteredMap.clear();
+	}
+
 	// Begin populating master map
 
 	AssocToDirInternal(path,"cnf");		// first pass through directory we look for *.cnf files
@@ -187,90 +192,75 @@ map<int,set<string>*>* MPane::getFileList()
 //
 //NOTE: We are assuming a "cnf_files" subdirectory exists in the current working directory
 //		Otherwise we cannot write or read the existing cnf files!
-//TODO: Update the m_masterMap for this file.
-bool MPane::labelFileAsFlag(int type, string item_path)
+bool MPane::labelFileAsFlag(int type, string filename)
 {
-	string CNF_EXT = ".cnf";
-	string CNF_DIR = "cnf_files\\";
-
-	unsigned int found;					//Position of last "." or "\\" in string item
-	string cnf_location = item_path;	//Location of cnf file for current file (if it exists)
-	string cnf_location_temp;			//Temporary file opened for writing
-
-	string file_filename;				//The filename of the item (file)
-
-	char type_buffer [5];					//buffer for converting int to cstring
-
+	string TMP = ".tmp";
+	
 	//Check for range and convert int type to cstring
 	if (type < 100 || type > 1000) {
 		return FALSE;
 	}
+	//Buffer for converting int to cstring
+	char type_buffer [5];					
 	_itoa_s(type, type_buffer, 10);
-	
-	
-	///////////////////////////////////////////////////////////////////////
-	//Here, we are appending the cnf_file directory to string cnf_location
-	//We will look for the cnf file in that diectory
-	///////////////////////////////////////////////////////////////////////
-	//Find the last "\\" and add cnf_files\\ to it
-	found = cnf_location.find_last_of("\\");		
-	if (found != -1) {
-		cnf_location.insert(found + 1, CNF_DIR);
-	}
-	else {
-		//Malformed string item_path
-		return FALSE;								
-	}
-	
-	///////////////////////////////////////////////////////////////////////
-	//Find the extension of the original string, and replace it with ".cnf"
-	///////////////////////////////////////////////////////////////////////
-	//Find the last "." of string item (to determine the extension)
-	found = cnf_location.find_last_of(".");		
-	//If there is an extension, remove it. If no extension skip this step
-	if (found != -1 && found > cnf_location.find_last_of("/\\")) {	
-		cnf_location = cnf_location.substr(0, found);
-	}
 
-	//Get the filename while we are here
-	found = cnf_location.find_last_of("/\\");	
-	file_filename = cnf_location.substr(found + 1, cnf_location.length());
+	//Generate location of .cnf file and .cnf.tmp files
+	string cnf_location = getCnfFullPath(filename);
+	string cnf_location_temp = cnf_location + TMP;
 
-	//Append the extension cnf
-	cnf_location.append(CNF_EXT);
-	//A temporary file for writing
-	cnf_location_temp = cnf_location + ".tmp";
-
+	int old_type = -1;
 	
 
 	///////////////////////////////////////////////////////////////////////
 	//Create the cnf file if it does not exist
 	//If it exists, change its type
 	///////////////////////////////////////////////////////////////////////
-	//Try to open the existing cnf file as input (read only)
-	fstream infile;
-	infile.open(cnf_location.c_str(), ios_base::in);
+	
 
-	//Also open the temporary output file (*.cnf.tmp)
+	//Open the temporary output file (*.cnf.tmp)
 	fstream outfile;
 	outfile.open(cnf_location_temp.c_str(), ios_base::out);
-	//File cannot be opened, return
+	//File cannot be opened, return failure
 	if(!outfile) {	
 		return FALSE;
 	}
-	
-	//File exists
-	if(infile.is_open())
+
+	//If no .cnf file exists, make it
+	if (!checkCnfExists(cnf_location)) 
 	{
-		//Close it, and check its type
-		infile.close();
+		//Make a *cnf.tmp file, with only the correct filename value.
+		//Other values are blank
+		outfile << "<filename>" << filename << "</filename>" << endl;
+		outfile << "<type>" << type_buffer << "</type>" << endl;
+		outfile << "<operations>" << endl << "</operations>";
+
+		//Close the IO stream
+		outfile.close();
+
+		//Rename the *.cnf.tmp to *.cnf file
+		//Now correctly formatted to be used by other functions
+		rename(cnf_location_temp.c_str(), cnf_location.c_str());
+
+		//Change the m_masterMap flag type for this file
+		return changeMasterMapFlag(UNKNOWN, type, filename);		
+
+	}
+
+	//File exists, change its type
+	else {
+
 		//If the old type is the same as the new type, return
-		if (type == determineType(cnf_location)) {
+		old_type = determineType(cnf_location);
+		if (type == old_type) {
 			return TRUE;
 		}
 
 		//Otherwise, open the original cnf file as input (read only)
+		fstream infile;
 		infile.open(cnf_location.c_str(), ios_base::in);
+		if (!infile) {
+			return FALSE;
+		}
 				
 		//Read each line from the original cnf file
 		string line;
@@ -295,31 +285,19 @@ bool MPane::labelFileAsFlag(int type, string item_path)
 		infile.close();
 		outfile.close();
 
-		//Replace the old cnf file with the newly created cnf.tmp > cnf file
+		//Replace the old cnf file with the newly created .cnf.tmp > .cnf file
 		remove(cnf_location.c_str());
 		rename(cnf_location_temp.c_str(), cnf_location.c_str());
 
-		return TRUE;
-	}
-
-	//This means that there is no current *.cnf file for the current Item (file)
-	else 
-	{
-		//Make a *cnf.tmp file, with only the correct filename value.
-		//Other values are blank
-		outfile << "<filename>" << file_filename << "</filename>" << endl;
-		outfile << "<type>" << type_buffer << "</type>" << endl;
-		outfile << "<operations>" << endl << "</operations>";
-
-		//Close the IO stream
-		outfile.close();
-
-		//Rename the *.cnf.tmp to *.cnf file
-		//Now correctly formatted to be used by other functions
-		rename(cnf_location_temp.c_str(), cnf_location.c_str());
+		//Change the m_masterMap flag type for this file
+		return changeMasterMapFlag(old_type, type, filename);
 
 		return TRUE;
 	}
+
+	//Should have returned by now, something is wrong otherwise
+	return FALSE;
+
 }
 
 // Given a cnf_info struct (see below), we append to the cnf file
@@ -421,6 +399,116 @@ bool MPane::updateConfig(cnf_info cnf_action_info)
 }
 
 //getFileData(filename); 
+
+bool MPane::changeMasterMapFlag(int old_type, int new_type, string filename)
+{
+	map<int,set<string>*>::iterator mit;
+	
+	//First add it to the new_type section
+	mit = m_masterMap.find(new_type);
+
+	//This is not the first item of this type to be added to the map
+	if(mit != m_masterMap.end()) 
+	{
+		mit->second->insert(filename);
+	}
+	//Else this is the first item of this type we have encountered
+	else 
+	{
+		set<string>* strset = new set<string>;
+		strset->insert(filename);
+		m_masterMap.insert(make_pair(new_type,strset));
+	}
+
+	if(old_type >= 100 && old_type <= 1000)
+	{
+		//Next remove it from the old section
+		mit = m_masterMap.find(old_type);
+		if(mit != m_masterMap.end()) 
+		{
+			mit->second->erase(filename);
+		}
+	}
+
+	return TRUE;
+}
+
+/* Given the full path to a cnf file, this function checks 
+ * if the cnf file exists
+ */
+bool MPane::checkCnfExists(string full_cnf_path)
+{
+	//Try to open the existing cnf file as input (read only)
+	fstream infile;
+	infile.open(full_cnf_path.c_str(), ios_base::in);
+
+	//File exists
+	if(infile.is_open())
+	{
+		//Close it
+		infile.close();
+
+		return TRUE;
+	}
+
+	return FALSE;
+
+}
+
+
+
+/* This function takes a string filename, and it returns a string
+ * containing the full path to the .cnf file associated with the input.
+ * ie. getCnfPath(gwd1.gwd) returns C:\\Temp\\cnf_files\\gwd1.gwd.cnf
+ */
+string MPane::getCnfFullPath(string filename)
+{
+	string CNF_EXT = ".cnf";
+	string CNF_DIR = "cnf_files\\";
+
+	string full_path = m_working_dir;	//Will contain the full path to the cnf file
+
+	unsigned int found;
+
+	///////////////////////////////////////////////////////////////////////
+	//Here, we are appending the cnf_file directory to string full_path
+	///////////////////////////////////////////////////////////////////////
+	//Find the last "\\" and add cnf_files\\ to it
+	found = full_path.find_last_of("\\");		
+	if (found != -1) {
+		full_path.insert(found + 1, CNF_DIR);
+	}
+	else {
+		//Probably a malformed string full_path, return ""
+		return "";								
+	}
+
+	///////////////////////////////////////////////////////////////////////
+	//If a directory, append the filename at the end of full_path 
+	///////////////////////////////////////////////////////////////////////
+	found = filename.find_last_of(".");
+	if (found == -1)
+		full_path.append(filename);
+	
+	
+	///////////////////////////////////////////////////////////////////////
+	//Append the .cnf extension to the string full_path
+	///////////////////////////////////////////////////////////////////////
+	full_path.append(CNF_EXT);
+
+	return full_path;
+}
+
+/* This function takes a string filename, and it returns a string
+ * containing the full path to the file.
+ * ie. getFileFullPath(gwd1.gwd) returns C:\\Temp\\gwd1.gwd
+ */
+string MPane::getFileFullPath(string filename)
+{
+	return m_working_dir + filename;
+}
+
+
 
 
 //int main()
