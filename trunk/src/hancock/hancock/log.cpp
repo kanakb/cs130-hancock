@@ -1,11 +1,13 @@
 #include "stdafx.h"
 #include "log.h"
 
-HancockLog::HancockLog(){
+HancockLog::HancockLog(string path)
+: dir(path)
+{
 	SYSTEMTIME st;
 	GetSystemTime(&st);
 	filename = new char[256];
-	sprintf_s(filename,256,"%s%d.%d.%d.%d.%d.txt",DIR,st.wMonth,st.wDay,st.wYear,st.wHour,st.wMinute);
+	sprintf_s(filename,256,"%s%d.%d.%d.%d.%d.txt",dir.c_str(),st.wMonth,st.wDay,st.wYear,st.wHour,st.wMinute);
 	
 	fout.open(filename);
 	
@@ -61,4 +63,9 @@ string HancockLog::dispLog(const char* filename){
 
 	return content;
 
+}
+
+void HancockLog::setdir(string d)
+{
+	dir = d;
 }

@@ -6,7 +6,7 @@
 #include <Windows.h>
 #include <stdio.h>
 
-const char DIR[256] = "Logs\\";
+//const char DIR[256] = "Logs\\";
 // feature request: create directory if it doesn't exist
 
 using namespace std;
@@ -16,12 +16,14 @@ class HancockLog{
 	char* filename;
 	ofstream fout;
 	string curLog;
+	string dir;
 	string getTimestamp();
 
 public:
-	HancockLog();
+	HancockLog(string path = "Logs\\");
 	~HancockLog();
 	void write(string info);
+	void setdir(string d);
 	char* getFileName();
 	string dispLog(const char* filename);
 	string dispCurrLog();
