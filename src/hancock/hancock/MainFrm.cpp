@@ -19,6 +19,7 @@
 
 #include "MainFrm.h"
 #include <map>
+#include <string>
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -666,15 +667,21 @@ void CMainFrame::OnViewLogger()
 	m_logUI->DoModal();
 }
 
-// Uses CFolderDialog from CodeProject to pick a directory to save the logs
+// Uses CFolderDialog from CodeProject to pick a directory to save the logs (for future executions)
 void CMainFrame::OnSaveLog()
 {
-	CString defPath = _T("C:\\");
+	CString defPath = _T("");
 	CString resPath = _T("");
 
 	CFolderDialog chooseLogSave(_T("Save Logs To..."), defPath, this, BIF_RETURNONLYFSDIRS | BIF_NEWDIALOGSTYLE);
 	if (chooseLogSave.DoModal() == IDOK)
+	{
 		resPath = chooseLogSave.GetFolderPath();
+		CT2CA ansiPath(resPath);
+		std::string stdPath(ansiPath);
+		m_log.setdir(stdPath);
+		m_log.write("Changed Log save path to:" + stdPath);
+	}
 	//MessageBox(resPath);
 }
 
