@@ -59,6 +59,7 @@ int CChildView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	m_wndWatch.Create(dwStyle, rectDummy, this, ID_LIST_1);
 	m_wndWatch.SendMessage(LVM_SETEXTENDEDLISTVIEWSTYLE, 0, LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES);
+	m_wndWatch.ModifyStyle(0, LVS_SINGLESEL);
 	m_wndWatch.InsertColumn(0, _T("File/Folder"), LVCFMT_LEFT, 100);
 	m_wndWatch.InsertColumn(1, _T("Type"), LVCFMT_LEFT, 100);
 

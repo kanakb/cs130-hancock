@@ -55,9 +55,9 @@
 #define WM_VIEWLOG (WM_USER + 128)
 #define WM_LOGSAVE (WM_USER + 129)
 #define ID_CMFCTREECTRL (WM_USER + 130)
-#define ID_RPANE (WM_USER + 131)
+#define ID_RPANE_A (WM_USER + 133)
 
-//next = 132
+//next = 134
 
 class COutlookBar : public CMFCOutlookBar
 {
