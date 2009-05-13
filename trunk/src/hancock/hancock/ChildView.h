@@ -16,9 +16,12 @@
 #pragma once
 
 #include "log.h"
-#define ID_LIST_1 (WM_USER + 300)
+#include "RPane.h"
 
-//next = 301
+#define ID_LIST_1 (WM_USER + 300)
+#define ID_RPANE_1 (WM_USER + 301)
+
+//next = 302
 
 // CChildView window
 
