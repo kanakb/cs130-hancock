@@ -15,6 +15,7 @@
 #pragma once
 #include "log.h"
 #include "LogUI.h"
+#include "RPane.h"
 #include "ChildView.h"
 #include "CalendarBar.h"
 #include "Resource.h"
@@ -54,8 +55,9 @@
 #define WM_VIEWLOG (WM_USER + 128)
 #define WM_LOGSAVE (WM_USER + 129)
 #define ID_CMFCTREECTRL (WM_USER + 130)
+#define ID_RPANE (WM_USER + 131)
 
-//next = 131
+//next = 132
 
 class COutlookBar : public CMFCOutlookBar
 {
@@ -149,6 +151,7 @@ protected:
 	CMFCOutlookBarPane*    m_pCurrOutlookPage;
 private:
 	std::map<UINT, BOOL> m_selectedItems;
+	RPane m_rPane;
 	HancockLog m_log;
 	LogUI *m_logUI;
 };
