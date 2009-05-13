@@ -109,13 +109,14 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_wndRibbonBar.Create(this);
 	InitializeRibbon();
 
-	if (!m_rPane.Create(_T("File Information"), this, CRect(0, 0, 100, 100), TRUE, ID_RPANE, WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN | CBRS_RIGHT | CBRS_FLOAT_MULTI))
+	if (!m_rPane.Create(_T("File Information"), this, CRect(0, 0, 100, 100), TRUE, ID_RPANE_A, WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN | CBRS_RIGHT | CBRS_FLOAT_MULTI))
 	{
 		TRACE0("Failed to RPane\n");
 		return -1;      // fail to create
 	}
 
 	m_rPane.EnableDocking(CBRS_ALIGN_ANY);
+	m_rPane.ShowPane(TRUE, FALSE, TRUE);
 
 	// enable Visual Studio 2005 style docking window behavior
 	CDockingManager::SetDockingMode(DT_SMART);
@@ -255,7 +256,7 @@ void CMainFrame::InitializeRibbon()
 	// Add goodware selection button
 	bNameValid = strTemp.LoadString(IDS_RIBBON_GOODWARE);
 	ASSERT(bNameValid);
-	CMFCRibbonButton* pBtnGoodware = new CMFCRibbonButton(WM_GOODWARE, strTemp, 0, 1);
+	CMFCRibbonButton* pBtnGoodware = new CMFCRibbonButton(WM_GOODWARE, strTemp, -1, 1);
 
 	// Can extract buffers from goodware
 	bNameValid = strTemp.LoadString(IDS_RIBBON_EXTRBUFFERS);
@@ -287,7 +288,7 @@ void CMainFrame::InitializeRibbon()
 	// Add Model selection button
 	bNameValid = strTemp.LoadString(IDS_RIBBON_MODELS);
 	ASSERT(bNameValid);
-	CMFCRibbonButton* pBtnModels = new CMFCRibbonButton(WM_MODEL, strTemp, 0, 1);
+	CMFCRibbonButton* pBtnModels = new CMFCRibbonButton(WM_MODEL, strTemp, -1, 1);
 
 	// Can prune a model
 	bNameValid = strTemp.LoadString(IDS_RIBBON_PRUNE);
@@ -325,7 +326,7 @@ void CMainFrame::InitializeRibbon()
 	// Add index selection button
 	bNameValid = strTemp.LoadString(IDS_RIBBON_INDECES);
 	ASSERT(bNameValid);
-	CMFCRibbonButton* pBtnIndeces = new CMFCRibbonButton(WM_INDEX, strTemp, 1, 1);
+	CMFCRibbonButton* pBtnIndeces = new CMFCRibbonButton(WM_INDEX, strTemp, -1, 1);
 
 	// Can find signatures from an index
 	bNameValid = strTemp.LoadString(IDS_RIBBON_LOCSIGS);
@@ -345,7 +346,7 @@ void CMainFrame::InitializeRibbon()
 	// Add malware selection button
 	bNameValid = strTemp.LoadString(IDS_RIBBON_MALWARE);
 	ASSERT(bNameValid);
-	CMFCRibbonButton* pBtnMalware = new CMFCRibbonButton(WM_MALWARE, strTemp, 1, 1);
+	CMFCRibbonButton* pBtnMalware = new CMFCRibbonButton(WM_MALWARE, strTemp, -1, 1);
 
 	// Can preprocess malware
 	bNameValid = strTemp.LoadString(IDS_RIBBON_PREPROC);
@@ -365,7 +366,7 @@ void CMainFrame::InitializeRibbon()
 	// Add preprocessed malware selection button
 	bNameValid = strTemp.LoadString(IDS_RIBBON_PREMALWARE);
 	ASSERT(bNameValid);
-	CMFCRibbonButton* pBtnPreMalware = new CMFCRibbonButton(WM_PREMALWARE, strTemp, 2, 1);
+	CMFCRibbonButton* pBtnPreMalware = new CMFCRibbonButton(WM_PREMALWARE, strTemp, -1, 1);
 
 	// Can create a clustering
 	bNameValid = strTemp.LoadString(IDS_RIBBON_CLSTFILES);
@@ -385,7 +386,7 @@ void CMainFrame::InitializeRibbon()
 	// Add clustering selection button
 	bNameValid = strTemp.LoadString(IDS_RIBBON_CLUSTERINGS);
 	ASSERT(bNameValid);
-	CMFCRibbonButton* pBtnClusterings = new CMFCRibbonButton(WM_CLUSTER, strTemp, 2, 1);
+	CMFCRibbonButton* pBtnClusterings = new CMFCRibbonButton(WM_CLUSTER, strTemp, -1, 1);
 
 	// Can create stub maps from clusterings
 	bNameValid = strTemp.LoadString(IDS_RIBBON_MAKESTUB);
@@ -405,7 +406,7 @@ void CMainFrame::InitializeRibbon()
 	// Add stub map selection button
 	bNameValid = strTemp.LoadString(IDS_RIBBON_STUBMAPS);
 	ASSERT(bNameValid);
-	CMFCRibbonButton* pBtnStubmaps = new CMFCRibbonButton(WM_STUBMAP, strTemp, 2, 1);
+	CMFCRibbonButton* pBtnStubmaps = new CMFCRibbonButton(WM_STUBMAP, strTemp, -1, 1);
 
 	// Can find signatures from stub maps
 	bNameValid = strTemp.LoadString(IDS_RIBBON_LOCSIGS);
@@ -425,7 +426,7 @@ void CMainFrame::InitializeRibbon()
 	// Add find signature output selection button
 	bNameValid = strTemp.LoadString(IDS_RIBBON_FINDOUTPUT);
 	ASSERT(bNameValid);
-	CMFCRibbonButton* pBtnFOutput = new CMFCRibbonButton(WM_FINDSIGS, strTemp, 3, 1);
+	CMFCRibbonButton* pBtnFOutput = new CMFCRibbonButton(WM_FINDSIGS, strTemp, -1, 1);
 
 	// Can label as find signatures output
 	bNameValid = strTemp.LoadString(IDS_RIBBON_LABELFINDSIGS);
@@ -439,7 +440,7 @@ void CMainFrame::InitializeRibbon()
 	// Add unclassified files selection button
 	bNameValid = strTemp.LoadString(IDS_RIBBON_UNLABELED);
 	ASSERT(bNameValid);
-	CMFCRibbonButton* pBtnUnlabeled = new CMFCRibbonButton(WM_UNCLASSIFIED, strTemp, 3, 1);
+	CMFCRibbonButton* pBtnUnlabeled = new CMFCRibbonButton(WM_UNCLASSIFIED, strTemp, -1, 1);
 	pPanelView->Add(pBtnUnlabeled);
 
 	// Create and add a "Scheduler" panel:
@@ -450,7 +451,7 @@ void CMainFrame::InitializeRibbon()
 	// Add "View Scheduler" button
 	bNameValid = strTemp.LoadString(IDS_RIBBON_VIEWSCHED);
 	ASSERT(bNameValid);
-	CMFCRibbonButton* pBtnViewSched = new CMFCRibbonButton(WM_VIEWSCHED, strTemp, 0, 1);
+	CMFCRibbonButton* pBtnViewSched = new CMFCRibbonButton(WM_VIEWSCHED, strTemp, -1, 1);
 	pPanelScheduler->Add(pBtnViewSched);
 
 	// Create and add a "Logging" panel:
@@ -461,13 +462,13 @@ void CMainFrame::InitializeRibbon()
 	// Add "View Log UI" button
 	bNameValid = strTemp.LoadString(IDS_RIBBON_VIEWLOG);
 	ASSERT(bNameValid);
-	CMFCRibbonButton* pBtnViewLog = new CMFCRibbonButton(WM_VIEWLOG, strTemp, 0, 1);
+	CMFCRibbonButton* pBtnViewLog = new CMFCRibbonButton(WM_VIEWLOG, strTemp, -1, 1);
 	pPanelLogging->Add(pBtnViewLog);
 
 	// Add "Log Save Directory" button
 	bNameValid = strTemp.LoadString(IDS_RIBBON_LOGSAVE);
 	ASSERT(bNameValid);
-	CMFCRibbonButton* pBtnSaveLog = new CMFCRibbonButton(WM_LOGSAVE, strTemp, 0, 1);
+	CMFCRibbonButton* pBtnSaveLog = new CMFCRibbonButton(WM_LOGSAVE, strTemp, -1, 1);
 	pPanelLogging->Add(pBtnSaveLog);
 
 	// Add quick access toolbar commands:
