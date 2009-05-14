@@ -29,7 +29,7 @@ class CChildView : public CWnd
 {
 // Construction
 public:
-	CChildView(HancockLog *log);
+	CChildView(HancockLog *log, RPane *rPane);
 
 // Attributes
 public:
@@ -38,7 +38,7 @@ public:
 public:
 
 // Overrides
-	protected:
+protected:
 	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
 	int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	void OnSize(UINT nType, int cx, int cy);
@@ -57,6 +57,7 @@ protected:
 private:
 	CMFCListCtrl m_wndWatch;
 	HancockLog *m_log;
+	RPane *m_rPane;
 	CString m_curDir;
 	CString m_curFile;
 };

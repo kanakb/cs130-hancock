@@ -39,6 +39,7 @@
 #define IDS_STATUS_PANE2                123
 #define IDS_RIBBON_VIEWLOG              124
 #define IDS_RIBBON_LOGSAVE              125
+#define IDS_RIBBON_VIEWRPANE            126
 #define IDR_MAINFRAME                   128
 #define IDR_MAINFRAME_256               129
 #define IDR_hancockTYPE                 130
@@ -97,7 +98,6 @@
 #define IDS_RIBBON_FINDOUTPUT           317
 #define IDS_RIBBON_UNLABELED            318
 #define IDC_LOGLIST                     1001
-#define IDC_EDIT1                       1002
 #define IDC_LOGTEXT                     1002
 #define ID_WRITE_PASTEASHYPERLINK       32770
 #define ID_VIEW_GROAR                   32771

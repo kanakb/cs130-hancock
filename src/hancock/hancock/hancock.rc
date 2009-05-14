@@ -333,7 +333,7 @@ END
 STRINGTABLE 
 BEGIN
     ID_APP_ABOUT            "Display program information, version number and copyright\nAbout"
-    ID_APP_EXIT             "Quit the application; prompts to save documents\nExit"
+    ID_APP_EXIT             "Quit the application\nExit"
 END
 
 STRINGTABLE 
@@ -401,6 +401,7 @@ BEGIN
     IDS_STATUS_PANE2        "Pane 2"
     IDS_RIBBON_VIEWLOG      "View Log UI"
     IDS_RIBBON_LOGSAVE      "Save Logs To..."
+    IDS_RIBBON_VIEWRPANE    "View File Info"
 END
 
 STRINGTABLE 

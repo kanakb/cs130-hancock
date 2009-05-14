@@ -48,7 +48,10 @@
 #include <afxcontrolbars.h>     // MFC support for ribbons and control bars
 
 
-
+// MEMORY LEAK CHECKING
+//#define _CRTDBG_MAP_ALLOC
+//#include <stdlib.h>
+//#include <crtdbg.h>
 
 
 

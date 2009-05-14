@@ -10,6 +10,7 @@ class RPane : public CDockablePane
 public:
 	RPane();
 	virtual ~RPane();
+	void setText(CString text);
 
 protected:
 	int OnCreate(LPCREATESTRUCT lpCreateStruct);

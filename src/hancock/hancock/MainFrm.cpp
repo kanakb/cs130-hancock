@@ -62,6 +62,7 @@ BEGIN_MESSAGE_MAP(CMainFrame, CFrameWndEx)
 	ON_COMMAND(WM_VIEWSCHED, &CMainFrame::OnViewScheduler)
 	ON_COMMAND(WM_VIEWLOG, &CMainFrame::OnViewLogger)
 	ON_COMMAND(WM_LOGSAVE, &CMainFrame::OnSaveLog)
+	ON_COMMAND(WM_FILEDATA, &CMainFrame::OnViewRPane)
 	ON_UPDATE_COMMAND_UI(WM_GOODWARE, &CMainFrame::OnUpdateViewFiles)
 	ON_UPDATE_COMMAND_UI(WM_MODEL, &CMainFrame::OnUpdateViewFiles)
 	ON_UPDATE_COMMAND_UI(WM_INDEX, &CMainFrame::OnUpdateViewFiles)
@@ -71,13 +72,14 @@ BEGIN_MESSAGE_MAP(CMainFrame, CFrameWndEx)
 	ON_UPDATE_COMMAND_UI(WM_STUBMAP, &CMainFrame::OnUpdateViewFiles)
 	ON_UPDATE_COMMAND_UI(WM_FINDSIGS, &CMainFrame::OnUpdateViewFiles)
 	ON_UPDATE_COMMAND_UI(WM_UNCLASSIFIED, &CMainFrame::OnUpdateViewFiles)
+	ON_UPDATE_COMMAND_UI(WM_FILEDATA, &CMainFrame::OnUpdateViewFiles)
 	ON_NOTIFY(TVN_SELCHANGED, ID_CMFCTREECTRL, &CMainFrame::OnChangeFolder)
 END_MESSAGE_MAP()
 
 // CMainFrame construction/destruction
 
 CMainFrame::CMainFrame()
-: m_wndView(&m_log)
+: m_wndView(&m_log, &m_rPane)
 {
 	// TODO: add member initialization code here
 }
@@ -206,17 +208,17 @@ void CMainFrame::InitializeRibbon()
 	//pMainPanel->Add(pBtnPrint);
 	//pMainPanel->Add(new CMFCRibbonSeparator(TRUE));
 
-	bNameValid = strTemp.LoadString(IDS_RIBBON_CLOSE);
+	bNameValid = strTemp.LoadString(IDS_RIBBON_EXIT);
 	ASSERT(bNameValid);
-	pMainPanel->Add(new CMFCRibbonButton(ID_FILE_CLOSE, strTemp, 9, 9));
+	pMainPanel->Add(new CMFCRibbonButton(ID_APP_EXIT, strTemp, 9, 9));
 
 	//bNameValid = strTemp.LoadString(IDS_RIBBON_RECENT_DOCS);
 	//ASSERT(bNameValid);
 	//pMainPanel->AddRecentFilesList(strTemp);
 
-	bNameValid = strTemp.LoadString(IDS_RIBBON_EXIT);
+	/*bNameValid = strTemp.LoadString(IDS_RIBBON_EXIT);
 	ASSERT(bNameValid);
-	pMainPanel->AddToBottom(new CMFCRibbonMainPanelButton(ID_APP_EXIT, strTemp, 15));
+	pMainPanel->AddToBottom(new CMFCRibbonMainPanelButton(ID_APP_EXIT, strTemp, 15));*/
 
 	// Add "Home" category with "File Types" panel:
 	bNameValid = strTemp.LoadString(IDS_RIBBON_ACTIONS);
@@ -471,6 +473,17 @@ void CMainFrame::InitializeRibbon()
 	CMFCRibbonButton* pBtnSaveLog = new CMFCRibbonButton(WM_LOGSAVE, strTemp, -1, 1);
 	pPanelLogging->Add(pBtnSaveLog);
 
+	// Create and add a "View" panel:
+	bNameValid = strTemp.LoadString(IDS_RIBBON_VIEW);
+	ASSERT(bNameValid);
+	CMFCRibbonPanel* pPanelData = pCategoryTools->AddPanel(strTemp, m_PanelImages.ExtractIcon (7));
+
+	// Add "View File Data" button
+	bNameValid = strTemp.LoadString(IDS_RIBBON_VIEWRPANE);
+	ASSERT(bNameValid);
+	CMFCRibbonButton* pBtnFileData = new CMFCRibbonButton(WM_FILEDATA, strTemp, -1, 1);
+	pPanelData->Add(pBtnFileData);
+
 	// Add quick access toolbar commands:
 	CList<UINT, UINT> lstQATCmds;
 
@@ -621,6 +634,12 @@ void CMainFrame::OnViewOther()
 	OnViewType(WM_UNCLASSIFIED);
 }
 
+// Toggles viewability of RPane
+void CMainFrame::OnViewRPane()
+{
+	OnViewType(WM_FILEDATA);
+}
+
 // For now, this just keeps buttons pressed
 void CMainFrame::OnViewType(UINT nID)
 {
@@ -661,6 +680,9 @@ void CMainFrame::OnViewLogger()
 	// working on switching to modeless
 	//m_logUI->Create(IDD_LOGUI, this);
 	m_logUI->DoModal();
+
+	delete m_logUI;
+	m_logUI = NULL;
 }
 
 // Uses CFolderDialog from CodeProject to pick a directory to save the logs (for future executions)
@@ -684,6 +706,9 @@ void CMainFrame::OnSaveLog()
 // For now, this is responsible for keeping the boxes checked
 void CMainFrame::OnUpdateViewFiles(CCmdUI* pCmdUI)
 {
+	if (pCmdUI->m_nID == WM_FILEDATA)
+		m_selectedItems[WM_FILEDATA] = m_rPane.IsVisible(); // set checked initially if RPane visible
+	
 	if(m_selectedItems.find(pCmdUI->m_nID) != m_selectedItems.end())
 		pCmdUI->SetCheck(m_selectedItems[pCmdUI->m_nID]);
 }
