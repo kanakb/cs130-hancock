@@ -87,3 +87,10 @@ void RPane::OnSetFocus(CWnd* pOldWnd)
 	CDockablePane::OnSetFocus(pOldWnd);
 	m_text.SetFocus();
 }
+
+
+void RPane::setText(CString text)
+{
+	// First, empty current file data
+	m_text.ResetContent();
+}

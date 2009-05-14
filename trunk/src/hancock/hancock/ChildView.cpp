@@ -24,8 +24,8 @@
 
 // CChildView
 
-CChildView::CChildView(HancockLog *log)
-: m_log(log), m_curDir(_T("")), m_curFile(_T(""))
+CChildView::CChildView(HancockLog *log, RPane *rPane)
+: m_log(log), m_curDir(_T("")), m_curFile(_T("")), m_rPane(rPane)
 {
 }
 
