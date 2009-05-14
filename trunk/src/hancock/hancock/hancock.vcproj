@@ -214,6 +214,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\MPane.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\RPane.cpp"
 				>
 			</File>
@@ -269,6 +273,10 @@
 			</File>
 			<File
 				RelativePath=".\MainFrm.h"
+				>
+			</File>
+			<File
+				RelativePath=".\MPane.h"
 				>
 			</File>
 			<File
