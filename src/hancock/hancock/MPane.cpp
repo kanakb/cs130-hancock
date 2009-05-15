@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "MPane.h"
 
 MPane::MPane()
@@ -144,6 +143,8 @@ void MPane::AssocToDirInternal(string path, string extension)
 			*/
 			//else
 			//{
+			if( strcmp(data.name,".") != 0 && strcmp(data.name,"..") != 0)
+			{
 				// this is just a normal file.  So just add it to our map
 				int type = UNKNOWN;		// assume that the file is of unknown type
 				string tempfn;			// used to strip off the .cnf extension
@@ -173,7 +174,7 @@ void MPane::AssocToDirInternal(string path, string extension)
 				}
 				if(extension != "conf")	// we do not want to add the .cnf files into the directory listing
 					m_directoryListing.insert(data.name);
-			//}
+			}
 		}while( _findnexti64(h,&data) == 0);
 		// close the find handle.
 		_findclose(h);
