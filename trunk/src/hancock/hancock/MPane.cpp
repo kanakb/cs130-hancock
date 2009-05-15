@@ -86,13 +86,18 @@ void MPane::AssocToDir(string path)
 
 	// Begin populating master map
 
-	AssocToDirInternal(path+"\\cnf","conf");		// first pass through directory we look for *.cnf files
+	AssocToDirInternal(path+"\\cnf_files","conf");		// first pass through directory we look for *.cnf files
 										// these files tell us what type of file * is (ie Malware, Goodware, etc...)
 	AssocToDirInternal(path,"*");		// second pass through we add everything else to the master map
 
 	validateMap();						// now that we have built a map and directory listing, validate the map
 
 	updateFilteredMap();				// update the filtered map in case there are flags to filter by
+}
+
+map<int,set<string>*>* MPane::getMasterList()
+{
+	return &m_masterMap;
 }
 
 // AssocToDirInternal is the function that actually does the work of going through the directory
@@ -115,34 +120,6 @@ void MPane::AssocToDirInternal(string path, string extension)
 	if(h >= 0)
 	{
 		do {
-			/*
-			if( (data.attrib & _A_SUBDIR) )
-			{
-				// make sure we skip "." and "..".  Have to use strcmp here because
-				// some file names can start with a dot, so just testing for the
-				// first dot is not suffient.
-				if( strcmp(data.name,".") != 0 && strcmp(data.name,"..") != 0)
-				{
-					// We found a sub-directory, label it as such and add it to the map
-					fname = path + "\\" + data.name;
-					m_directoryListing.insert(fname);
-					map<int,set<string>*>::iterator mit;
-					mit = m_masterMap.find(DIR);
-					if(mit != m_masterMap.end()) // this is not the first directory to be added to the map
-					{
-						mit->second->insert(fname);
-					}
-					else // this is the first directory we have encountered
-					{
-						set<string>* strset = new set<string>;
-						strset->insert(fname);
-						m_masterMap.insert(make_pair(DIR,strset));
-					}
-				}
-			}
-			*/
-			//else
-			//{
 			if( strcmp(data.name,".") != 0 && strcmp(data.name,"..") != 0)
 			{
 				// this is just a normal file.  So just add it to our map
