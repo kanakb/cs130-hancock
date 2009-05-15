@@ -36,6 +36,7 @@ class MPane
 
 public:
 	MPane();
+	~MPane();
 	void AssocToDir(string path);				// Given a path, associate the MPane with that path
 	void addFlag(int type);						// Add a flag to filter the directory files 
 	void removeFlag(int type);					// Remove a flag previously used to filter files
