@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "MPane.h"
 
 MPane::MPane()
