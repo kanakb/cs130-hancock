@@ -47,33 +47,27 @@ public:
 														 * set in the master map, remove it from the set that it was
 														 * found.
 														 */
+	string getCnfData(string filename);	/* Given a file in the current directory,
+										 * this function reads its .conf file and returns all the info in the following format:
+										 * <filename>filename</filename>\n
+											<type>type</type>\n
+											<operations>\n
+											operation1\n	//Operations not finalized yet
+											</operations>;
+										 */
 
-	class Action;	//Temporary declaration. See below for actual
+	//class Action;
 
 	/*bool updateConfig(Action* action);				/* Given a cnf_info struct (see below), we append to the cnf file
 														 * for a particular file (indicated in cnf_info) with the actions performed
 														 */
 
-	string getCnfFullPath(string filename);		/* This function takes a string filename, and it returns a string
-												 * containing the full path to the .cnf file associated with the input.
-												 * ie. getCnfPath(gwd1.gwd) returns C:\\Temp\\cnf_files\\gwd1.gwd.cnf
-												 */
-	string getFileFullPath(string filename);	/* This function takes a string filename, and it returns a string
-												 * containing the full path to the file.
-												 * ie. getFileFullPath(gwd1.gwd) returns C:\\Temp\\gwd1.gwd
-												 */
-	bool checkCnfExists(string full_cnf_path);	/* Given the full path to a cnf file, this function checks 
-												 * if the file exists
-												 */
-
-	bool changeMasterMapFlag(int old_type, int new_type, string filename);	/* Given the filename, update m_masterMap 
-																			 * from old_type to new_type
-																			 */
-
 
 private:
 
 	string m_working_dir;					// The path of the current working directory. ie C:\\Windows\\Temp\\
+
+	bool m_cnfFolderCreated;
 
 	map<int,set<string>*> m_masterMap;		// the master map contains all directory files
 	map<int,set<string>*> m_filteredMap;	// filtered map contains only entries matching the flags
@@ -101,6 +95,27 @@ private:
 	void validateMap();						// validates the master map against the directory listing
 	void updateFilteredMap();				// this function is called to update the contents of the filtered map
 											// whenever assocToDir is called associating the master map to a new directory
+
+
+	string getCnfFullPath(string filename);		/* This function takes a string filename, and it returns a string
+												 * containing the full path to the .cnf file associated with the input.
+												 * ie. getCnfPath(gwd1.gwd) returns C:\\Temp\\cnf_files\\gwd1.gwd.cnf
+												 */
+	string getFileFullPath(string filename);	/* This function takes a string filename, and it returns a string
+												 * containing the full path to the file.
+												 * ie. getFileFullPath(gwd1.gwd) returns C:\\Temp\\gwd1.gwd
+												 */
+	bool checkCnfExists(string full_cnf_path);	/* Given the full path to a cnf file, this function checks 
+												 * if the file exists
+												 */
+
+	bool changeMasterMapFlag(int old_type, int new_type, string filename);	/* Given the filename, update m_masterMap 
+																			 * from old_type to new_type
+																			 */
+
+	bool cnfFolderUpdate(); /* If cnf_files exists within a given directory, return true
+							 * otherwise, create the cnf_files directory and return the status
+							 */
 };
 
 #endif // MPANE_H DEFINED
