@@ -25,7 +25,6 @@
 #define STUBMAP 700
 #define CLUSTER 800
 #define INDEX 900
-#define DIR 1000
 // End of filetypes
 
 using namespace std;

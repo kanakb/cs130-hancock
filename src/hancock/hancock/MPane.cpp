@@ -5,6 +5,36 @@ MPane::MPane()
 {
 }
 
+~MPane::MPane()
+{
+	if(!m_masterMap.empty())					// if the map isnt empty delete its current entries
+	{
+		map<int,set<string>*>::iterator mit;	// declare a map interator for the master map
+		for(mit = m_masterMap.begin(); mit != m_masterMap.end(); mit++)
+		{
+			if(mit->second != NULL)		// ensure we do not accidentally delete a null pointer
+				delete mit->second;
+		}
+		m_masterMap.clear();
+	}
+
+	if(!m_filteredMap.empty())
+	{
+		map<int,set<string>*>::iterator fit;	// declare a map interator for the filtered map
+		for(fit = m_filteredMap.begin(); fit != m_filtered.end(); fit++)
+		{
+			if(fit->second != NULL)		// ensure we do not accidentally delete a null pointer
+				delete fit->second;
+		}
+		m_filteredMap.clear();
+	}
+
+	if(!m_directoryListing.empty())
+	{
+		m_directoryListing.clear();
+	}
+}
+
 // addFlag adds the flag specified by type to the set of filters used to create filteredMap
 // it adds the flag to the set and then adds that set to the filteredMap if it exists in masterMap
 void MPane::addFlag(int type)
@@ -40,13 +70,25 @@ void MPane::AssocToDir(string path)
 	 * associating the map to a new directory.
 	 */
 
-	if(!m_masterMap.empty())
+	if(!m_masterMap.empty())					// if the map isnt empty delete its current entries
 	{
+		map<int,set<string>*>::iterator mit;	// declare a map interator for the master map
+		for(mit = m_masterMap.begin(); mit != m_masterMap.end(); mit++)
+		{
+			if(mit->second != NULL)		// ensure we do not accidentally delete a null pointer
+				delete mit->second;
+		}
 		m_masterMap.clear();
 	}
 
 	if(!m_filteredMap.empty())
 	{
+		map<int,set<string>*>::iterator fit;	// declare a map interator for the filtered map
+		for(fit = m_filteredMap.begin(); fit != m_filtered.end(); fit++)
+		{
+			if(fit->second != NULL)		// ensure we do not accidentally delete a null pointer
+				delete fit->second;
+		}
 		m_filteredMap.clear();
 	}
 
@@ -86,6 +128,7 @@ void MPane::AssocToDirInternal(string path, string extension)
 	if(h >= 0)
 	{
 		do {
+			/*
 			if( (data.attrib & _A_SUBDIR) )
 			{
 				// make sure we skip "." and "..".  Have to use strcmp here because
@@ -110,8 +153,9 @@ void MPane::AssocToDirInternal(string path, string extension)
 					}
 				}
 			}
-			else
-			{
+			*/
+			//else
+			//{
 				// this is just a normal file.  So just add it to our map
 				int type = UNKNOWN;		// assume that the file is of unknown type
 				string tempfn;			// used to strip off the .cnf extension
@@ -141,7 +185,7 @@ void MPane::AssocToDirInternal(string path, string extension)
 				}
 				if(extension != "conf")	// we do not want to add the .cnf files into the directory listing
 					m_directoryListing.insert(data.name);
-			}
+			//}
 		}while( _findnexti64(h,&data) == 0);
 		// close the find handle.
 		_findclose(h);
