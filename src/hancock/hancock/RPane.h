@@ -1,5 +1,5 @@
 #pragma once
-
+#include <string>
 
 // RPane
 
@@ -10,7 +10,8 @@ class RPane : public CDockablePane
 public:
 	RPane();
 	virtual ~RPane();
-	void setText(CString text);
+	void setText(const std::string &text);
+	void clear();
 
 protected:
 	int OnCreate(LPCREATESTRUCT lpCreateStruct);

@@ -48,7 +48,9 @@ protected:
 // Implementation
 public:
 	void updateFolder(CString newFolder);
+	void updateFile(int type);
 	void recalcList();
+	void setRelabeled(BOOL status);
 	virtual ~CChildView();
 
 	// Generated message map functions
@@ -64,5 +66,6 @@ private:
 	MPane *m_mPane;
 	CString m_curDir;
 	CString m_curFile;
+	BOOL m_relabeled;
 };
 
