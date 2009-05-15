@@ -6,7 +6,7 @@
 
 #ifndef ACTION_H
 #define ACTION_H
-#include "mPane.h"
+#include "MPane.h"
 #include <list>
 #include <string>
 using namespace std;
