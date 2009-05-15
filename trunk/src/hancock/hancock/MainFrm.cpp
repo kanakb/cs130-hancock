@@ -79,7 +79,7 @@ END_MESSAGE_MAP()
 // CMainFrame construction/destruction
 
 CMainFrame::CMainFrame()
-: m_wndView(&m_log, &m_rPane)
+: m_wndView(&m_log, &m_rPane, &m_mPane)
 {
 	// TODO: add member initialization code here
 }
@@ -584,54 +584,99 @@ void CMainFrame::OnSetFocus(CWnd* /*pOldWnd*/)
 void CMainFrame::OnViewGoodware()
 {
 	OnViewType(WM_GOODWARE);
+	if (m_selectedItems[WM_GOODWARE] == TRUE)
+		m_mPane.addFlag(GOODWARE);
+	else
+		m_mPane.removeFlag(GOODWARE);
+	m_wndView.recalcList();
 }
 
 // Toggle viewing of Models
 void CMainFrame::OnViewModel()
 {
 	OnViewType(WM_MODEL);
+	if (m_selectedItems[WM_MODEL] == TRUE)
+		m_mPane.addFlag(MODEL);
+	else
+		m_mPane.removeFlag(MODEL);
+	m_wndView.recalcList();
 }
 
 // Toggle viewing of Indeces
 void CMainFrame::OnViewIndex()
 {
 	OnViewType(WM_INDEX);
+	if (m_selectedItems[WM_INDEX] == TRUE)
+		m_mPane.addFlag(INDEX);
+	else
+		m_mPane.removeFlag(INDEX);
+	m_wndView.recalcList();
 }
 
 // Toggle viewing of Malware files
 void CMainFrame::OnViewMalware()
 {
 	OnViewType(WM_MALWARE);
+	if (m_selectedItems[WM_MALWARE] == TRUE)
+		m_mPane.addFlag(MALWARE);
+	else
+		m_mPane.removeFlag(MALWARE);
+	m_wndView.recalcList();
 }
 
 // Toggle viewing of Preprocessed Malware
 void CMainFrame::OnViewPreMalware()
 {
 	OnViewType(WM_PREMALWARE);
+	if (m_selectedItems[WM_PREMALWARE] == TRUE)
+		m_mPane.addFlag(PPM);
+	else
+		m_mPane.removeFlag(PPM);
+	m_wndView.recalcList();
 }
 
 // Toggle viewing of Clusterings
 void CMainFrame::OnViewCluster()
 {
 	OnViewType(WM_CLUSTER);
+	if (m_selectedItems[WM_CLUSTER] == TRUE)
+		m_mPane.addFlag(CLUSTER);
+	else
+		m_mPane.removeFlag(CLUSTER);
+	m_wndView.recalcList();
 }
 
 // Toggle viewing of Stub Maps
 void CMainFrame::OnViewStubMap()
 {
 	OnViewType(WM_STUBMAP);
+	if (m_selectedItems[WM_STUBMAP] == TRUE)
+		m_mPane.addFlag(STUBMAP);
+	else
+		m_mPane.removeFlag(STUBMAP);
+	m_wndView.recalcList();
 }
 
 // Toggle viewing of Find Signatures output
 void CMainFrame::OnViewFindSigs()
 {
 	OnViewType(WM_FINDSIGS);
+	if (m_selectedItems[WM_FINDSIGS] == TRUE)
+		m_mPane.addFlag(SIGNATURE);
+	else
+		m_mPane.removeFlag(SIGNATURE);
+	m_wndView.recalcList();
 }
 
 // Toggle viewing of Unclassified files
 void CMainFrame::OnViewOther()
 {
 	OnViewType(WM_UNCLASSIFIED);
+	if (m_selectedItems[WM_UNCLASSIFIED] == TRUE)
+		m_mPane.addFlag(UNKNOWN);
+	else
+		m_mPane.removeFlag(UNKNOWN);
+	m_wndView.recalcList();
 }
 
 // Toggles viewability of RPane

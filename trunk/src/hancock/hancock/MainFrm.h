@@ -16,6 +16,7 @@
 #include "log.h"
 #include "LogUI.h"
 #include "RPane.h"
+#include "MPane.h"
 #include "ChildView.h"
 #include "CalendarBar.h"
 #include "Resource.h"
@@ -154,6 +155,7 @@ protected:
 private:
 	std::map<UINT, BOOL> m_selectedItems;
 	RPane m_rPane;
+	MPane m_mPane;
 	HancockLog m_log;
 	LogUI *m_logUI;
 };

@@ -17,6 +17,7 @@
 
 #include "log.h"
 #include "RPane.h"
+#include "MPane.h"
 
 #define ID_LIST_1 (WM_USER + 300)
 #define ID_RPANE_1 (WM_USER + 301)
@@ -29,7 +30,7 @@ class CChildView : public CWnd
 {
 // Construction
 public:
-	CChildView(HancockLog *log, RPane *rPane);
+	CChildView(HancockLog *log, RPane *rPane, MPane *mPane);
 
 // Attributes
 public:
@@ -47,6 +48,7 @@ protected:
 // Implementation
 public:
 	void updateFolder(CString newFolder);
+	void recalcList();
 	virtual ~CChildView();
 
 	// Generated message map functions
@@ -55,9 +57,11 @@ protected:
 	DECLARE_MESSAGE_MAP()
 
 private:
+	void setFileType(int index, int type);
 	CMFCListCtrl m_wndWatch;
 	HancockLog *m_log;
 	RPane *m_rPane;
+	MPane *m_mPane;
 	CString m_curDir;
 	CString m_curFile;
 };
