@@ -20,12 +20,6 @@ MPane::~MPane()
 
 	if(!m_filteredMap.empty())
 	{
-		map<int,set<string>*>::iterator fit;	// declare a map interator for the filtered map
-		for(fit = m_filteredMap.begin(); fit != m_filteredMap.end(); fit++)
-		{
-			if(fit->second != NULL)		// ensure we do not accidentally delete a null pointer
-				delete fit->second;
-		}
 		m_filteredMap.clear();
 	}
 
@@ -83,12 +77,6 @@ void MPane::AssocToDir(string path)
 
 	if(!m_filteredMap.empty())
 	{
-		map<int,set<string>*>::iterator fit;	// declare a map interator for the filtered map
-		for(fit = m_filteredMap.begin(); fit != m_filteredMap.end(); fit++)
-		{
-			if(fit->second != NULL)		// ensure we do not accidentally delete a null pointer
-				delete fit->second;
-		}
 		m_filteredMap.clear();
 	}
 
