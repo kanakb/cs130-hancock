@@ -15,6 +15,7 @@
 #include "stdafx.h"
 #include "hancock.h"
 #include "ChildView.h"
+#include <map>
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -24,8 +25,8 @@
 
 // CChildView
 
-CChildView::CChildView(HancockLog *log, RPane *rPane)
-: m_log(log), m_curDir(_T("")), m_curFile(_T("")), m_rPane(rPane)
+CChildView::CChildView(HancockLog *log, RPane *rPane, MPane *mPane)
+: m_log(log), m_curDir(_T("")), m_curFile(_T("")), m_rPane(rPane), m_mPane(mPane)
 {
 }
 
@@ -62,18 +63,6 @@ int CChildView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_wndWatch.ModifyStyle(0, LVS_SINGLESEL);
 	m_wndWatch.InsertColumn(0, _T("File/Folder"), LVCFMT_LEFT, 100);
 	m_wndWatch.InsertColumn(1, _T("Type"), LVCFMT_LEFT, 100);
-
-	// TODO: get rid of this and replace with something that updates when the folder changes
-	CString fn = _T("File");
-	CString tp = _T("Type");
-	for (int i = 0; i < 5; i++)
-	{
-		char ch = '0' + i;
-		CString fntemp = fn + ch;
-		CString tptemp = tp + ch;
-		m_wndWatch.InsertItem(i, fntemp);
-		m_wndWatch.SetItemText(i, 1, tptemp);
-	}
 
 	return 0;
 }
@@ -123,7 +112,13 @@ void CChildView::OnSize(UINT nType, int cx, int cy)
 void CChildView::updateFolder(CString newFolder)
 {
 	// TODO: replace with an actual list update
+	if (newFolder == _T(""))
+		return;
+
 	m_curDir = newFolder;
+	CT2CA dir(newFolder);
+	m_mPane->AssocToDir(std::string(dir));
+	recalcList();
 	//MessageBox(newFolder);
 }
 
@@ -132,4 +127,65 @@ void CChildView::OnChangeFileList(NMHDR * pNotifyStruct, LRESULT * result)
 	// TODO: replace with an actual file update
 	//MessageBox(_T("Test"));
 	*result = 0;
+}
+
+void CChildView::recalcList()
+{
+	// clear the file list
+	m_wndWatch.DeleteAllItems();
+
+	// get map containing all files
+	std::map<int,set<string>*>* pMap = m_mPane->getFileList();
+
+	// iterate by file type
+	std::map<int,set<string>*>::iterator map_it = pMap->begin();
+	for (; map_it != pMap->end(); map_it++)
+	{
+		// iterate by file
+		std::set<string>::iterator set_it = map_it->second->begin();
+		for (int i = 0; set_it != map_it->second->end(); set_it++)
+		{
+			CString temp(set_it->c_str());
+			m_wndWatch.InsertItem(i, temp);
+			setFileType(i, map_it->first);
+			i++;
+		}
+	}
+}
+
+// Helper function to fill in types of each file
+void CChildView::setFileType(int index, int type)
+{
+	CString fileType;
+	switch(type)
+	{
+	case UNKNOWN:
+		fileType = _T("Unclassified");
+		break;
+	case GOODWARE:
+		fileType = _T("Goodware");
+		break;
+	case MALWARE:
+		fileType = _T("Malware");
+		break;
+	case PPM:
+		fileType = _T("Preprocessed Malware");
+		break;
+	case MODEL:
+		fileType = _T("Model");
+		break;
+	case SIGNATURE:
+		fileType = _T("Find Signatures Output");
+		break;
+	case STUBMAP:
+		fileType = _T("Stub Map");
+		break;
+	case CLUSTER:
+		fileType = _T("Cluster");
+		break;
+	case INDEX:
+		fileType = _T("Index");
+		break;
+	}
+	m_wndWatch.SetItemText(index, 1, fileType);
 }
