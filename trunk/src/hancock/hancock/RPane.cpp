@@ -4,6 +4,10 @@
 #include "stdafx.h"
 #include "hancock.h"
 #include "RPane.h"
+#include <string>
+#include <iostream>
+#include <sstream>
+using namespace std;
 
 
 // RPane
@@ -48,15 +52,6 @@ int RPane::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	m_text.SetFont(&m_Font);
 
-	// TODO: replace with something that reads from MPane
-	CString temp = _T("Line ");
-	for (int i = 0; i < 100; i++)
-	{
-		char ch = '0' + i;
-		CString temp2 = temp + ch;
-		m_text.AddString(temp2);
-	}
-
 	return 0;
 }
 
@@ -89,8 +84,25 @@ void RPane::OnSetFocus(CWnd* pOldWnd)
 }
 
 
-void RPane::setText(CString text)
+void RPane::setText(const string &text)
 {
 	// First, empty current file data
+	m_text.ResetContent();
+
+	// Now parse cnf data line by line and write to RPane
+	stringstream ss(text);
+	while (ss)
+	{
+		string temp;
+		getline(ss, temp);
+		CString tempW(temp.c_str());
+		//MessageBox(tempW);
+
+		m_text.AddString(tempW);
+	}
+}
+
+void RPane::clear()
+{
 	m_text.ResetContent();
 }

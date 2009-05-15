@@ -602,7 +602,7 @@ string MPane::getFileFullPath(string filename)
 /* If cnf_files exists within a given directory, return true
  * otherwise, create the cnf_files directory and return the status
  */
-bool MPane::cnfFolderUpdate()
+BOOL MPane::cnfFolderUpdate()
 {
 	if(m_cnfFolderCreated) {
 		return TRUE;
@@ -612,12 +612,12 @@ bool MPane::cnfFolderUpdate()
 	string path = m_working_dir;
 	path = path + CNF_DIR;
 
-	if (GetFileAttributes(path.c_str()) != 0xFFFFFFFF) {
+	if (GetFileAttributes(CString(path.c_str())) != 0xFFFFFFFF) {
 		m_cnfFolderCreated = TRUE;
 		return m_cnfFolderCreated;
 	}
 	else {
-		m_cnfFolderCreated = CreateDirectory(path.c_str(), NULL);
+		m_cnfFolderCreated = CreateDirectory(CString(path.c_str()), NULL);
 		return m_cnfFolderCreated;
 	}
 }

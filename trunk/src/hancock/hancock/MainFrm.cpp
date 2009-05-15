@@ -682,12 +682,17 @@ void CMainFrame::OnViewOther()
 // Toggles viewability of RPane
 void CMainFrame::OnViewRPane()
 {
+	m_rPane.ShowPane(!m_rPane.IsVisible(), FALSE, TRUE);
 	OnViewType(WM_FILEDATA);
 }
 
 // For now, this just keeps buttons pressed
 void CMainFrame::OnViewType(UINT nID)
 {
+	// Clear RPane in case we're disabling view of a selected file
+	m_rPane.clear();
+	m_wndView.setRelabeled(TRUE);
+
 	if(m_selectedItems.find(nID) == m_selectedItems.end())
 		m_selectedItems[nID] = TRUE;
 	else
@@ -699,21 +704,57 @@ void CMainFrame::OnViewType(UINT nID)
 void CMainFrame::OnMakeModel() { }
 void CMainFrame::OnExtractBuffers() { }
 void CMainFrame::OnMakeIndex() { }
-void CMainFrame::OnLabelGood() { }
+
+void CMainFrame::OnLabelGood()
+{
+	m_wndView.updateFile(GOODWARE);
+}
+
 void CMainFrame::OnPrune() { }
 void CMainFrame::OnMerge() { }
 void CMainFrame::OnModelCompile() { }
 void CMainFrame::OnMakeStub() { }
-void CMainFrame::OnLabelModel() { }
+
+void CMainFrame::OnLabelModel()
+{
+	m_wndView.updateFile(MODEL);
+}
+
 void CMainFrame::OnFindSigs() { MessageBox(_T("Finding Signatures")); }
-void CMainFrame::OnLabelIndex() { }
+
+void CMainFrame::OnLabelIndex()
+{
+	m_wndView.updateFile(INDEX);
+}
+
 void CMainFrame::OnPreprocess() { }
-void CMainFrame::OnLabelMalware() { }
+
+void CMainFrame::OnLabelMalware()
+{
+	m_wndView.updateFile(MALWARE);
+}
+
 void CMainFrame::OnClusterFiles() { }
-void CMainFrame::OnLabelPreMalware() { }
-void CMainFrame::OnLabelCluster() { }
-void CMainFrame::OnLabelStubMap() { }
-void CMainFrame::OnLabelFindSigs() { }
+
+void CMainFrame::OnLabelPreMalware()
+{
+	m_wndView.updateFile(PPM);
+}
+
+void CMainFrame::OnLabelCluster()
+{
+	m_wndView.updateFile(CLUSTER);
+}
+
+void CMainFrame::OnLabelStubMap()
+{
+	m_wndView.updateFile(STUBMAP);
+}
+
+void CMainFrame::OnLabelFindSigs()
+{
+	m_wndView.updateFile(SIGNATURE);
+}
 
 // Functions to bring up scheduling and logging GUI
 void CMainFrame::OnViewScheduler() { m_log.write("Opened Scheduler UI."); }

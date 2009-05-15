@@ -67,7 +67,7 @@ private:
 
 	string m_working_dir;					// The path of the current working directory. ie C:\\Windows\\Temp\\
 
-	bool m_cnfFolderCreated;
+	BOOL m_cnfFolderCreated;
 
 	map<int,set<string>*> m_masterMap;		// the master map contains all directory files
 	map<int,set<string>*> m_filteredMap;	// filtered map contains only entries matching the flags
@@ -113,7 +113,7 @@ private:
 																			 * from old_type to new_type
 																			 */
 
-	bool cnfFolderUpdate(); /* If cnf_files exists within a given directory, return true
+	BOOL cnfFolderUpdate(); /* If cnf_files exists within a given directory, return true
 							 * otherwise, create the cnf_files directory and return the status
 							 */
 };

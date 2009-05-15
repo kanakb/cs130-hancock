@@ -16,6 +16,7 @@
 #include "hancock.h"
 #include "ChildView.h"
 #include <map>
+#include <string>
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -26,8 +27,11 @@
 // CChildView
 
 CChildView::CChildView(HancockLog *log, RPane *rPane, MPane *mPane)
-: m_log(log), m_curDir(_T("")), m_curFile(_T("")), m_rPane(rPane), m_mPane(mPane)
+: m_log(log), m_rPane(rPane), m_mPane(mPane)
 {
+	m_curDir = _T("");
+	m_curFile = _T("");
+	m_relabeled = TRUE;
 }
 
 CChildView::~CChildView()
@@ -111,7 +115,6 @@ void CChildView::OnSize(UINT nType, int cx, int cy)
 // Update list of files with new folder name
 void CChildView::updateFolder(CString newFolder)
 {
-	// TODO: replace with an actual list update
 	if (newFolder == _T(""))
 		return;
 
@@ -122,10 +125,23 @@ void CChildView::updateFolder(CString newFolder)
 	//MessageBox(newFolder);
 }
 
+// Gets currently selected item (if changed) and gets cnf data (if available)
 void CChildView::OnChangeFileList(NMHDR * pNotifyStruct, LRESULT * result)
 {
-	// TODO: replace with an actual file update
-	//MessageBox(_T("Test"));
+	POSITION pos = m_wndWatch.GetFirstSelectedItemPosition();
+	if (pos != NULL)
+	{
+		int nItem = m_wndWatch.GetNextSelectedItem(pos);
+		CString itemText = m_wndWatch.GetItemText(nItem, 0);
+		if ((m_curFile != itemText || m_relabeled) && itemText != _T(""))
+		{
+			m_relabeled = FALSE;
+			m_curFile = itemText;
+			CT2CA filename(itemText);
+			std::string data = m_mPane->getCnfData(std::string(filename));
+			m_rPane->setText(data);
+		}
+	}
 	*result = 0;
 }
 
@@ -188,4 +204,26 @@ void CChildView::setFileType(int index, int type)
 		break;
 	}
 	m_wndWatch.SetItemText(index, 1, fileType);
+}
+
+// Wrapper function for labelFileAsFlag
+void CChildView::updateFile(int type)
+{
+	POSITION pos = m_wndWatch.GetFirstSelectedItemPosition();
+	if (pos != NULL)
+	{
+		int nItem = m_wndWatch.GetNextSelectedItem(pos);
+		CString itemText = m_wndWatch.GetItemText(nItem, 0);
+		//MessageBox(itemText);
+		CT2CA filename(itemText);
+		m_mPane->labelFileAsFlag(type, std::string(filename));
+		m_relabeled = TRUE;
+		recalcList();
+		m_rPane->clear();
+	}
+}
+
+void CChildView::setRelabeled(BOOL status)
+{
+	m_relabeled = status;
 }
