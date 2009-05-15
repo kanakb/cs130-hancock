@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "MPane.h"
 
 MPane::MPane()
@@ -58,6 +57,8 @@ void MPane::removeFlag(int type)
 // populate the master map with the contents of that directory
 void MPane::AssocToDir(string path)
 {
+	m_cnfFolderCreated = false;
+	m_working_dir = path + "\\";
 
 	/* If this test succeeds, then this is not the first call to AssocToDir.
 	 * Therefore we must clear the current map of files that we have before
@@ -279,9 +280,6 @@ map<int,set<string>*>* MPane::getFileList()
 //Parameters:
 //  int type: the item type, ie GOODWARE = 200
 //  string item: the full path to the file , ie c:\\windows\\goodware1.gwd
-//
-//NOTE: We are assuming a "cnf_files" subdirectory exists in the current working directory
-//		Otherwise we cannot write or read the existing cnf files!
 bool MPane::labelFileAsFlag(int type, string filename)
 {
 	string TMP = ".tmp";
@@ -300,6 +298,8 @@ bool MPane::labelFileAsFlag(int type, string filename)
 
 	int old_type = -1;
 	
+	if (!cnfFolderUpdate())
+		return FALSE;
 
 	///////////////////////////////////////////////////////////////////////
 	//Create the cnf file if it does not exist
@@ -312,7 +312,7 @@ bool MPane::labelFileAsFlag(int type, string filename)
 	outfile.open(cnf_location_temp.c_str(), ios_base::out);
 	//File cannot be opened, return failure
 	if(!outfile) {	
-		return false;
+		return FALSE;
 	}
 
 	//If no .cnf file exists, make it
@@ -342,6 +342,8 @@ bool MPane::labelFileAsFlag(int type, string filename)
 		//If the old type is the same as the new type, return
 		old_type = determineType(cnf_location);
 		if (type == old_type) {
+			outfile.close();
+			remove(cnf_location_temp.c_str());
 			return true;
 		}
 
@@ -349,6 +351,9 @@ bool MPane::labelFileAsFlag(int type, string filename)
 		fstream infile;
 		infile.open(cnf_location.c_str(), ios_base::in);
 		if (!infile) {
+			infile.close();
+			outfile.close();
+			remove(cnf_location_temp.c_str());
 			return false;
 		}
 				
@@ -381,8 +386,6 @@ bool MPane::labelFileAsFlag(int type, string filename)
 
 		//Change the m_masterMap flag type for this file
 		return changeMasterMapFlag(old_type, type, filename);
-
-		return true;
 	}
 
 	//Should have returned by now, something is wrong otherwise
@@ -555,7 +558,7 @@ bool MPane::checkCnfExists(string full_cnf_path)
  */
 string MPane::getCnfFullPath(string filename)
 {
-	string CNF_EXT = ".cnf";
+	string CNF_EXT = ".conf";
 	string CNF_DIR = "cnf_files\\";
 
 	string full_path = m_working_dir;	//Will contain the full path to the cnf file
@@ -575,12 +578,7 @@ string MPane::getCnfFullPath(string filename)
 		return "";								
 	}
 
-	///////////////////////////////////////////////////////////////////////
-	//If a directory, append the filename at the end of full_path 
-	///////////////////////////////////////////////////////////////////////
-	found = filename.find_last_of(".");
-	if (found == -1)
-		full_path.append(filename);
+	full_path.append(filename);
 	
 	
 	///////////////////////////////////////////////////////////////////////
@@ -600,43 +598,52 @@ string MPane::getFileFullPath(string filename)
 	return m_working_dir + filename;
 }
 
+/* If cnf_files exists within a given directory, return true
+ * otherwise, create the cnf_files directory and return the status
+ */
+bool MPane::cnfFolderUpdate()
+{
+	if(m_cnfFolderCreated) {
+		return TRUE;
+	}
 
+	string CNF_DIR = "cnf_files\\";
+	string path = m_working_dir;
+	path = path + CNF_DIR;
 
+	if (GetFileAttributes(path.c_str()) != 0xFFFFFFFF) {
+		m_cnfFolderCreated = TRUE;
+		return m_cnfFolderCreated;
+	}
+	else {
+		m_cnfFolderCreated = CreateDirectory(path.c_str(), NULL);
+		return m_cnfFolderCreated;
+	}
+}
 
-//int main()
-//{
-//	/*Testing labelFileAsFlag*/
-//	/*
-//	//Include a subdirectory cnf_files in this folder. A test1.cnf file will be created
-//	string ip1 = "C:\\test1\\test1.mal";
-//	MPane* mpane1 = new MPane();
-//
-//	mpane1->labelFileAsFlag(500, ip1);
-//	*/
-//	return 0;
-//}
+string MPane::getCnfData(string filename)
+{
+	string return_string = "";
 
-//Comments:
-//- AssocToDirInternal should look for all cnf files in a subdirectory called cnf_files.
-//  We do not want to write the cnf files to their directory directly.
-//	- Also, perform a crosscheck to make sure all cnf files have a valid real file.
-//	  We don't want to have a messed up master map otherwise.
-//- AssocToDir should also clear m_filteredMap
-//- determineType should close the file it reads (done)
-//- determineType should also look for </type> instead of < because there is a chance
-//  that the other sections ie <operations> are included in the same line, by a human editor
-//
-//- We need to somehow check for a cnf_files directory and create it if it is not there
-//	- for now i am assuming it will be created elsewhere
-//
-//Changes:
-//- I implemented labelFileAsFlag and updateConfig as boolean functions
-//	- if they fail for some reason, they will return false. then the gui can handle the error.
-//
-//Testing:
-//- Tested labelFileAsFlag. Works.
-//
-//Todo:
-//- Update the m_masterMap from the labelFileAsFlag function
-//- updateConfig needs to iterate through the map to write the actions into the cnf file
-//- Implement getFileData (trivial)
+	string full_cnf_path = getCnfFullPath(filename);
+	if (!checkCnfExists(full_cnf_path)) {
+		return return_string;
+	}
+
+	fstream infile;
+	infile.open(full_cnf_path.c_str(), ios_base::in);
+	if (!infile) {
+		return return_string;
+	}
+
+	//Read each line from the original cnf file
+	string line;
+	while(getline(infile, line))
+	{
+		return_string = return_string + line + "\n";
+	}
+	//Close the IO stream
+	infile.close();
+	
+	return return_string;
+}
