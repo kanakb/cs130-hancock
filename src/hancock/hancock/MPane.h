@@ -41,6 +41,7 @@ public:
 	void addFlag(int type);						// Add a flag to filter the directory files 
 	void removeFlag(int type);					// Remove a flag previously used to filter files
 	map<int,set<string>*>* getFileList();		// Return the filtered list of files
+	map<int,set<string>*>* getMasterList();		// Return the master list of files
 	bool labelFileAsFlag(int type, string item_path);	/* Label an unknown file type as type specified in type argument
 														 * This function will also add the file to the appropriate
 														 * set in the master map, remove it from the set that it was

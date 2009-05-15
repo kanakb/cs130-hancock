@@ -37,7 +37,7 @@ int main(char argc, char** argv)
 					removeflag = true;
 					break;
 				case 'm': // print the files listed in master map in the following format:       file        type
-					write_to_log = true;
+					printMap(testPane.getMasterList());
 					break;
 				case 'p': // print the files listed in filtered map in the following format:       file        type
 					printMap(testPane.getFileList());
@@ -50,27 +50,43 @@ int main(char argc, char** argv)
 		{
 			if(assoc_path)		// the input is a directory path since it was read after a -a flag
 			{
-				log_filename = argv[i];
-				cout << testLog.dispLog(log_filename.c_str()) << endl;
-				cout << endl;
-				disp_log = false;
+				path = argv[i];
+				testPane.AssocToDir(path);
+				assoc_path = false;
 			}
 
 			else if(addflag)	// the input is a flag type to add to the flag set, update the filtered map if necessary
 			{
-				info_to_write = argv[i];
-				testLog.write(info_to_write);
-				write_to_log = false;
+				type = atoi(argv[i]);
+				testPane.addFlag(type);
+				addflag = false;
 			}
 
-			else if(removeflag)	// the input is a flag type to remove it from the flag set, update the filtered map if necessary
+			else if(removeflag)	// the input is a flag type to remove from the flag set, update the filtered map if necessary
 			{
-				info_to_write = argv[i];
-				testLog.write(info_to_write);
-				write_to_log = false;
+				type = atoi(argv[i]);
+				testPane.removeFlag(type);
+				removeflag = false;
 			}
 		}	
 	} 
 
 	return 0;
+}
+
+void printMap(map<int,set<string>*>* theMap)
+{
+	map<int,set<string>*>::iterator mit;	// create a map iterator
+	set<string>::iterator sit;	// create a set iterator
+	cout << endl;
+	cout << "Printing out the map contents" << endl;
+	cout << "-----------------------------" << endl;
+	cout << "Type\t\tFilename" << endl;
+	for(mit = theMap->begin(); mit != theMap->end(); mit++)		// iterate through the map and print out the contents
+	{
+		for(sit = mit->second->begin(); sit != mit->second->end(); sit++)	// iterate through set contents, print them
+		{
+			cout << mit->first << "\t\t" << *sit << endl;
+		}
+	}
 }
