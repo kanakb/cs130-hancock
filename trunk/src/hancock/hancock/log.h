@@ -22,8 +22,8 @@ class HancockLog{
 public:
 	HancockLog(string path = "Logs\\");
 	~HancockLog();
-	void write(string info);
-	void setdir(string d);
+	void write(const string &info);
+	void setdir(const string &d);
 	char* getFileName();
 	string dispLog(const char* filename);
 	string dispCurrLog();
