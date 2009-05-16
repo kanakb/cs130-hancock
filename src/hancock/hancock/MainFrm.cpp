@@ -111,9 +111,9 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_wndRibbonBar.Create(this);
 	InitializeRibbon();
 
-	if (!m_rPane.Create(_T("File Information"), this, CRect(0, 0, 100, 100), TRUE, ID_RPANE_A, WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN | CBRS_RIGHT | CBRS_FLOAT_MULTI))
+	if (!m_rPane.Create(_T("File Information"), this, CRect(0, 0, 200, 200), TRUE, ID_RPANE_A, WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN | CBRS_RIGHT | CBRS_FLOAT_MULTI))
 	{
-		TRACE0("Failed to RPane\n");
+		TRACE0("Failed to create RPane\n");
 		return -1;      // fail to create
 	}
 

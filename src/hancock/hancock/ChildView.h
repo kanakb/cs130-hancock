@@ -61,7 +61,7 @@ protected:
 private:
 	void setFileType(int index, int type);
 	void getTypeFromCode(int type, CString &name);
-	CMFCListCtrl m_wndWatch;
+	CListCtrl m_wndWatch;
 	HancockLog *m_log;
 	RPane *m_rPane;
 	MPane *m_mPane;
