@@ -4,6 +4,18 @@
 HancockLog::HancockLog(string path)
 : dir(path)
 {
+	ifstream infile("logdir.txt");
+	if (!infile)
+	{
+		ofstream outfile("logdir.txt");
+		outfile << path << endl;
+		outfile.close();
+	}
+	else
+	{
+		getline(infile, dir);
+	}
+
 	SYSTEMTIME st;
 	GetSystemTime(&st);
 	filename = new char[256];
@@ -34,7 +46,7 @@ char* HancockLog::getFileName(){
 	return filename;
 }
 
-void HancockLog::write(string info){
+void HancockLog::write(const string &info){
 
 	fout << getTimestamp() + info + "\n";
 	curLog = curLog + getTimestamp() + info + "\n";
@@ -65,7 +77,10 @@ string HancockLog::dispLog(const char* filename){
 
 }
 
-void HancockLog::setdir(string d)
+void HancockLog::setdir(const string &d)
 {
 	dir = d;
+	ofstream outfile("logdir.txt");
+	outfile << dir << endl;
+	outfile.close();
 }

@@ -113,7 +113,7 @@ void CChildView::OnSize(UINT nType, int cx, int cy)
 }
 
 // Update list of files with new folder name
-void CChildView::updateFolder(CString newFolder)
+void CChildView::updateFolder(const CString &newFolder)
 {
 	if (newFolder == _T(""))
 		return;
@@ -173,36 +173,7 @@ void CChildView::recalcList()
 void CChildView::setFileType(int index, int type)
 {
 	CString fileType;
-	switch(type)
-	{
-	case UNKNOWN:
-		fileType = _T("Unclassified");
-		break;
-	case GOODWARE:
-		fileType = _T("Goodware");
-		break;
-	case MALWARE:
-		fileType = _T("Malware");
-		break;
-	case PPM:
-		fileType = _T("Preprocessed Malware");
-		break;
-	case MODEL:
-		fileType = _T("Model");
-		break;
-	case SIGNATURE:
-		fileType = _T("Find Signatures Output");
-		break;
-	case STUBMAP:
-		fileType = _T("Stub Map");
-		break;
-	case CLUSTER:
-		fileType = _T("Cluster");
-		break;
-	case INDEX:
-		fileType = _T("Index");
-		break;
-	}
+	getTypeFromCode(type, fileType);
 	m_wndWatch.SetItemText(index, 1, fileType);
 }
 
@@ -220,10 +191,55 @@ void CChildView::updateFile(int type)
 		m_relabeled = TRUE;
 		recalcList();
 		m_rPane->clear();
+
+		// Log action
+		CString logLabel;
+		getTypeFromCode(type, logLabel);
+		logLabel = _T("Labeled ") + itemText + _T(" as ") + logLabel;
+		CT2CA asciilog(logLabel);
+		m_log->write(std::string(asciilog));
 	}
 }
 
 void CChildView::setRelabeled(BOOL status)
 {
 	m_relabeled = status;
+}
+
+// This function gets the string associated with a type ID
+void CChildView::getTypeFromCode(int type, CString &name)
+{
+	switch(type)
+	{
+	case UNKNOWN:
+		name = _T("Unclassified");
+		break;
+	case GOODWARE:
+		name = _T("Goodware");
+		break;
+	case MALWARE:
+		name = _T("Malware");
+		break;
+	case PPM:
+		name = _T("Preprocessed Malware");
+		break;
+	case MODEL:
+		name = _T("Model");
+		break;
+	case SIGNATURE:
+		name = _T("Find Signatures Output");
+		break;
+	case STUBMAP:
+		name = _T("Stub Map");
+		break;
+	case CLUSTER:
+		name = _T("Cluster");
+		break;
+	case INDEX:
+		name = _T("Index");
+		break;
+	default:
+		name = _T("");
+		break;
+	}
 }

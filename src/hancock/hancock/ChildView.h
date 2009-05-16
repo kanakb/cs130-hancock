@@ -47,7 +47,7 @@ protected:
 
 // Implementation
 public:
-	void updateFolder(CString newFolder);
+	void updateFolder(const CString &newFolder);
 	void updateFile(int type);
 	void recalcList();
 	void setRelabeled(BOOL status);
@@ -60,6 +60,7 @@ protected:
 
 private:
 	void setFileType(int index, int type);
+	void getTypeFromCode(int type, CString &name);
 	CMFCListCtrl m_wndWatch;
 	HancockLog *m_log;
 	RPane *m_rPane;
