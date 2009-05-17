@@ -785,7 +785,7 @@ void CMainFrame::OnSaveLog()
 		CT2CA ansiPath(resPath);
 		std::string stdPath(ansiPath);
 		m_log.setdir(stdPath);
-		m_log.write("Changed Log save path to:" + stdPath);
+		m_log.write("Changed Log save path to: " + stdPath);
 		MessageBox(_T("Changes will be reflected the next time this program is started."));
 	}
 	//MessageBox(resPath);

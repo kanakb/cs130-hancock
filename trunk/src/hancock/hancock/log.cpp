@@ -22,7 +22,7 @@ HancockLog::HancockLog(string path)
 	SYSTEMTIME st;
 	GetSystemTime(&st);
 	filename = new char[256];
-	sprintf_s(filename,256,"%s%d.%d.%d.%d.%d.txt",dir.c_str(),st.wMonth,st.wDay,st.wYear,st.wHour,st.wMinute);
+	sprintf_s(filename,256,"%s%02d.%02d.%d.%02d.%02d.txt",dir.c_str(),st.wMonth,st.wDay,st.wYear,st.wHour,st.wMinute);
 	
 	fout.open(filename);
 	
@@ -41,7 +41,7 @@ string HancockLog::getTimestamp(){
 	SYSTEMTIME st;
 	GetSystemTime(&st);
 	char time[256];
-	sprintf_s(time,256,"%d.%d.%d  %d:%d - ",st.wMonth,st.wDay,st.wYear,st.wHour,st.wMinute);
+	sprintf_s(time,256,"%02d.%02d.%d  %02d:%02d - ",st.wMonth,st.wDay,st.wYear,st.wHour,st.wMinute);
 	return time;
 }
 
@@ -73,7 +73,10 @@ string HancockLog::dispLog(const char* fname){
 		while (! fin.eof() )
 		{
 			getline (fin,line);
-			content =  content + "\r\n" + line;
+			if (content != "")
+				content =  content + "\r\n" + line;
+			else
+				content = line;
 		}
 		fin.close();
 	}
