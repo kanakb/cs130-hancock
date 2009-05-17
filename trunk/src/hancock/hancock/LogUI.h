@@ -1,6 +1,7 @@
 #pragma once
 #include "afxwin.h"
 #include "log.h"
+#include <list>
 
 
 
@@ -32,6 +33,6 @@ private:
 	CEdit m_logText;
 	HancockLog *m_log;
 
-	int getLogFiles(CString* fileList); //Populates CString array with
+	list<CString> getLogFiles(); //Populates CString array with
 	//contents of Log folder. Returns number of files.
 };
