@@ -38,11 +38,12 @@ void LogUI::DoDataExchange(CDataExchange* pDX)
 	int n = this->getLogFiles(s);
 	for (int i = 0; i < n; i++){
 		m_logList.InsertString(i,s[i]);
+		m_logList.SetCurSel(i);
 	}
 	
 	//Populates Main Pane with Current Log File
 	CString currLog(m_log->dispCurrLog().c_str());
-	m_logText.SetWindowTextW(currLog);
+	m_logText.SetWindowText(currLog);
 
 }
 
@@ -78,7 +79,7 @@ void LogUI::OnLbnSelchangeLoglist()
 	path = m_log->getDir() + path;
 	const char * fname = path.c_str();
 	CString logText(m_log->dispLog(fname).c_str());
-	m_logText.SetWindowTextW(logText);
+	m_logText.SetWindowText(logText);
 
 }
 
