@@ -3,7 +3,13 @@
 
 #include "stdafx.h"
 #include "hancock.h"
+#include <string>
 #include "LogUI.h"
+#include <windows.h>
+#include <io.h>
+
+
+
 
 
 // LogUI dialog
@@ -26,6 +32,18 @@ void LogUI::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDOK, m_closeBtn);
 	DDX_Control(pDX, IDC_LOGLIST, m_logList);
 	DDX_Control(pDX, IDC_LOGTEXT, m_logText);
+
+	//Populates Left Pane with files in log folder
+	CString s[256];
+	int n = this->getLogFiles(s);
+	for (int i = 0; i < n; i++){
+		m_logList.InsertString(i,s[i]);
+	}
+	
+	//Populates Main Pane with Current Log File
+	CString currLog(m_log->dispCurrLog().c_str());
+	m_logText.SetWindowTextW(currLog);
+
 }
 
 
@@ -50,7 +68,18 @@ void LogUI::OnEnChangeLogtext()
 
 void LogUI::OnLbnSelchangeLoglist()
 {
-	// TODO: Add your control notification handler code here
+	CString csBuff;
+	int i = m_logList.GetCurSel();
+	m_logList.GetText(i,csBuff);
+	
+	CT2CA buff1(csBuff);
+
+	string path (buff1);
+	path = m_log->getDir() + path;
+	const char * fname = path.c_str();
+	CString logText(m_log->dispLog(fname).c_str());
+	m_logText.SetWindowTextW(logText);
+
 }
 
 void LogUI::OnBnClickedOk()
@@ -68,3 +97,35 @@ BOOL LogUI::Create(UINT nID, CWnd * pWnd)
 void LogUI::PostNcDestroy() {
 	//delete this;
 }
+
+int LogUI::getLogFiles(CString* fileList){
+	
+	struct _finddatai64_t data;
+	// First create the filename that will be use to initialize the find.
+	// "*.*" are wild card characters that tells the find function to return a
+	// list of all the files and directories.  You can limit this if you wish
+	// to just file with specific extensions, for example "*.txt".  If you do that
+	// then finder will not return any directory names.
+	string fname = m_log->getDir() + "\\*.txt";
+	
+	
+
+	// start the finder -- on error _findfirsti64() will return -1, otherwise if no
+	// error it returns a handle greater than -1.
+	long h = _findfirsti64(fname.c_str(),&data);
+	int n = 0; //Size of array
+	if (h>0){
+		
+		do{
+			fileList[n] = data.name;
+			n++;
+		}while( _findnexti64(h,&data) == 0);
+		
+		_findclose(h);
+	
+	}
+
+	return n;
+
+}
+	
