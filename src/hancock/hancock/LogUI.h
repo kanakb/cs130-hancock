@@ -3,6 +3,7 @@
 #include "log.h"
 
 
+
 // LogUI dialog
 
 class LogUI : public CDialog
@@ -30,4 +31,7 @@ private:
 	CListBox m_logList;
 	CEdit m_logText;
 	HancockLog *m_log;
+
+	int getLogFiles(CString* fileList); //Populates CString array with
+	//contents of Log folder. Returns number of files.
 };

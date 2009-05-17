@@ -4,6 +4,9 @@
 HancockLog::HancockLog(string path)
 : dir(path)
 {
+	CString directory(dir.c_str());
+	CreateDirectory(directory,0);
+	
 	ifstream infile("logdir.txt");
 	if (!infile)
 	{
@@ -48,30 +51,34 @@ char* HancockLog::getFileName(){
 
 void HancockLog::write(const string &info){
 
-	fout << getTimestamp() + info + "\n";
-	curLog = curLog + getTimestamp() + info + "\n";
+	fout << getTimestamp() + info + "\r\n";
+	curLog = curLog + getTimestamp() + info + "\r\n";
 }
 
 string HancockLog::dispCurrLog(){
 	return curLog;
 }
 
-string HancockLog::dispLog(const char* filename){
-
+string HancockLog::dispLog(const char* fname){
+	/*string s = fname;
+	string t = filename;
+	return t + "  " + s;*/
+	if (strcmp(fname,filename)==0)
+		return dispCurrLog();
 	string line;
 	string content;
-	ifstream fin (filename);
+	ifstream fin (fname);
 	if (fin.is_open())
 	{
 		while (! fin.eof() )
 		{
 			getline (fin,line);
-			content =  content + "\n" + line;
+			content =  content + "\r\n" + line;
 		}
 		fin.close();
 	}
 
-	else content = "Unable to open file\n"; 
+	else content = "Unable to open file\r\n"; 
 
 	return content;
 
@@ -83,4 +90,8 @@ void HancockLog::setdir(const string &d)
 	ofstream outfile("logdir.txt");
 	outfile << dir << endl;
 	outfile.close();
+}
+
+string HancockLog::getDir(){
+	return dir;
 }
