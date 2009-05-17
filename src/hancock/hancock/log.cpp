@@ -23,7 +23,7 @@ HancockLog::HancockLog(string path)
 	SYSTEMTIME st;
 	GetSystemTime(&st);
 	filename = new char[256];
-	sprintf_s(filename,256,"%s%02d.%02d.%d.%02d%02d.%03d.txt",dir.c_str(),st.wMonth,st.wDay,st.wYear,st.wHour,st.wMinute,st.wMilliseconds);
+	sprintf_s(filename,256,"%s%02d.%02d.%d.%02d.%02d.%03d.txt",dir.c_str(),st.wMonth,st.wDay,st.wYear,st.wHour,st.wMinute,st.wMilliseconds);
 	
 	fout.open(filename);
 	
