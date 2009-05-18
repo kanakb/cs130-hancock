@@ -33,6 +33,8 @@ private:
 	CEdit m_logText;
 	HancockLog *m_log;
 
-	list<CString> getLogFiles(); //Populates CString array with
+	void getLogFiles(list<CString>* fileList); //Populates CString array with
 	//contents of Log folder. Returns number of files.
+
+
 };
