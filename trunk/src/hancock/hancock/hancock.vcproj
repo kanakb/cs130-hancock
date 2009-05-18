@@ -218,6 +218,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\MakeModelDlg.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\MPane.cpp"
 				>
 			</File>
@@ -281,6 +285,10 @@
 			</File>
 			<File
 				RelativePath=".\MainFrm.h"
+				>
+			</File>
+			<File
+				RelativePath=".\MakeModelDlg.h"
 				>
 			</File>
 			<File
