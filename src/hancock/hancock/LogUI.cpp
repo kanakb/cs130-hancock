@@ -14,7 +14,9 @@
 
 
 // LogUI dialog
-bool cmpFileNames(CString cs1, CString cs2);
+
+//returns the older of two filenames
+bool cmpFileNames(const CString& cs2, const CString& cs1);
 
 IMPLEMENT_DYNAMIC(LogUI, CDialog)
 
@@ -38,7 +40,7 @@ void LogUI::DoDataExchange(CDataExchange* pDX)
 	//Populates Left Pane with files in log folder
 	list<CString> names;
 	list<CString>::iterator it;
-	names = this->getLogFiles();
+	this->getLogFiles(&names);
 	names.sort(cmpFileNames);
 	int i=0;
 	for (it=names.begin(); it!=names.end(); ++it){
@@ -106,10 +108,8 @@ void LogUI::PostNcDestroy() {
 	//delete this;
 }
 
-list<CString> LogUI::getLogFiles(){
+void LogUI::getLogFiles(list<CString>* fileList){
 	
-	list<CString> fileList;
-
 	struct _finddatai64_t data;
 	// First create the filename that will be use to initialize the find.
 	// "*.*" are wild card characters that tells the find function to return a
@@ -127,17 +127,16 @@ list<CString> LogUI::getLogFiles(){
 		
 		do{
 			const CString cs(data.name);
-			fileList.push_back(cs);
+			fileList->push_back(cs);
 		}while( _findnexti64(h,&data) == 0);
 		
 		_findclose(h);
 	
 	}
 
-	return fileList;
 
 }
-bool cmpFileNames(CString cs2, CString cs1){
+bool cmpFileNames(const CString& cs2, const CString& cs1){
 	//compares year
 	for (int i = 6; i < 10; i++){
 		if (cs1[i]>cs2[i])
@@ -155,7 +154,7 @@ bool cmpFileNames(CString cs2, CString cs1){
 	}
 
 	//compares hours, minutes, milliseconds
-	for (int i = 11; i < 19; i++){
+	for (int i = 11; i < 20; i++){
 		if (cs1[i]>cs2[i])
 			return true;
 		else if (cs1[i]<cs2[i])
