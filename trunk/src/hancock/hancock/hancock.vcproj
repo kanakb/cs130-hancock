@@ -198,6 +198,18 @@
 				>
 			</File>
 			<File
+				RelativePath=".\ClstDlg.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\ExtrBuffersDlg.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\FindSigsDlg.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\FolderDlg.cpp"
 				>
 			</File>
@@ -218,11 +230,31 @@
 				>
 			</File>
 			<File
+				RelativePath=".\MakeIndexDlg.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\MakeModelDlg.cpp"
 				>
 			</File>
 			<File
+				RelativePath=".\MergeDlg.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\ModCompileDlg.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\MPane.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\PreprocDlg.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\PruneDlg.cpp"
 				>
 			</File>
 			<File
@@ -249,6 +281,10 @@
 					/>
 				</FileConfiguration>
 			</File>
+			<File
+				RelativePath=".\StubMapDlg.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -265,6 +301,18 @@
 			</File>
 			<File
 				RelativePath=".\ChildView.h"
+				>
+			</File>
+			<File
+				RelativePath=".\ClstDlg.h"
+				>
+			</File>
+			<File
+				RelativePath=".\ExtrBuffersDlg.h"
+				>
+			</File>
+			<File
+				RelativePath=".\FindSigsDlg.h"
 				>
 			</File>
 			<File
@@ -288,11 +336,31 @@
 				>
 			</File>
 			<File
+				RelativePath=".\MakeIndexDlg.h"
+				>
+			</File>
+			<File
 				RelativePath=".\MakeModelDlg.h"
 				>
 			</File>
 			<File
+				RelativePath=".\MergeDlg.h"
+				>
+			</File>
+			<File
+				RelativePath=".\ModCompileDlg.h"
+				>
+			</File>
+			<File
 				RelativePath=".\MPane.h"
+				>
+			</File>
+			<File
+				RelativePath=".\PreprocDlg.h"
+				>
+			</File>
+			<File
+				RelativePath=".\PruneDlg.h"
 				>
 			</File>
 			<File
@@ -305,6 +373,10 @@
 			</File>
 			<File
 				RelativePath=".\stdafx.h"
+				>
+			</File>
+			<File
+				RelativePath=".\StubMapDlg.h"
 				>
 			</File>
 			<File
