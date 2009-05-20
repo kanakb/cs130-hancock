@@ -18,6 +18,16 @@
 #include "hancock.h"
 
 #include "MainFrm.h"
+#include "MakeModelDlg.h"
+#include "MakeIndexDlg.h"
+#include "ModCompileDlg.h"
+#include "MergeDlg.h"
+#include "PruneDlg.h"
+#include "ExtrBuffersDlg.h"
+#include "FindSigsDlg.h"
+#include "ClstDlg.h"
+#include "PreprocDlg.h"
+#include "StubMapDlg.h"
 #include <map>
 #include <string>
 
@@ -701,40 +711,85 @@ void CMainFrame::OnViewType(UINT nID)
 }
 
 // Action functions
-void CMainFrame::OnMakeModel() { }
-void CMainFrame::OnExtractBuffers() { }
-void CMainFrame::OnMakeIndex() { }
+void CMainFrame::OnMakeModel()
+{
+	MakeModelDlg myDlg;
+	myDlg.DoModal();
+}
+
+void CMainFrame::OnExtractBuffers()
+{
+	ExtrBuffersDlg myDlg;
+	myDlg.DoModal();
+}
+
+void CMainFrame::OnMakeIndex()
+{
+	MakeIndexDlg myDlg;
+	myDlg.DoModal();
+}
 
 void CMainFrame::OnLabelGood()
 {
 	m_wndView.updateFile(GOODWARE);
 }
 
-void CMainFrame::OnPrune() { }
-void CMainFrame::OnMerge() { }
-void CMainFrame::OnModelCompile() { }
-void CMainFrame::OnMakeStub() { }
+void CMainFrame::OnPrune()
+{
+	PruneDlg myDlg;
+	myDlg.DoModal();
+}
+
+void CMainFrame::OnMerge()
+{
+	MergeDlg myDlg;
+	myDlg.DoModal();
+}
+
+void CMainFrame::OnModelCompile()
+{
+	ModCompileDlg myDlg;
+	myDlg.DoModal();
+}
+
+void CMainFrame::OnMakeStub()
+{
+	StubMapDlg myDlg;
+	myDlg.DoModal();
+}
 
 void CMainFrame::OnLabelModel()
 {
 	m_wndView.updateFile(MODEL);
 }
 
-void CMainFrame::OnFindSigs() { MessageBox(_T("Finding Signatures")); }
+void CMainFrame::OnFindSigs()
+{
+	FindSigsDlg myDlg;
+	myDlg.DoModal();
+}
 
 void CMainFrame::OnLabelIndex()
 {
 	m_wndView.updateFile(INDEX);
 }
 
-void CMainFrame::OnPreprocess() { }
+void CMainFrame::OnPreprocess()
+{
+	PreprocDlg myDlg;
+	myDlg.DoModal();
+}
 
 void CMainFrame::OnLabelMalware()
 {
 	m_wndView.updateFile(MALWARE);
 }
 
-void CMainFrame::OnClusterFiles() { }
+void CMainFrame::OnClusterFiles()
+{
+	ClstDlg myDlg;
+	myDlg.DoModal();
+}
 
 void CMainFrame::OnLabelPreMalware()
 {

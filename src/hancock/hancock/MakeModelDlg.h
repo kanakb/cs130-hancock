@@ -20,14 +20,5 @@ protected:
 
 	DECLARE_MESSAGE_MAP()
 public:
-	afx_msg void OnBnClickedBtnSelmodinp();
-	afx_msg void OnBnClickedBtnSelmodout();
-	afx_msg void OnBnClickedBtnCmodelcfg();
-	afx_msg void OnBnClickedBtnCmodelecfg();
 	afx_msg void OnBnClickedOk();
-private:
-	CEdit m_trainDir;
-	CEdit m_trainSize;
-	CEdit m_inpMode;
-	CEdit m_outputFile;
 };
