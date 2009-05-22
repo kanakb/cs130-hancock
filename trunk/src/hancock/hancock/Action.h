@@ -10,14 +10,13 @@
 
 #define MAX_BUF_LEN 1024
 
-#include "MPane.h" 
-#include <iostream>
+//#include "MPane.h"  // !!!!TEMPORARY!!!!
+#include <iostream>	  // !!!!TEMPORARY!!!!
 #include <vector>
 #include <string>
 #include "windows.h"
 #include "stdio.h"
 #include <tchar.h>
-#include "stdafx.h"
 //#include <curses.h>	// !!!!TEMPORARY!!!!
 using namespace std;
 
