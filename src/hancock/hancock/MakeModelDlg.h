@@ -41,4 +41,10 @@ private:
 	CEdit m_size3;
 	CEdit m_mode;
 	CEdit m_output;
+	CButton m_selTD2;
+	CButton m_selTD3;
+	CButton m_browseTD2;
+	CButton m_depTD2;
+	CButton m_browseTD3;
+	CButton m_depTD3;
 };
