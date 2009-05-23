@@ -4,6 +4,7 @@
 #include "stdafx.h"
 #include "hancock.h"
 #include "ClstDlg.h"
+#include "FolderDlg.h"
 
 
 // ClstDlg dialog
@@ -26,6 +27,8 @@ void ClstDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_EDIT_EXTRBUF_INP, m_input);
 	DDX_Control(pDX, IDC_EDIT4, m_type);
 	DDX_Control(pDX, IDC_EDIT_MODE, m_maxDiff);
+	DDX_Control(pDX, IDC_BTN_ECFG, m_eCFG);
+	DDX_Control(pDX, IDOK, m_start);
 }
 
 
@@ -43,6 +46,8 @@ END_MESSAGE_MAP()
 void ClstDlg::OnBnClickedBtnCrcfg()
 {
 	// TODO: Add code for creating a cfg file
+	m_eCFG.EnableWindow(TRUE);
+	m_start.EnableWindow(TRUE);
 }
 
 void ClstDlg::OnBnClickedBtnEcfg()
@@ -59,6 +64,12 @@ void ClstDlg::OnBnClickedOk()
 void ClstDlg::OnBnClickedBtnSelinp1()
 {
 	// TODO: Add code for picking an input directory
+	CString defPath = _T("");
+	CFolderDialog inDir1(_T("Input Directory"), defPath, this, BIF_RETURNONLYFSDIRS | BIF_NEWDIALOGSTYLE);
+	if (inDir1.DoModal() == IDOK)
+	{
+		m_input.SetWindowText(inDir1.GetFolderPath());
+	}
 }
 
 void ClstDlg::OnBnClickedSeldep1()

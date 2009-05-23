@@ -43,4 +43,13 @@ private:
 public:
 	afx_msg void OnBnClickedCheck1();
 	afx_msg void OnBnClickedCheck2();
+private:
+	CButton m_eCFG;
+	CButton m_start;
+	CButton m_selM2;
+	CButton m_selI1;
+	CButton m_browseM2;
+	CButton m_depM2;
+	CButton m_browseI1;
+	CButton m_depI1;
 };

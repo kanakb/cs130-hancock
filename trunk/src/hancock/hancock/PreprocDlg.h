@@ -39,4 +39,6 @@ private:
 	CEdit m_inpIDAScr;
 	CEdit m_inpDefs;
 	CEdit m_output;
+	CButton m_eCFG;
+	CButton m_start;
 };

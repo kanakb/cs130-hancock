@@ -38,6 +38,9 @@ void MakeModelDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_DEP_CMOD2, m_depTD2);
 	DDX_Control(pDX, IDC_BTN_SELMODINP3, m_browseTD3);
 	DDX_Control(pDX, IDC_DEP_CMOD3, m_depTD3);
+	DDX_Control(pDX, IDC_BTN_CRCFG, m_crCFG);
+	DDX_Control(pDX, IDC_BTN_ECFG, m_eCFG);
+	DDX_Control(pDX, IDOK, m_start);
 }
 
 
@@ -68,7 +71,7 @@ void MakeModelDlg::OnBnClickedBtnSelinp1()
 {
 	// TODO: Add code for picking an input directory (#1)
 	CString defPath = _T("");
-	CFolderDialog inDir1(_T("Training Directory 1"), defPath, this, BIF_RETURNONLYFSDIRS | BIF_NEWDIALOGSTYLE);;
+	CFolderDialog inDir1(_T("Training Directory 1"), defPath, this, BIF_RETURNONLYFSDIRS | BIF_NEWDIALOGSTYLE);
 	if (inDir1.DoModal() == IDOK)
 	{
 		m_input1.SetWindowText(inDir1.GetFolderPath());
@@ -84,7 +87,7 @@ void MakeModelDlg::OnBnClickedBtnSelmodinp2()
 {
 	// TODO: Add code for picking an input directory (#2)
 	CString defPath = _T("");
-	CFolderDialog inDir2(_T("Training Directory 2"), defPath, this, BIF_RETURNONLYFSDIRS | BIF_NEWDIALOGSTYLE);;
+	CFolderDialog inDir2(_T("Training Directory 2"), defPath, this, BIF_RETURNONLYFSDIRS | BIF_NEWDIALOGSTYLE);
 	if (inDir2.DoModal() == IDOK)
 	{
 		m_input2.SetWindowText(inDir2.GetFolderPath());
@@ -100,7 +103,7 @@ void MakeModelDlg::OnBnClickedBtnSelmodinp3()
 {
 	// TODO: Add code for picking an input directory (#3)
 	CString defPath = _T("");
-	CFolderDialog inDir3(_T("Training Directory 3"), defPath, this, BIF_RETURNONLYFSDIRS | BIF_NEWDIALOGSTYLE);;
+	CFolderDialog inDir3(_T("Training Directory 3"), defPath, this, BIF_RETURNONLYFSDIRS | BIF_NEWDIALOGSTYLE);
 	if (inDir3.DoModal() == IDOK)
 	{
 		m_input3.SetWindowText(inDir3.GetFolderPath());
@@ -115,11 +118,21 @@ void MakeModelDlg::OnBnClickedDepCmod3()
 void MakeModelDlg::OnBnClickedBtnSelmodout()
 {
 	// TODO: Add code for picking an output file
+	CFileDialog outBox(FALSE, NULL, NULL, OFN_OVERWRITEPROMPT, _T("Models (*.mdl)|*.mdl|All Files(*.*)|*.*||"));
+	if (outBox.DoModal() == IDOK)
+	{
+		CString fullFilePath = outBox.GetFolderPath() + _T("\\") + outBox.GetFileName();
+		if (outBox.GetFileExt() == _T(""))
+			fullFilePath += _T(".mdl");
+		m_output.SetWindowText(fullFilePath);
+	}
 }
 
 void MakeModelDlg::OnBnClickedBtnCrcfg()
 {
 	// TODO: Add code for creating a cfg file
+	m_eCFG.EnableWindow(TRUE);
+	m_start.EnableWindow(TRUE);
 }
 
 void MakeModelDlg::OnBnClickedBtnEcfg()

@@ -47,4 +47,7 @@ private:
 	CButton m_depTD2;
 	CButton m_browseTD3;
 	CButton m_depTD3;
+	CButton m_crCFG;
+	CButton m_eCFG;
+	CButton m_start;
 };

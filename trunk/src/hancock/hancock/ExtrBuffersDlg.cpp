@@ -4,6 +4,7 @@
 #include "stdafx.h"
 #include "hancock.h"
 #include "ExtrBuffersDlg.h"
+#include "FolderDlg.h"
 
 
 // ExtrBuffersDlg dialog
@@ -26,6 +27,8 @@ void ExtrBuffersDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_EDIT_EXTRBUF_INP, m_input);
 	DDX_Control(pDX, IDC_EDIT4, m_output);
 	DDX_Control(pDX, IDC_EDIT_MODE, m_mode);
+	DDX_Control(pDX, IDC_BTN_ECFG, m_eCFG);
+	DDX_Control(pDX, IDOK, m_start);
 }
 
 
@@ -44,6 +47,8 @@ END_MESSAGE_MAP()
 void ExtrBuffersDlg::OnBnClickedBtnCrcfg()
 {
 	// TODO: Add code for creating a cfg file
+	m_eCFG.EnableWindow(TRUE);
+	m_start.EnableWindow(TRUE);
 }
 
 void ExtrBuffersDlg::OnBnClickedBtnEcfg()
@@ -60,11 +65,23 @@ void ExtrBuffersDlg::OnBnClickedOk()
 void ExtrBuffersDlg::OnBnClickedBtnSelinp1()
 {
 	// TODO: Add code for picking an input directory
+	CString defPath = _T("");
+	CFolderDialog inDir1(_T("Input Directory"), defPath, this, BIF_RETURNONLYFSDIRS | BIF_NEWDIALOGSTYLE);
+	if (inDir1.DoModal() == IDOK)
+	{
+		m_input.SetWindowText(inDir1.GetFolderPath());
+	}
 }
 
 void ExtrBuffersDlg::OnBnClickedBtnSelout1()
 {
 	// TODO: Add code for picking an output directory
+	CString defPath = _T("");
+	CFolderDialog outDir1(_T("Output Directory"), defPath, this, BIF_RETURNONLYFSDIRS | BIF_NEWDIALOGSTYLE);
+	if (outDir1.DoModal() == IDOK)
+	{
+		m_output.SetWindowText(outDir1.GetFolderPath());
+	}
 }
 
 void ExtrBuffersDlg::OnBnClickedSeldep1()

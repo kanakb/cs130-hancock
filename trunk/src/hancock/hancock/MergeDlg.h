@@ -34,4 +34,6 @@ private:
 	CEdit m_input2;
 	CEdit m_path2;
 	CEdit m_output;
+	CButton m_eCFG;
+	CButton m_start;
 };
