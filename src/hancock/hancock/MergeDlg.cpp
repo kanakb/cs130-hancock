@@ -28,6 +28,8 @@ void MergeDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_EDIT_INP2, m_input2);
 	DDX_Control(pDX, IDC_EDIT3, m_path2);
 	DDX_Control(pDX, IDC_EDIT_OUT1, m_output);
+	DDX_Control(pDX, IDC_BTN_ECFG, m_eCFG);
+	DDX_Control(pDX, IDOK, m_start);
 }
 
 
@@ -48,6 +50,8 @@ END_MESSAGE_MAP()
 void MergeDlg::OnBnClickedBtnCrcfg()
 {
 	// TODO: Add code for creating a cfg file
+	m_eCFG.EnableWindow(TRUE);
+	m_start.EnableWindow(TRUE);
 }
 
 void MergeDlg::OnBnClickedBtnEcfg()
@@ -64,6 +68,13 @@ void MergeDlg::OnBnClickedOk()
 void MergeDlg::OnBnClickedBtnSelinp1()
 {
 	// TODO: Add code for picking an input model (#1)
+	CFileDialog inBox1(TRUE, NULL, NULL, OFN_OVERWRITEPROMPT, _T("Models(*.mdl)|*.bin|All Files(*.*)|*.*||"));
+	if (inBox1.DoModal() == IDOK)
+	{
+		CString fullFilePath = inBox1.GetFolderPath() + _T("\\") + inBox1.GetFileName();
+		m_input1.SetWindowText(fullFilePath);
+		m_path1.SetWindowText(inBox1.GetFolderPath());
+	}
 }
 
 void MergeDlg::OnBnClickedSeldep1()
@@ -74,6 +85,13 @@ void MergeDlg::OnBnClickedSeldep1()
 void MergeDlg::OnBnClickedBtnSelinp2()
 {
 	// TODO: Add code for picking an input model (#2)
+	CFileDialog inBox1(TRUE, NULL, NULL, OFN_OVERWRITEPROMPT, _T("Models(*.mdl)|*.bin|All Files(*.*)|*.*||"));
+	if (inBox1.DoModal() == IDOK)
+	{
+		CString fullFilePath = inBox1.GetFolderPath() + _T("\\") + inBox1.GetFileName();
+		m_input2.SetWindowText(fullFilePath);
+		m_path2.SetWindowText(inBox1.GetFolderPath());
+	}
 }
 
 void MergeDlg::OnBnClickedSeldep2()
@@ -84,4 +102,12 @@ void MergeDlg::OnBnClickedSeldep2()
 void MergeDlg::OnBnClickedBtnSelmodout()
 {
 	// TODO: Add code for picking an output model
+	CFileDialog outBox(FALSE, NULL, NULL, OFN_OVERWRITEPROMPT, _T("Models (*.mdl)|*.mdl|All Files(*.*)|*.*||"));
+	if (outBox.DoModal() == IDOK)
+	{
+		CString fullFilePath = outBox.GetFolderPath() + _T("\\") + outBox.GetFileName();
+		if (outBox.GetFileExt() == _T(""))
+			fullFilePath += _T(".mdl");
+		m_output.SetWindowText(fullFilePath);
+	}
 }

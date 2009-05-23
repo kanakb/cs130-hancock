@@ -30,4 +30,6 @@ private:
 	CEdit m_input;
 	CEdit m_output;
 	CEdit m_mode;
+	CButton m_eCFG;
+	CButton m_start;
 };

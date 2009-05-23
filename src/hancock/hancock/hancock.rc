@@ -296,7 +296,7 @@ CAPTION "Compile Model"
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
     DEFPUSHBUTTON   "Start",IDOK,345,129,50,14
-    EDITTEXT        IDC_EDIT_COMPILE_INP,66,15,219,111,ES_MULTILINE | ES_AUTOVSCROLL | ES_AUTOHSCROLL | ES_WANTRETURN | WS_VSCROLL
+    EDITTEXT        IDC_EDIT_COMPILE_INP,66,15,219,111,ES_MULTILINE | ES_AUTOVSCROLL | ES_AUTOHSCROLL | ES_WANTRETURN | WS_VSCROLL | WS_HSCROLL
     LTEXT           "Input Files",-1,19,16,34,8
     PUSHBUTTON      "Select...",IDC_BTN_SELINP1,291,15,50,14
     PUSHBUTTON      "Dependency",IDC_SELDEP1,345,15,50,14
@@ -439,7 +439,7 @@ END
 
 IDD_CLSTFILES DIALOGEX 0, 0, 361, 100
 STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
-CAPTION "Extract Buffers"
+CAPTION "Cluster Files"
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
     DEFPUSHBUTTON   "Start",IDOK,304,79,50,14,WS_DISABLED
@@ -600,6 +600,21 @@ BEGIN
     END
 END
 #endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog Info
+//
+
+IDD_MAKEINDEX DLGINIT
+BEGIN
+    IDC_COMBO_INDMODE, 0x403, 10, 0
+0x6962, 0x426e, 0x6675, 0x6566, 0x0072, 
+    IDC_COMBO_INDMODE, 0x403, 11, 0
+0x6574, 0x7478, 0x7542, 0x6666, 0x7265, "\000" 
+    0
+END
 
 
 /////////////////////////////////////////////////////////////////////////////

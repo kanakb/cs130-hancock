@@ -29,4 +29,6 @@ private:
 	CEdit m_input;
 	CEdit m_type;
 	CEdit m_maxDiff;
+	CButton m_eCFG;
+	CButton m_start;
 };

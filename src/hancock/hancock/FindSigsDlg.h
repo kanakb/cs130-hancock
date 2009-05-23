@@ -44,4 +44,12 @@ private:
 	CEdit m_inpClst2;
 	CEdit m_mode;
 	CEdit m_output;
+	CButton m_eCFG;
+	CButton m_start;
+	CButton m_selI2;
+	CButton m_selC2;
+	CButton m_browseI2;
+	CButton m_depI2;
+	CButton m_browseC2;
+	CButton m_depC2;
 };

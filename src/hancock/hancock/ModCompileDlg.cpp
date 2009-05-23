@@ -44,7 +44,19 @@ void ModCompileDlg::OnBnClickedOk()
 
 void ModCompileDlg::OnBnClickedBtnSelinp1()
 {
-	// TODO: Add code for picking an input directory
+	// TODO: Add code for picking input files
+	CString fileList;
+	m_input.GetWindowText(fileList);
+	CFileDialog inBox(TRUE, NULL, NULL, OFN_OVERWRITEPROMPT, _T("Models (*.mdl)|*.mdl|All Files(*.*)|*.*||"));
+	if (inBox.DoModal() == IDOK)
+	{
+		CString fullFilePath = inBox.GetFolderPath() + _T("\\") + inBox.GetFileName();
+		if (fileList == _T(""))
+			fileList += fullFilePath;
+		else
+			fileList += _T("\r\n") + fullFilePath;
+		m_input.SetWindowText(fileList);
+	}
 }
 
 void ModCompileDlg::OnBnClickedSeldep1()
