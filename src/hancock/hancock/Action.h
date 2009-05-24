@@ -44,7 +44,7 @@ public:
 protected:
 	void executeProcess(string cmd);
 	char buf[MAX_BUF_LEN];		// i/o buffer
-	HANDLE newstdin,newstdout,read_stdout,write_stdin;
+	HANDLE stdout_in_child, stdout_from_child;
 	PROCESS_INFORMATION pi;
 	vector<string> argv;	
 };
