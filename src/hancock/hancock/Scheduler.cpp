@@ -15,21 +15,23 @@ DWORD WINAPI Scheduler::Thread_Loop (LPVOID lpParam)
 	
 	while (true)
 	{
-		if(!actionList->empty())
+		if(!actionList->empty())			// if there are tasks in the m_actions list
 		{
-			if (it == actionList->end())
+			if (it == actionList->end())	// if we have gone through the list already, start at the beginning
 			{
 				it = actionList->begin();
 				Sleep(SLEEP_TIME);
 			}
 	        
-			if ((*it)->status == RUNNING && (*it)->m_action->isComplete())
+			if ((*it)->status == RUNNING && (*it)->m_action->isComplete())		// if task has completed
 			{
 				list<actData*>::iterator dit;
 				
+				// remove the completed task from the dependency lists of its dependents
 				for (dit = (*it)->dependents.begin(); dit != (*it)->dependents.end(); dit++)
 					(*dit)->dependencies.remove(*it);
-
+				
+				// update the status of the task and the internal active task count
 				(*it)->status = COMPLETED;
 				activeCount--;
 
@@ -37,6 +39,17 @@ DWORD WINAPI Scheduler::Thread_Loop (LPVOID lpParam)
 				string logStr = ((Scheduler*)lpParam)->formatTime();
 				logStr += " "+(*it)->m_action->exeName+" completed with status: "+(*it)->m_action->output;
 				((Scheduler*)lpParam)->m_log->write(logStr);
+
+				// TODO: Here is where the call to the MPane function should go
+				// Prabhu, Kanak I have added 2 variables to the actData structure soleley for the purpose
+				// of making this task easier: list<string> inputs   &   list<string outputs
+				// They can be accessed in this manner:  (*it)->inputs   and   (*it)->outputs
+				// This also means that the MPane function signature needs to be:
+				//      function(list<string> inputs, list<string outputs)
+				// Also, Kanak, you will need to pass these in to the addAction call as well so that they
+				// are properly initialized.
+				// Below I have written a placeholder for the call to the MPane function:
+				//		((Scheduler*)lpParam)->m_mpane->the_function_here((*it)->inputs,(*it)->outputs);
 			}
 
 			else if ((*it)->status == RUNNING)
@@ -67,8 +80,8 @@ DWORD WINAPI Scheduler::Thread_Loop (LPVOID lpParam)
 	}
 }
 
-Scheduler::Scheduler(HancockLog* hlog)
-:m_log(hlog)
+Scheduler::Scheduler(HancockLog* hlog,MPane* mpane)
+:m_log(hlog),m_mpane(mpane)
 {
 	//cout<<"Initializing Scheduler..."<<endl;
 	threshold = getThresholdFromFile();
@@ -123,12 +136,14 @@ string Scheduler::formatTime()
 }
 	
 //Adds a new action, starts if no dependencies, under threshold.
-void Scheduler::addAction(Action* task, list<actData*> inDependencies)
+void Scheduler::addAction(Action* task, list<actData*> inDependencies, list<string> inputs, list<string> outputs)
 {
 	actData* toAdd = new actData;
 	toAdd->m_action = task;
 	toAdd->startTime = "";
 	toAdd->status = WAITING;
+	toAdd->inputs = inputs;
+	toAdd->outputs = outputs;
 	if(inDependencies.empty())		// if there are no dependencies, 
 	{
 		m_actions->push_back(toAdd);	// add the actData of this task to the m_actions list
