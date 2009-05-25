@@ -4,6 +4,7 @@
 #include <shlobj.h> //for directory functions
 #include <map>
 #include <string>
+#include <string.h>
 #include <algorithm>
 #include <fstream>
 #include <list>
@@ -55,6 +56,22 @@ public:
 											operation1\n	//Operations not finalized yet
 											</operations>;
 										 */
+
+	/* Updates the .conf file after an action has been performed:
+	   Inputs:	int action_int is the type of action performed:
+
+				100 Extract Buffers, 101 Create Model, 102 Create Index
+				200 Prune Model, 201 Merge Models, 202 Compile Models, 203 Create Stub Map
+				300 Find Signatures
+				400 Preprocess Malware
+				500 Cluster Files
+
+				const list<string> &inputs is the list of all the input files to the action
+				const list<string> &outputs is the list of all the output files of the action
+		Outputs: TRUE if success, FALSE if fail
+	*/
+	bool updateCnfAction(int action_int, const list<string> &inputs, const list<string> &outputs);
+
 
 	//class Action;
 
@@ -116,6 +133,12 @@ private:
 	BOOL cnfFolderUpdate(); /* If cnf_files exists within a given directory, return true
 							 * otherwise, create the cnf_files directory and return the status
 							 */
+
+	string getActionStringFromInt(int action_int);
+	int getFiletypeIntFromActionInt(int action_int);
+
+
+
 };
 
 #endif // MPANE_H DEFINED
