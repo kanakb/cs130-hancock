@@ -1,38 +1,30 @@
+#include "stdafx.h"
 #include "Scheduler.h"
 
 DWORD WINAPI Scheduler::Thread_Loop (LPVOID lpParam)
-{	
-	cout<<"Starting Thread..."<<endl;cout.flush();
+{		
 	list<actData*>::iterator it;
-	cout<<"Created an iterator..."<<endl;cout.flush();
-	cout<<"Creating a new actDataList..."<<endl;cout.flush();
 	list<actData*>* actionList = new list<actData*>;
-	cout<<"Created a new actDataList..."<<endl;cout.flush();
 	actionList = ((Scheduler*)lpParam)->getActList();
-	cout<<"Initialized new actDataList..."<<endl;cout.flush();
+	
 	while(actionList->empty())
 	{
-		cout<<"No processes to run."<<endl;cout.flush();
 		Sleep(SLEEP_TIME);
-		cout<<"Checking again..."<<endl;cout.flush();
 	}
-	cout<<"We now have work to do..."<<endl;cout.flush();
 	it = ((Scheduler*)lpParam)->getActList()->begin();
-	cout<<"Entering main loop..."<<endl;cout.flush();
+	
 	while (true)
 	{
 		if(!actionList->empty())
 		{
 			if (it == actionList->end())
 			{
-				cout<<"Wrapping around..."<<endl;cout.flush();
 				it = actionList->begin();
 				Sleep(SLEEP_TIME);
 			}
 	        
 			if ((*it)->status == RUNNING && (*it)->m_action->isComplete())
 			{
-				cout<<"Process "<<(*it)->m_action->getName()<<" is done..."<<endl;cout.flush();
 				list<actData*>::iterator dit;
 				
 				for (dit = (*it)->dependents.begin(); dit != (*it)->dependents.end(); dit++)
@@ -41,41 +33,44 @@ DWORD WINAPI Scheduler::Thread_Loop (LPVOID lpParam)
 				(*it)->status = COMPLETED;
 				activeCount--;
 
-				// TODO for Sargis: Output *it.m_action.status to LOG!
+				// Logs the status of the completed action
+				string logStr = ((Scheduler*)lpParam)->formatTime();
+				logStr += " "+(*it)->m_action->exeName+" completed with status: "+(*it)->m_action->output;
+				((Scheduler*)lpParam)->m_log->write(logStr);
 			}
 
 			else if ((*it)->status == RUNNING)
 			{
-				cout<<"Process "<<(*it)->m_action->getName()<<" is running..."<<endl;cout.flush();
 				// It's still running. Don't do anything
 			}
 
 			else if ((*it)->status == WAITING)
 			{
-				cout<<"Process "<<(*it)->m_action->getName()<<" is waiting..."<<endl;cout.flush();
 				if ((*it)->dependencies.empty() && activeCount < threshold)
 				{
-					cout<<"Starting "<<(*it)->m_action->getName()<<endl;
 					(*it)->startTime = formatTime();
 					(*it)->m_action->act();
 					activeCount++;
 					(*it)->status = RUNNING;
 
-					// TODO for Sargis: Output *it.m_action started running to LOG!
+					// Logs that a new action has been started.
+					string logStr = ((Scheduler*)lpParam)->formatTime();
+					logStr += " "+(*it)->m_action->exeName+" has been started.";
+					((Scheduler*)lpParam)->m_log->write(logStr);
 				}
 			}
 
 			it++;
-			cout<<"Checking next task..."<<endl;
 			continue;
 		}
 		Sleep(SLEEP_TIME);
 	}
 }
 
-Scheduler::Scheduler()
+Scheduler::Scheduler(HancockLog* hlog)
+:m_log(hlog)
 {
-	cout<<"Initializing Scheduler..."<<endl;
+	//cout<<"Initializing Scheduler..."<<endl;
 	threshold = getThresholdFromFile();
 	activeCount = 0;
 	//m_actions = (list<actData*>*) HeapAlloc(GetProcessHeap(),HEAP_ZERO_MEMORY,sizeof(list<Scheduler::actData>));
@@ -92,6 +87,7 @@ Scheduler::Scheduler()
 
 Scheduler::~Scheduler()
 {
+	delete m_log;
 	delete m_actions;
 	CloseHandle(Handle_of_Thread_Loop);
 }
@@ -133,10 +129,10 @@ void Scheduler::addAction(Action* task, list<actData*> inDependencies)
 	toAdd->m_action = task;
 	toAdd->startTime = "";
 	toAdd->status = WAITING;
-	if(inDependencies.empty())
+	if(inDependencies.empty())		// if there are no dependencies, 
 	{
-		m_actions->push_back(toAdd);
-		return;
+		m_actions->push_back(toAdd);	// add the actData of this task to the m_actions list
+		return;	
 	}
 	toAdd->dependencies = inDependencies;
 	list<actData*>::iterator it;        // list iterator for dependencies list
