@@ -266,6 +266,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Scheduler.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\stdafx.cpp"
 				>
 				<FileConfiguration

@@ -1,10 +1,12 @@
 #pragma once
 
+#ifndef SCHEDULER_H
+#define SCHEDULER_H
 #include "Action.h"
+#include "log.h"
 #include <string>
 #include <list>
 #include <windows.h>
-#include "Action.h"
 
 #define SLEEP_TIME 1000
 #define WAITING 1
@@ -23,8 +25,9 @@ public:
         list<actData*> dependents;
 	};
 
+	HancockLog* m_log;				// pointer to the instance of the current log 
 
-	Scheduler();
+	Scheduler(HancockLog* hlog);
 	~Scheduler();
 	
 	//Adds a new action, starts if no dependencies, under threshold.
@@ -51,7 +54,7 @@ public:
 	//returns current time in format (mm/dd/yy hh:mm)
 	string formatTime();
 
-private:
+private:	
 	HANDLE Handle_of_Thread_Loop;	// variable to hold handle of Thread
     list<actData*>* m_actions;
     DWORD WINAPI Thread_Loop (LPVOID lpParam);
@@ -62,3 +65,5 @@ private:
 		return static_cast<Scheduler*>(info)->Thread_Loop(info);
 	}
 };
+
+#endif
