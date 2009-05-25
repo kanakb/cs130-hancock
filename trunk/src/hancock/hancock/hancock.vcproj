@@ -289,6 +289,10 @@
 				RelativePath=".\StubMapDlg.cpp"
 				>
 			</File>
+			<File
+				RelativePath=".\ThresholdDlg.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -393,6 +397,10 @@
 			</File>
 			<File
 				RelativePath=".\targetver.h"
+				>
+			</File>
+			<File
+				RelativePath=".\ThresholdDlg.h"
 				>
 			</File>
 		</Filter>

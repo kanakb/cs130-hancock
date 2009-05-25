@@ -28,6 +28,7 @@
 #include "ClstDlg.h"
 #include "PreprocDlg.h"
 #include "StubMapDlg.h"
+#include "ThresholdDlg.h"
 #include <map>
 #include <string>
 
@@ -73,6 +74,7 @@ BEGIN_MESSAGE_MAP(CMainFrame, CFrameWndEx)
 	ON_COMMAND(WM_VIEWLOG, &CMainFrame::OnViewLogger)
 	ON_COMMAND(WM_LOGSAVE, &CMainFrame::OnSaveLog)
 	ON_COMMAND(WM_FILEDATA, &CMainFrame::OnViewRPane)
+	ON_COMMAND(WM_THRESHOLD, &CMainFrame::OnSetThreshold)
 	ON_UPDATE_COMMAND_UI(WM_GOODWARE, &CMainFrame::OnUpdateViewFiles)
 	ON_UPDATE_COMMAND_UI(WM_MODEL, &CMainFrame::OnUpdateViewFiles)
 	ON_UPDATE_COMMAND_UI(WM_INDEX, &CMainFrame::OnUpdateViewFiles)
@@ -466,6 +468,12 @@ void CMainFrame::InitializeRibbon()
 	CMFCRibbonButton* pBtnViewSched = new CMFCRibbonButton(WM_VIEWSCHED, strTemp, -1, 1);
 	pPanelScheduler->Add(pBtnViewSched);
 
+	// Add "Set Threshold" button
+	bNameValid = strTemp.LoadString(IDS_RIBBON_THRESHOLD);
+	ASSERT(bNameValid);
+	CMFCRibbonButton* pBtnThreshold = new CMFCRibbonButton(WM_THRESHOLD, strTemp, -1, 1);
+	pPanelScheduler->Add(pBtnThreshold);
+
 	// Create and add a "Logging" panel:
 	bNameValid = strTemp.LoadString(IDS_RIBBON_LOGGING);
 	ASSERT(bNameValid);
@@ -714,19 +722,22 @@ void CMainFrame::OnViewType(UINT nID)
 void CMainFrame::OnMakeModel()
 {
 	MakeModelDlg myDlg;
-	myDlg.DoModal();
+	if (myDlg.DoModal() == IDOK)
+		m_log.write("Created Make Model action");
 }
 
 void CMainFrame::OnExtractBuffers()
 {
 	ExtrBuffersDlg myDlg;
-	myDlg.DoModal();
+	if (myDlg.DoModal() == IDOK)
+		m_log.write("Created Extract Buffers action");
 }
 
 void CMainFrame::OnMakeIndex()
 {
 	MakeIndexDlg myDlg;
-	myDlg.DoModal();
+	if (myDlg.DoModal() == IDOK)
+		m_log.write("Created Make Index action");
 }
 
 void CMainFrame::OnLabelGood()
@@ -737,25 +748,29 @@ void CMainFrame::OnLabelGood()
 void CMainFrame::OnPrune()
 {
 	PruneDlg myDlg;
-	myDlg.DoModal();
+	if (myDlg.DoModal() == IDOK)
+		m_log.write("Created Prune Model action");
 }
 
 void CMainFrame::OnMerge()
 {
 	MergeDlg myDlg;
-	myDlg.DoModal();
+	if (myDlg.DoModal() == IDOK)
+		m_log.write("Created Merge Model action");
 }
 
 void CMainFrame::OnModelCompile()
 {
 	ModCompileDlg myDlg;
-	myDlg.DoModal();
+	if (myDlg.DoModal() == IDOK)
+		m_log.write("Created Compile Model action");
 }
 
 void CMainFrame::OnMakeStub()
 {
 	StubMapDlg myDlg;
-	myDlg.DoModal();
+	if (myDlg.DoModal() == IDOK)
+		m_log.write("Created Make Stub Map action");
 }
 
 void CMainFrame::OnLabelModel()
@@ -766,7 +781,8 @@ void CMainFrame::OnLabelModel()
 void CMainFrame::OnFindSigs()
 {
 	FindSigsDlg myDlg;
-	myDlg.DoModal();
+	if (myDlg.DoModal() == IDOK)
+		m_log.write("Created Find Signatures action");
 }
 
 void CMainFrame::OnLabelIndex()
@@ -777,7 +793,8 @@ void CMainFrame::OnLabelIndex()
 void CMainFrame::OnPreprocess()
 {
 	PreprocDlg myDlg;
-	myDlg.DoModal();
+	if (myDlg.DoModal() == IDOK)
+		m_log.write("Created Preprocess Malware action");
 }
 
 void CMainFrame::OnLabelMalware()
@@ -788,7 +805,8 @@ void CMainFrame::OnLabelMalware()
 void CMainFrame::OnClusterFiles()
 {
 	ClstDlg myDlg;
-	myDlg.DoModal();
+	if (myDlg.DoModal() == IDOK)
+		m_log.write("Created Cluster Files action");
 }
 
 void CMainFrame::OnLabelPreMalware()
@@ -813,6 +831,13 @@ void CMainFrame::OnLabelFindSigs()
 
 // Functions to bring up scheduling and logging GUI
 void CMainFrame::OnViewScheduler() { m_log.write("Opened Scheduler UI."); }
+
+void CMainFrame::OnSetThreshold()
+{
+	ThresholdDlg tDlg(&m_log);
+	tDlg.DoModal();
+}
+
 void CMainFrame::OnViewLogger()
 {
 	m_log.write("Opened Log UI");
