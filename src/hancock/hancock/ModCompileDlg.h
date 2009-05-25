@@ -1,5 +1,7 @@
 #pragma once
 #include "afxwin.h"
+#include "Scheduler.h"
+#include <list>
 
 
 // ModCompileDlg dialog
@@ -9,7 +11,7 @@ class ModCompileDlg : public CDialog
 	DECLARE_DYNAMIC(ModCompileDlg)
 
 public:
-	ModCompileDlg(CWnd* pParent = NULL);   // standard constructor
+	ModCompileDlg(Scheduler *sched, CWnd* pParent = NULL);   // standard constructor
 	virtual ~ModCompileDlg();
 
 // Dialog Data
@@ -25,4 +27,6 @@ public:
 	afx_msg void OnBnClickedSeldep1();
 private:
 	CEdit m_input;
+	Scheduler *m_sched;
+	std::list<Scheduler::actData*> m_deps;
 };

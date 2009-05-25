@@ -6,9 +6,12 @@
 #include "PreprocDlg.h"
 #include "FolderDlg.h"
 #include "EditCFGDlg.h"
+#include "Action.h"
+#include "Scheduler.h"
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <list>
 using namespace std;
 
 
@@ -16,8 +19,8 @@ using namespace std;
 
 IMPLEMENT_DYNAMIC(PreprocDlg, CDialog)
 
-PreprocDlg::PreprocDlg(CWnd* pParent /*=NULL*/)
-	: CDialog(PreprocDlg::IDD, pParent)
+PreprocDlg::PreprocDlg(Scheduler *sched, CWnd* pParent /*=NULL*/)
+	: CDialog(PreprocDlg::IDD, pParent), m_sched(sched)
 {
 
 }
@@ -134,6 +137,24 @@ void PreprocDlg::OnBnClickedBtnEcfg()
 void PreprocDlg::OnBnClickedOk()
 {
 	// TODO: Add code for starting the action
+	Action *act = new Action("C:\\sandbox\\PreProcMalware\\", "PreProcMalware.exe", m_cfgname);
+	std::list<string> inputs;
+	std::list<string> outputs;
+
+	// Process inputs
+	CString in;
+	m_input.GetWindowText(in);
+	CT2CA asciiInp1(in);
+	inputs.push_back(string(asciiInp1));
+
+	//Process outputs
+	CString out;
+	m_output.GetWindowText(out);
+	CT2CA asciiOut(out);
+	outputs.push_back(string(asciiOut));
+
+	// Schedule action
+	m_sched->addAction(act, m_deps, inputs, outputs);
 	OnOK();
 }
 

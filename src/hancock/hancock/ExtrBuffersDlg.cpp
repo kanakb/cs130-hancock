@@ -6,9 +6,12 @@
 #include "ExtrBuffersDlg.h"
 #include "FolderDlg.h"
 #include "EditCFGDlg.h"
+#include "Action.h"
+#include "Scheduler.h"
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <list>
 using namespace std;
 
 
@@ -16,8 +19,8 @@ using namespace std;
 
 IMPLEMENT_DYNAMIC(ExtrBuffersDlg, CDialog)
 
-ExtrBuffersDlg::ExtrBuffersDlg(CWnd* pParent /*=NULL*/)
-	: CDialog(ExtrBuffersDlg::IDD, pParent)
+ExtrBuffersDlg::ExtrBuffersDlg(Scheduler *sched, CWnd* pParent /*=NULL*/)
+	: CDialog(ExtrBuffersDlg::IDD, pParent), m_sched(sched)
 {
 
 }
@@ -102,6 +105,24 @@ void ExtrBuffersDlg::OnBnClickedBtnEcfg()
 void ExtrBuffersDlg::OnBnClickedOk()
 {
 	// TODO: Add code for starting the action
+	Action *act = new Action("C:\\sandbox\\GetPEBuffers\\", "GetPEBuffers.exe", m_cfgname);
+	std::list<string> inputs;
+	std::list<string> outputs;
+
+	// Process inputs
+	CString inDir;
+	m_input.GetWindowText(inDir);
+	CT2CA asciiInp(inDir);
+	inputs.push_back(string(asciiInp));
+
+	//Process outputs
+	CString outDir;
+	m_input.GetWindowText(outDir);
+	CT2CA asciiOut(inDir);
+	outputs.push_back(string(asciiOut));
+
+	// Schedule action
+	m_sched->addAction(act, m_deps, inputs, outputs);
 	OnOK();
 }
 

@@ -1,6 +1,8 @@
 #pragma once
 #include "afxwin.h"
+#include "Scheduler.h"
 #include <string>
+#include <list>
 
 
 // FindSigsDlg dialog
@@ -10,7 +12,7 @@ class FindSigsDlg : public CDialog
 	DECLARE_DYNAMIC(FindSigsDlg)
 
 public:
-	FindSigsDlg(CWnd* pParent = NULL);   // standard constructor
+	FindSigsDlg(Scheduler *sched, CWnd* pParent = NULL);   // standard constructor
 	virtual ~FindSigsDlg();
 
 // Dialog Data
@@ -56,4 +58,6 @@ private:
 	CEdit m_minCov;
 	CEdit m_stdev;
 	std::string m_cfgname;
+	Scheduler *m_sched;
+	std::list<Scheduler::actData*> m_deps;
 };

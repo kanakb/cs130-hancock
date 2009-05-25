@@ -1,6 +1,8 @@
 #pragma once
 #include "afxwin.h"
+#include "Scheduler.h"
 #include <string>
+#include <list>
 
 
 // MergeDlg dialog
@@ -10,7 +12,7 @@ class MergeDlg : public CDialog
 	DECLARE_DYNAMIC(MergeDlg)
 
 public:
-	MergeDlg(CWnd* pParent = NULL);   // standard constructor
+	MergeDlg(Scheduler *sched, CWnd* pParent = NULL);   // standard constructor
 	virtual ~MergeDlg();
 
 // Dialog Data
@@ -38,4 +40,6 @@ private:
 	CButton m_eCFG;
 	CButton m_start;
 	std::string m_cfgname;
+	Scheduler *m_sched;
+	std::list<Scheduler::actData*> m_deps;
 };

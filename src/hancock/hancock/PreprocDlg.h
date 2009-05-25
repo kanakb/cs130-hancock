@@ -1,6 +1,8 @@
 #pragma once
 #include "afxwin.h"
+#include "Scheduler.h"
 #include <string>
+#include <list>
 
 
 // PreprocDlg dialog
@@ -10,7 +12,7 @@ class PreprocDlg : public CDialog
 	DECLARE_DYNAMIC(PreprocDlg)
 
 public:
-	PreprocDlg(CWnd* pParent = NULL);   // standard constructor
+	PreprocDlg(Scheduler *sched, CWnd* pParent = NULL);   // standard constructor
 	virtual ~PreprocDlg();
 
 // Dialog Data
@@ -43,4 +45,6 @@ private:
 	CEdit m_maxProcs;
 	CEdit m_timeOut;
 	std::string m_cfgname;
+	Scheduler *m_sched;
+	std::list<Scheduler::actData*> m_deps;
 };

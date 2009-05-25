@@ -1,6 +1,8 @@
 #pragma once
 #include "afxwin.h"
+#include "Scheduler.h"
 #include <string>
+#include <list>
 
 
 // MakeModelDlg dialog
@@ -10,7 +12,7 @@ class MakeModelDlg : public CDialog
 	DECLARE_DYNAMIC(MakeModelDlg)
 
 public:
-	MakeModelDlg(CWnd* pParent = NULL);   // standard constructor
+	MakeModelDlg(Scheduler *sched, CWnd* pParent = NULL);   // standard constructor
 	virtual ~MakeModelDlg();
 
 // Dialog Data
@@ -61,4 +63,6 @@ private:
 	CButton m_selTS2;
 	CButton m_selTS3;
 	std::string m_cfgname;
+	Scheduler *m_sched;
+	std::list<Scheduler::actData*> m_deps;
 };

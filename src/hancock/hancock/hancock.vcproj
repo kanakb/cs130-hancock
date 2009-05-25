@@ -270,6 +270,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\ScheduleUI.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\stdafx.cpp"
 				>
 				<FileConfiguration
@@ -389,6 +393,10 @@
 			</File>
 			<File
 				RelativePath=".\Scheduler.h"
+				>
+			</File>
+			<File
+				RelativePath=".\ScheduleUI.h"
 				>
 			</File>
 			<File

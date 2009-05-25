@@ -5,9 +5,12 @@
 #include "hancock.h"
 #include "FindSigsDlg.h"
 #include "EditCFGDlg.h"
+#include "Action.h"
+#include "Scheduler.h"
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <list>
 using namespace std;
 
 
@@ -15,8 +18,8 @@ using namespace std;
 
 IMPLEMENT_DYNAMIC(FindSigsDlg, CDialog)
 
-FindSigsDlg::FindSigsDlg(CWnd* pParent /*=NULL*/)
-	: CDialog(FindSigsDlg::IDD, pParent)
+FindSigsDlg::FindSigsDlg(Scheduler *sched, CWnd* pParent /*=NULL*/)
+	: CDialog(FindSigsDlg::IDD, pParent), m_sched(sched)
 {
 
 }
@@ -163,6 +166,48 @@ void FindSigsDlg::OnBnClickedBtnEcfg()
 void FindSigsDlg::OnBnClickedOk()
 {
 	// TODO: Add code for starting the action
+	Action *act = new Action("C:\\sandbox\\FindSigs\\", "FindSigs.exe", m_cfgname);
+	std::list<string> inputs;
+	std::list<string> outputs;
+
+	// Process inputs
+	CString in;
+	m_inpStubMap.GetWindowText(in);
+	CT2CA asciiInp1(in);
+	inputs.push_back(string(asciiInp1));
+
+	m_inpClst1.GetWindowText(in);
+	CT2CA asciiInp2(in);
+	inputs.push_back(string(asciiInp2));
+
+	m_inpInd1.GetWindowText(in);
+	CT2CA asciiInp3(in);
+	inputs.push_back(string(asciiInp3));
+
+	m_inpInd2.GetWindowText(in);
+	BOOL checkState = m_selI2.GetCheck();
+	if (checkState)
+	{
+		CT2CA asciiInp4(in);
+		inputs.push_back(string(asciiInp4));
+	}
+
+	m_inpClst2.GetWindowText(in);
+	checkState = m_selC2.GetCheck();
+	if (checkState)
+	{
+		CT2CA asciiInp5(in);
+		inputs.push_back(string(asciiInp5));
+	}
+
+	//Process outputs
+	CString out;
+	m_output.GetWindowText(out);
+	CT2CA asciiOut(out);
+	outputs.push_back(string(asciiOut));
+
+	// Schedule action
+	m_sched->addAction(act, m_deps, inputs, outputs);
 	OnOK();
 }
 

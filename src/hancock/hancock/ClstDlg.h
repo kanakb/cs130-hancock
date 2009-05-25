@@ -1,6 +1,8 @@
 #pragma once
 #include "afxwin.h"
+#include "Scheduler.h"
 #include <string>
+#include <list>
 
 
 // ClstDlg dialog
@@ -10,7 +12,7 @@ class ClstDlg : public CDialog
 	DECLARE_DYNAMIC(ClstDlg)
 
 public:
-	ClstDlg(CWnd* pParent = NULL);   // standard constructor
+	ClstDlg(Scheduler *sched, CWnd* pParent = NULL);   // standard constructor
 	virtual ~ClstDlg();
 
 // Dialog Data
@@ -33,4 +35,6 @@ private:
 	CButton m_eCFG;
 	CButton m_start;
 	std::string m_cfgname;
+	Scheduler *m_sched;
+	std::list<Scheduler::actData*> m_deps;
 };

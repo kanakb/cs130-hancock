@@ -1,6 +1,8 @@
 #pragma once
 #include "afxwin.h"
+#include "Scheduler.h"
 #include <string>
+#include <list>
 
 
 // StubMapDlg dialog
@@ -10,7 +12,7 @@ class StubMapDlg : public CDialog
 	DECLARE_DYNAMIC(StubMapDlg)
 
 public:
-	StubMapDlg(CWnd* pParent = NULL);   // standard constructor
+	StubMapDlg(Scheduler *sched, CWnd* pParent = NULL);   // standard constructor
 	virtual ~StubMapDlg();
 
 // Dialog Data
@@ -54,4 +56,6 @@ private:
 	CButton m_browseI1;
 	CButton m_depI1;
 	std::string m_cfgname;
+	Scheduler *m_sched;
+	std::list<Scheduler::actData*> m_deps;
 };

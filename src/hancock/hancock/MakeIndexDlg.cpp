@@ -5,14 +5,20 @@
 #include "hancock.h"
 #include "MakeIndexDlg.h"
 #include "FolderDlg.h"
+#include "Action.h"
+#include "Scheduler.h"
+#include <list>
+#include <string>
+#include <vector>
+using namespace std;
 
 
 // MakeIndexDlg dialog
 
 IMPLEMENT_DYNAMIC(MakeIndexDlg, CDialog)
 
-MakeIndexDlg::MakeIndexDlg(CWnd* pParent /*=NULL*/)
-	: CDialog(MakeIndexDlg::IDD, pParent)
+MakeIndexDlg::MakeIndexDlg(Scheduler *sched, CWnd* pParent /*=NULL*/)
+	: CDialog(MakeIndexDlg::IDD, pParent), m_sched(sched)
 {
 }
 
@@ -42,6 +48,37 @@ END_MESSAGE_MAP()
 void MakeIndexDlg::OnBnClickedOk()
 {
 	// TODO: Add code for starting the action
+	std::vector<string> vParam;
+	std::list<string> inputs;
+	std::list<string> outputs;
+
+	// Process inputs
+	CString in;
+	m_input.GetWindowText(in);
+	CT2CA asciiInp1(in);
+	inputs.push_back(string(asciiInp1));
+	vParam.push_back(string(asciiInp1));
+
+	//Process outputs
+	CString out;
+	m_output.GetWindowText(out);
+	CT2CA asciiOut(out);
+	outputs.push_back(string(asciiOut));
+	vParam.push_back(string(asciiOut));
+
+	CString mode;
+	int nIndex = m_mode.GetCurSel();
+	if (nIndex != CB_ERR)
+	{
+		if (nIndex == 0)
+			vParam.push_back("binBuffer");
+		else
+			vParam.push_back("textBuffer");
+	}
+	Action *act = new Action("C:\\sandbox\\CreateBinIndex\\", "CreateBinIndex.exe", vParam);
+
+	// Schedule action
+	m_sched->addAction(act, m_deps, inputs, outputs);
 	OnOK();
 }
 

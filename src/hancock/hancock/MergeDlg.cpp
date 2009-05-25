@@ -5,9 +5,12 @@
 #include "hancock.h"
 #include "MergeDlg.h"
 #include "EditCFGDlg.h"
+#include "Action.h"
+#include "Scheduler.h"
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <list>
 using namespace std;
 
 
@@ -15,8 +18,8 @@ using namespace std;
 
 IMPLEMENT_DYNAMIC(MergeDlg, CDialog)
 
-MergeDlg::MergeDlg(CWnd* pParent /*=NULL*/)
-	: CDialog(MergeDlg::IDD, pParent)
+MergeDlg::MergeDlg(Scheduler *sched, CWnd* pParent /*=NULL*/)
+	: CDialog(MergeDlg::IDD, pParent), m_sched(sched)
 {
 
 }
@@ -113,6 +116,28 @@ void MergeDlg::OnBnClickedBtnEcfg()
 void MergeDlg::OnBnClickedOk()
 {
 	// TODO: Add code for starting the action
+	Action *act = new Action("C:\\sandbox\\MergeModels\\", "MergeModels.exe", m_cfgname);
+	std::list<string> inputs;
+	std::list<string> outputs;
+
+	// Process inputs
+	CString in;
+	m_input1.GetWindowText(in);
+	CT2CA asciiInp1(in);
+	inputs.push_back(string(asciiInp1));
+
+	m_input2.GetWindowText(in);
+	CT2CA asciiInp2(in);
+	inputs.push_back(string(asciiInp2));
+
+	//Process outputs
+	CString out;
+	m_output.GetWindowText(out);
+	CT2CA asciiOut(out);
+	outputs.push_back(string(asciiOut));
+
+	// Schedule action
+	m_sched->addAction(act, m_deps, inputs, outputs);
 	OnOK();
 }
 

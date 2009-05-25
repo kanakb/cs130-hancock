@@ -14,6 +14,7 @@
 
 #include "stdafx.h"
 #include "log.h"
+#include "Scheduler.h"
 #include "FolderDlg.h"
 #include "hancock.h"
 
@@ -29,6 +30,7 @@
 #include "PreprocDlg.h"
 #include "StubMapDlg.h"
 #include "ThresholdDlg.h"
+#include "ScheduleUI.h"
 #include <map>
 #include <string>
 
@@ -91,9 +93,8 @@ END_MESSAGE_MAP()
 // CMainFrame construction/destruction
 
 CMainFrame::CMainFrame()
-: m_wndView(&m_log, &m_rPane, &m_mPane)
+: m_wndView(&m_log, &m_rPane, &m_mPane), m_scheduler(&m_log, &m_mPane)
 {
-	// TODO: add member initialization code here
 }
 
 CMainFrame::~CMainFrame()
@@ -721,21 +722,21 @@ void CMainFrame::OnViewType(UINT nID)
 // Action functions
 void CMainFrame::OnMakeModel()
 {
-	MakeModelDlg myDlg;
+	MakeModelDlg myDlg(&m_scheduler);
 	if (myDlg.DoModal() == IDOK)
 		m_log.write("Created Make Model action");
 }
 
 void CMainFrame::OnExtractBuffers()
 {
-	ExtrBuffersDlg myDlg;
+	ExtrBuffersDlg myDlg(&m_scheduler);
 	if (myDlg.DoModal() == IDOK)
 		m_log.write("Created Extract Buffers action");
 }
 
 void CMainFrame::OnMakeIndex()
 {
-	MakeIndexDlg myDlg;
+	MakeIndexDlg myDlg(&m_scheduler);
 	if (myDlg.DoModal() == IDOK)
 		m_log.write("Created Make Index action");
 }
@@ -747,28 +748,28 @@ void CMainFrame::OnLabelGood()
 
 void CMainFrame::OnPrune()
 {
-	PruneDlg myDlg;
+	PruneDlg myDlg(&m_scheduler);
 	if (myDlg.DoModal() == IDOK)
 		m_log.write("Created Prune Model action");
 }
 
 void CMainFrame::OnMerge()
 {
-	MergeDlg myDlg;
+	MergeDlg myDlg(&m_scheduler);
 	if (myDlg.DoModal() == IDOK)
 		m_log.write("Created Merge Model action");
 }
 
 void CMainFrame::OnModelCompile()
 {
-	ModCompileDlg myDlg;
+	ModCompileDlg myDlg(&m_scheduler);
 	if (myDlg.DoModal() == IDOK)
 		m_log.write("Created Compile Model action");
 }
 
 void CMainFrame::OnMakeStub()
 {
-	StubMapDlg myDlg;
+	StubMapDlg myDlg(&m_scheduler);
 	if (myDlg.DoModal() == IDOK)
 		m_log.write("Created Make Stub Map action");
 }
@@ -780,7 +781,7 @@ void CMainFrame::OnLabelModel()
 
 void CMainFrame::OnFindSigs()
 {
-	FindSigsDlg myDlg;
+	FindSigsDlg myDlg(&m_scheduler);
 	if (myDlg.DoModal() == IDOK)
 		m_log.write("Created Find Signatures action");
 }
@@ -792,7 +793,7 @@ void CMainFrame::OnLabelIndex()
 
 void CMainFrame::OnPreprocess()
 {
-	PreprocDlg myDlg;
+	PreprocDlg myDlg(&m_scheduler);
 	if (myDlg.DoModal() == IDOK)
 		m_log.write("Created Preprocess Malware action");
 }
@@ -804,7 +805,7 @@ void CMainFrame::OnLabelMalware()
 
 void CMainFrame::OnClusterFiles()
 {
-	ClstDlg myDlg;
+	ClstDlg myDlg(&m_scheduler);
 	if (myDlg.DoModal() == IDOK)
 		m_log.write("Created Cluster Files action");
 }
@@ -830,7 +831,12 @@ void CMainFrame::OnLabelFindSigs()
 }
 
 // Functions to bring up scheduling and logging GUI
-void CMainFrame::OnViewScheduler() { m_log.write("Opened Scheduler UI."); }
+void CMainFrame::OnViewScheduler()
+{
+	m_log.write("Opened Scheduler UI.");
+	ScheduleUI sched(FALSE, &m_scheduler);
+	sched.DoModal();
+}
 
 void CMainFrame::OnSetThreshold()
 {
