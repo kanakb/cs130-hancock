@@ -3,6 +3,7 @@
 #ifndef SCHEDULER_H
 #define SCHEDULER_H
 #include "Action.h"
+#include "MPane.h"
 #include "log.h"
 #include <string>
 #include <list>
@@ -23,15 +24,18 @@ public:
 		int status;
 		list<actData*> dependencies;
         list<actData*> dependents;
+		list<string> inputs;
+		list<string> outputs;
 	};
 
-	HancockLog* m_log;				// pointer to the instance of the current log 
+	HancockLog* m_log;				// pointer to the instance of the current log
+	MPane* m_mpane;					// pointer to MPane instance
 
-	Scheduler(HancockLog* hlog);
+	Scheduler(HancockLog* hlog, MPane* mpane);
 	~Scheduler();
 	
 	//Adds a new action, starts if no dependencies, under threshold.
-	void addAction(Action* task, list<actData*> inDependencies); 
+	void addAction(Action* task, list<actData*> inDependencies, list<string> inputs, list<string> outputs); 
 	
 	//Returns list of actions, statuses, start times, for UI.
 	list<actData*>* getActList();
