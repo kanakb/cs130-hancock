@@ -4,14 +4,22 @@
 #include "stdafx.h"
 #include "hancock.h"
 #include "ModCompileDlg.h"
+#include "Action.h"
+#include "Scheduler.h"
+#include <string>
+#include <list>
+#include <iostream>
+#include <sstream>
+#include <vector>
+using namespace std;
 
 
 // ModCompileDlg dialog
 
 IMPLEMENT_DYNAMIC(ModCompileDlg, CDialog)
 
-ModCompileDlg::ModCompileDlg(CWnd* pParent /*=NULL*/)
-	: CDialog(ModCompileDlg::IDD, pParent)
+ModCompileDlg::ModCompileDlg(Scheduler *sched, CWnd* pParent /*=NULL*/)
+	: CDialog(ModCompileDlg::IDD, pParent), m_sched(sched)
 {
 
 }
@@ -39,6 +47,33 @@ END_MESSAGE_MAP()
 void ModCompileDlg::OnBnClickedOk()
 {
 	// TODO: Add code for starting the action
+	std::list<string> inputs;
+	std::list<string> outputs;
+	std::vector<string> vParam;
+
+	// Process inputs
+	CString models;
+	m_input.GetWindowText(models);
+	CT2CA aModels(models);
+	string text(aModels);
+	stringstream ss(text);
+
+	while (ss)
+	{
+		string in;
+		getline(ss, in);
+		if (in != "")
+		{
+			inputs.push_back(in);
+			vParam.push_back(in);
+		}
+	}
+
+	//Process outputs (none at the moment)
+
+	// Schedule action
+	Action *act = new Action("C:\\sandbox\\CompileModel\\", "CompileModel.exe", vParam);
+	m_sched->addAction(act, m_deps, inputs, outputs);
 	OnOK();
 }
 

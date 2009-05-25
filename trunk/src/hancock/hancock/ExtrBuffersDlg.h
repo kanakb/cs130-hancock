@@ -1,6 +1,8 @@
 #pragma once
 #include "afxwin.h"
+#include "Scheduler.h"
 #include <string>
+#include <list>
 
 
 // ExtrBuffersDlg dialog
@@ -10,7 +12,7 @@ class ExtrBuffersDlg : public CDialog
 	DECLARE_DYNAMIC(ExtrBuffersDlg)
 
 public:
-	ExtrBuffersDlg(CWnd* pParent = NULL);   // standard constructor
+	ExtrBuffersDlg(Scheduler *sched, CWnd* pParent = NULL);   // standard constructor
 	virtual ~ExtrBuffersDlg();
 
 // Dialog Data
@@ -34,4 +36,6 @@ private:
 	CButton m_eCFG;
 	CButton m_start;
 	std::string m_cfgname;
+	std::list<Scheduler::actData*> m_deps;
+	Scheduler *m_sched;
 };

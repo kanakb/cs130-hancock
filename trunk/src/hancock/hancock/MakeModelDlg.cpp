@@ -6,17 +6,20 @@
 #include "MakeModelDlg.h"
 #include "FolderDlg.h"
 #include "EditCFGDlg.h"
+#include "Action.h"
+#include "Scheduler.h"
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <list>
 using namespace std;
 
 // MakeModelDlg dialog
 
 IMPLEMENT_DYNAMIC(MakeModelDlg, CDialog)
 
-MakeModelDlg::MakeModelDlg(CWnd* pParent /*=NULL*/)
-	: CDialog(MakeModelDlg::IDD, pParent)
+MakeModelDlg::MakeModelDlg(Scheduler *sched, CWnd* pParent /*=NULL*/)
+	: CDialog(MakeModelDlg::IDD, pParent), m_sched(sched)
 {
 
 }
@@ -75,6 +78,40 @@ END_MESSAGE_MAP()
 void MakeModelDlg::OnBnClickedOk()
 {
 	// TODO: Add code for starting the action
+	Action *act = new Action("C:\\sandbox\\CreateModel\\", "CreateModel.exe", m_cfgname);
+	std::list<string> inputs;
+	std::list<string> outputs;
+
+	// Process inputs
+	CString in;
+	m_input1.GetWindowText(in);
+	CT2CA asciiInp1(in);
+	inputs.push_back(string(asciiInp1));
+
+	m_input2.GetWindowText(in);
+	BOOL checkState = m_selTD2.GetCheck();
+	if (checkState)
+	{
+		CT2CA asciiInp3(in);
+		inputs.push_back(string(asciiInp3));
+	}
+
+	m_input3.GetWindowText(in);
+	checkState = m_selTD3.GetCheck();
+	if (checkState)
+	{
+		CT2CA asciiInp4(in);
+		inputs.push_back(string(asciiInp4));
+	}
+
+	//Process outputs
+	CString out;
+	m_output.GetWindowText(out);
+	CT2CA asciiOut(out);
+	outputs.push_back(string(asciiOut));
+
+	// Schedule action
+	m_sched->addAction(act, m_deps, inputs, outputs);
 	OnOK();
 }
 

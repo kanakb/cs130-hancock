@@ -1,4 +1,4 @@
-// lstDlg.cpp : implementation file
+// ClstDlg.cpp : implementation file
 //
 
 #include "stdafx.h"
@@ -6,6 +6,8 @@
 #include "ClstDlg.h"
 #include "FolderDlg.h"
 #include "EditCFGDlg.h"
+#include "Action.h"
+#include "Scheduler.h"
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -16,8 +18,8 @@ using namespace std;
 
 IMPLEMENT_DYNAMIC(ClstDlg, CDialog)
 
-ClstDlg::ClstDlg(CWnd* pParent /*=NULL*/)
-	: CDialog(ClstDlg::IDD, pParent)
+ClstDlg::ClstDlg(Scheduler *sched, CWnd* pParent /*=NULL*/)
+	: CDialog(ClstDlg::IDD, pParent), m_sched(sched)
 {
 
 }
@@ -102,6 +104,20 @@ void ClstDlg::OnBnClickedBtnEcfg()
 void ClstDlg::OnBnClickedOk()
 {
 	// TODO: Add code for starting the action
+	Action *act = new Action("C:\\sandbox\\FileClust\\", "FileClust.exe", m_cfgname);
+	std::list<string> inputs;
+	std::list<string> outputs;
+
+	// Process inputs
+	CString inDir;
+	m_input.GetWindowText(inDir);
+	CT2CA asciiInp(inDir);
+	inputs.push_back(string(asciiInp));
+
+	//Process outputs (none here)
+
+	// Schedule action
+	m_sched->addAction(act, m_deps, inputs, outputs);
 	OnOK();
 }
 

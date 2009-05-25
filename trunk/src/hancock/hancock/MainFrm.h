@@ -19,6 +19,7 @@
 #include "MPane.h"
 #include "ChildView.h"
 #include "CalendarBar.h"
+#include "Scheduler.h"
 #include "Resource.h"
 #include <map>
 
@@ -160,6 +161,7 @@ private:
 	MPane m_mPane;
 	HancockLog m_log;
 	LogUI *m_logUI;
+	Scheduler m_scheduler;
 };
 
 

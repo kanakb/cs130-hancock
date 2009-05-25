@@ -5,9 +5,12 @@
 #include "hancock.h"
 #include "StubMapDlg.h"
 #include "EditCFGDlg.h"
+#include "Action.h"
+#include "Scheduler.h"
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <list>
 using namespace std;
 
 
@@ -15,8 +18,8 @@ using namespace std;
 
 IMPLEMENT_DYNAMIC(StubMapDlg, CDialog)
 
-StubMapDlg::StubMapDlg(CWnd* pParent /*=NULL*/)
-	: CDialog(StubMapDlg::IDD, pParent)
+StubMapDlg::StubMapDlg(Scheduler *sched, CWnd* pParent /*=NULL*/)
+	: CDialog(StubMapDlg::IDD, pParent), m_sched(sched)
 {
 
 }
@@ -154,6 +157,44 @@ void StubMapDlg::OnBnClickedBtnEcfg()
 void StubMapDlg::OnBnClickedOk()
 {
 	// TODO: Add  code for starting the action
+	Action *act = new Action("C:\\sandbox\\StubGen\\", "StubGen.exe", m_cfgname);
+	std::list<string> inputs;
+	std::list<string> outputs;
+
+	// Process inputs
+	CString in;
+	m_inpClst.GetWindowText(in);
+	CT2CA asciiInp1(in);
+	inputs.push_back(string(asciiInp1));
+
+	m_inpMod1.GetWindowText(in);
+	CT2CA asciiInp2(in);
+	inputs.push_back(string(asciiInp2));
+
+	m_inpMod2.GetWindowText(in);
+	BOOL checkState = m_selM2.GetCheck();
+	if (checkState)
+	{
+		CT2CA asciiInp3(in);
+		inputs.push_back(string(asciiInp3));
+	}
+
+	m_inpIndex.GetWindowText(in);
+	checkState = m_selI1.GetCheck();
+	if (checkState)
+	{
+		CT2CA asciiInp4(in);
+		inputs.push_back(string(asciiInp4));
+	}
+
+	//Process outputs
+	CString out;
+	m_output.GetWindowText(out);
+	CT2CA asciiOut(out);
+	outputs.push_back(string(asciiOut));
+
+	// Schedule action
+	m_sched->addAction(act, m_deps, inputs, outputs);
 	OnOK();
 }
 

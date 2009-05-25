@@ -109,8 +109,8 @@
 #define IDD_PREPROC                     321
 #define IDD_CLSTFILES                   322
 #define IDD_CFGDLG                      323
-#define IDD_DIALOG1                     324
 #define IDD_THRESHOLD                   324
+#define IDD_SCHEDUI                     325
 #define IDC_LOGLIST                     1001
 #define IDC_LOGTEXT                     1002
 #define IDC_EDIT1                       1003
@@ -173,6 +173,8 @@
 #define IDC_CHECK3                      1046
 #define IDC_CHECK4                      1047
 #define IDC_CHECK5                      1048
+#define IDC_LIST3                       1049
+#define IDC_BUTTON1                     1050
 #define ID_WRITE_PASTEASHYPERLINK       32770
 #define ID_VIEW_GROAR                   32771
 #define ID_VIEW_GOODWARE                32772
@@ -197,9 +199,9 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        325
+#define _APS_NEXT_RESOURCE_VALUE        326
 #define _APS_NEXT_COMMAND_VALUE         32789
-#define _APS_NEXT_CONTROL_VALUE         1047
+#define _APS_NEXT_CONTROL_VALUE         1051
 #define _APS_NEXT_SYMED_VALUE           310
 #endif
 #endif

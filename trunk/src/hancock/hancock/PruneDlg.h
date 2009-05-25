@@ -1,5 +1,7 @@
 #pragma once
 #include "afxwin.h"
+#include "Scheduler.h"
+#include <list>
 
 
 // PruneDlg dialog
@@ -9,7 +11,7 @@ class PruneDlg : public CDialog
 	DECLARE_DYNAMIC(PruneDlg)
 
 public:
-	PruneDlg(CWnd* pParent = NULL);   // standard constructor
+	PruneDlg(Scheduler *sched, CWnd* pParent = NULL);   // standard constructor
 	virtual ~PruneDlg();
 
 // Dialog Data
@@ -26,4 +28,6 @@ public:
 private:
 	CEdit m_input;
 	CEdit m_thresholds;
+	Scheduler *m_sched;
+	std::list<Scheduler::actData*> m_deps;
 };
