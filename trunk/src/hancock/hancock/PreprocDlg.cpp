@@ -5,6 +5,11 @@
 #include "hancock.h"
 #include "PreprocDlg.h"
 #include "FolderDlg.h"
+#include "EditCFGDlg.h"
+#include <iostream>
+#include <fstream>
+#include <string>
+using namespace std;
 
 
 // PreprocDlg dialog
@@ -32,6 +37,8 @@ void PreprocDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_EDIT4, m_output);
 	DDX_Control(pDX, IDC_BTN_ECFG, m_eCFG);
 	DDX_Control(pDX, IDOK, m_start);
+	DDX_Control(pDX, IDC_EDIT_EXTRBUF_INP6, m_maxProcs);
+	DDX_Control(pDX, IDC_EDIT_EXTRBUF_INP7, m_timeOut);
 }
 
 
@@ -54,13 +61,74 @@ END_MESSAGE_MAP()
 void PreprocDlg::OnBnClickedBtnCrcfg()
 {
 	// TODO: Add code for creating a cfg file
-	m_eCFG.EnableWindow(TRUE);
-	m_start.EnableWindow(TRUE);
+	CFileDialog cfgBox(FALSE, NULL, NULL, OFN_OVERWRITEPROMPT, _T("Configuration Files(*.cfg)|*.cfg|All Files(*.*)|*.*||"));
+	if (cfgBox.DoModal() == IDOK)
+	{
+		// Get file path from dialog
+		CString fullFilePath = cfgBox.GetFolderPath() + _T("\\") + cfgBox.GetFileName();
+		if (cfgBox.GetFileExt() == _T(""))
+			fullFilePath += _T(".cfg");
+
+		// Open file for writing
+		CT2CA asciiPath(fullFilePath);
+		string sPath(asciiPath);
+		m_cfgname = sPath;
+		ofstream fout(sPath.c_str());
+
+		// Write each parameter
+		CString param;
+		m_input.GetWindowText(param);
+		CT2CA asciiParam(param);
+		string sParam(asciiParam);
+		fout << "inputDir = " << sParam << endl;
+
+		m_output.GetWindowText(param);
+		CT2CA asciiParam2(param);
+		sParam = asciiParam2;
+		fout << "outputDirBase = " << sParam << endl;
+
+		m_inpMD5.GetWindowText(param);
+		CT2CA asciiParam3(param);
+		sParam = asciiParam3;
+		fout << "MD5ListFile = " << sParam << endl;
+
+		m_maxProcs.GetWindowText(param);
+		CT2CA asciiParam4(param);
+		sParam = asciiParam4;
+		fout << "maxIdaProcs = " << sParam << endl;
+
+		m_timeOut.GetWindowText(param);
+		CT2CA asciiParam5(param);
+		sParam = asciiParam5;
+		fout << "procTimeOut = " << sParam << endl;
+
+		m_inpIDA.GetWindowText(param);
+		CT2CA asciiParam6(param);
+		sParam = asciiParam6;
+		fout << "IdaPath = " << sParam << endl;
+
+		m_inpIDAScr.GetWindowText(param);
+		CT2CA asciiParam7(param);
+		sParam = asciiParam7;
+		fout << "IdaScriptPath = " << sParam << endl;
+
+		m_inpDefs.GetWindowText(param);
+		CT2CA asciiParam8(param);
+		sParam = asciiParam8;
+		fout << "elegharnDefs = " << sParam << endl;
+		fout << "#skipToStage = 3" << endl;
+
+		fout.close();
+		m_eCFG.EnableWindow(TRUE);
+		m_start.EnableWindow(TRUE);
+	}
 }
 
 void PreprocDlg::OnBnClickedBtnEcfg()
 {
 	// TODO: Add code for editing a cfg file
+	EditCFGDlg ecfg(m_cfgname);
+	ecfg.DoModal();
 }
 
 void PreprocDlg::OnBnClickedOk()

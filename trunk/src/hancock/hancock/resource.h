@@ -106,8 +106,9 @@
 #define IDD_FINDSIGS                    319
 #define IDD_STUBMAP                     320
 #define IDD_PREPROC                     321
-#define IDD_EXTRBUFFERS1                322
 #define IDD_CLSTFILES                   322
+#define IDD_DIALOG1                     323
+#define IDD_CFGDLG                      323
 #define IDC_LOGLIST                     1001
 #define IDC_LOGTEXT                     1002
 #define IDC_EDIT1                       1003
@@ -118,6 +119,8 @@
 #define IDC_EDIT3                       1006
 #define IDC_EDIT4                       1007
 #define IDC_BTN_SELMODOUT               1008
+#define IDC_EDIT12                      1008
+#define IDC_EDIT11                      1009
 #define IDC_SELDEP1                     1011
 #define IDC_CHECK1                      1012
 #define IDC_SELDEP2                     1012
@@ -155,7 +158,9 @@
 #define IDC_EDIT_SMIM2                  1036
 #define IDC_EDIT_EXTRBUF_INP5           1036
 #define IDC_BTN_SELSMINP3               1037
+#define IDC_EDIT_EXTRBUF_INP6           1037
 #define IDC_DEP_CSM3                    1038
+#define IDC_EDIT_EXTRBUF_INP7           1038
 #define IDC_BTN_SELSMINP4               1039
 #define IDC_DEP_CSM4                    1040
 #define IDC_BTN_SELINP4                 1041
@@ -163,6 +168,9 @@
 #define IDC_SELDEP5                     1043
 #define IDC_SELDEP6                     1044
 #define IDC_BTN_SELFSOUT                1045
+#define IDC_CHECK3                      1046
+#define IDC_CHECK4                      1047
+#define IDC_CHECK5                      1048
 #define ID_WRITE_PASTEASHYPERLINK       32770
 #define ID_VIEW_GROAR                   32771
 #define ID_VIEW_GOODWARE                32772
@@ -187,9 +195,9 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        314
+#define _APS_NEXT_RESOURCE_VALUE        324
 #define _APS_NEXT_COMMAND_VALUE         32789
-#define _APS_NEXT_CONTROL_VALUE         1046
+#define _APS_NEXT_CONTROL_VALUE         1047
 #define _APS_NEXT_SYMED_VALUE           310
 #endif
 #endif

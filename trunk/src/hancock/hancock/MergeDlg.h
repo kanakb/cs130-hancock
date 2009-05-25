@@ -1,5 +1,6 @@
 #pragma once
 #include "afxwin.h"
+#include <string>
 
 
 // MergeDlg dialog
@@ -36,4 +37,5 @@ private:
 	CEdit m_output;
 	CButton m_eCFG;
 	CButton m_start;
+	std::string m_cfgname;
 };

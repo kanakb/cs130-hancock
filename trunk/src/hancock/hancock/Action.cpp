@@ -4,7 +4,7 @@
  *
  */
 
-// #include "stdafx.h" //!!!!!TEMPORARY!!!!!
+#include "stdafx.h" //!!!!!TEMPORARY!!!!!
 #include "Action.h"
 
 Action::Action()

@@ -1,5 +1,6 @@
 #pragma once
 #include "afxwin.h"
+#include <string>
 
 
 // StubMapDlg dialog
@@ -52,4 +53,5 @@ private:
 	CButton m_depM2;
 	CButton m_browseI1;
 	CButton m_depI1;
+	std::string m_cfgname;
 };
