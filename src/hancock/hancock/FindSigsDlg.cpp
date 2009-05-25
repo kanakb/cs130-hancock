@@ -4,6 +4,11 @@
 #include "stdafx.h"
 #include "hancock.h"
 #include "FindSigsDlg.h"
+#include "EditCFGDlg.h"
+#include <iostream>
+#include <fstream>
+#include <string>
+using namespace std;
 
 
 // FindSigsDlg dialog
@@ -38,6 +43,8 @@ void FindSigsDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_SELDEP5, m_depI2);
 	DDX_Control(pDX, IDC_BTN_SELINP5, m_browseC2);
 	DDX_Control(pDX, IDC_SELDEP6, m_depC2);
+	DDX_Control(pDX, IDC_EDIT11, m_minCov);
+	DDX_Control(pDX, IDC_EDIT12, m_stdev);
 }
 
 
@@ -66,13 +73,91 @@ END_MESSAGE_MAP()
 void FindSigsDlg::OnBnClickedBtnCrcfg()
 {
 	// TODO: Add code for creating a cfg file
-	m_eCFG.EnableWindow(TRUE);
-	m_start.EnableWindow(TRUE);
+	CFileDialog cfgBox(FALSE, NULL, NULL, OFN_OVERWRITEPROMPT, _T("Configuration Files(*.cfg)|*.cfg|All Files(*.*)|*.*||"));
+	if (cfgBox.DoModal() == IDOK)
+	{
+		// Get file path from dialog
+		CString fullFilePath = cfgBox.GetFolderPath() + _T("\\") + cfgBox.GetFileName();
+		if (cfgBox.GetFileExt() == _T(""))
+			fullFilePath += _T(".cfg");
+
+		// Open file for writing
+		CT2CA asciiPath(fullFilePath);
+		string sPath(asciiPath);
+		m_cfgname = sPath;
+		ofstream fout(sPath.c_str());
+
+		// Write each parameter
+		CString param;
+		m_inpStubMap.GetWindowText(param);
+		CT2CA asciiParam(param);
+		string sParam(asciiParam);
+		fout << "stubMap = " << sParam << endl;
+
+		m_inpClst1.GetWindowText(param);
+		CT2CA asciiParam2(param);
+		sParam = asciiParam2;
+		fout << "fileGroupFile = " << sParam << endl;
+		fout << "#groupThresholdRatio  = 0.1" << endl;
+		fout << "#groupCountThreshold  = 4" << endl;
+
+		m_inpInd1.GetWindowText(param);
+		CT2CA asciiParam3(param);
+		sParam = asciiParam3;
+		fout << "fpIndexFile = " << sParam << endl;
+
+		if (m_selI2.GetCheck())
+		{
+			m_inpInd2.GetWindowText(param);
+			CT2CA asciiParam4(param);
+			sParam = asciiParam4;
+			fout << "fpIndexFile2 = " << sParam << endl;
+		}
+		else
+			fout << "#fpIndexFile2 = " << endl;
+
+		m_minCov.GetWindowText(param);
+		CT2CA asciiParam5(param);
+		sParam = asciiParam5;
+		fout << "sigMinCoverage = " << sParam << endl;
+
+		m_stdev.GetWindowText(param);
+		CT2CA asciiParam6(param);
+		sParam = asciiParam6;
+		fout << "StDevFileOffset = " << sParam << endl;
+
+		m_mode.GetWindowText(param);
+		CT2CA asciiParam7(param);
+		sParam = asciiParam7;
+		fout << "fileBufferMode = " << sParam << endl;
+		fout << "#dualSigs" << endl;
+		fout << "#triSigs" << endl;
+		fout << "#findRedundantSigs" << endl;
+		fout << "#queueSize = 10" << endl;
+
+		if (m_selC2.GetCheck())
+		{
+			m_inpClst2.GetWindowText(param);
+			CT2CA asciiParam8(param);
+			sParam = asciiParam8;
+			fout << "superGroupFile = " << sParam << endl;
+		}
+		else
+			fout << "#superGroupFile = " << endl;
+		
+		fout << "#groupThresholdRatioOutsideSuperGroup = 0.5" << endl;
+
+		fout.close();
+		m_eCFG.EnableWindow(TRUE);
+		m_start.EnableWindow(TRUE);
+	}
 }
 
 void FindSigsDlg::OnBnClickedBtnEcfg()
 {
 	// TODO: Add code for editing a cfg file
+	EditCFGDlg ecfg(m_cfgname);
+	ecfg.DoModal();
 }
 
 void FindSigsDlg::OnBnClickedOk()

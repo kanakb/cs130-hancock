@@ -4,6 +4,11 @@
 #include "stdafx.h"
 #include "hancock.h"
 #include "StubMapDlg.h"
+#include "EditCFGDlg.h"
+#include <iostream>
+#include <fstream>
+#include <string>
+using namespace std;
 
 
 // StubMapDlg dialog
@@ -64,13 +69,86 @@ END_MESSAGE_MAP()
 void StubMapDlg::OnBnClickedBtnCrcfg()
 {
 	// TODO: Add code for creating a cfg file
-	m_eCFG.EnableWindow(TRUE);
-	m_start.EnableWindow(TRUE);
+	CFileDialog cfgBox(FALSE, NULL, NULL, OFN_OVERWRITEPROMPT, _T("Configuration Files(*.cfg)|*.cfg|All Files(*.*)|*.*||"));
+	if (cfgBox.DoModal() == IDOK)
+	{
+		// Get file path from dialog
+		CString fullFilePath = cfgBox.GetFolderPath() + _T("\\") + cfgBox.GetFileName();
+		if (cfgBox.GetFileExt() == _T(""))
+			fullFilePath += _T(".cfg");
+
+		// Open file for writing
+		CT2CA asciiPath(fullFilePath);
+		string sPath(asciiPath);
+		m_cfgname = sPath;
+		ofstream fout(sPath.c_str());
+
+		// Write each parameter
+		CString param;
+		m_inpClst.GetWindowText(param);
+		CT2CA asciiParam(param);
+		string sParam(asciiParam);
+		fout << "fileGroupFile = " << sParam << endl;
+
+		m_output.GetWindowText(param);
+		CT2CA asciiParam2(param);
+		sParam = asciiParam2;
+		fout << "stubMap = " << sParam << endl;
+		fout << "#badFileList = " << endl;
+
+		m_inpMod1.GetWindowText(param);
+		CT2CA asciiParam3(param);
+		sParam = asciiParam3;
+		fout << "modelFile1 = " << sParam << endl;
+		fout << "probabilityThresh1 = -80" << endl;
+
+		if (m_selM2.GetCheck())
+		{
+			m_inpMod2.GetWindowText(param);
+			CT2CA asciiParam4(param);
+			sParam = asciiParam4;
+			fout << "modelFile2 = " << sParam << endl;
+			fout << "probabilityThresh2 = -90" << endl;
+		}
+		else
+		{
+			fout << "#modelFile2 = " << endl;
+			fout << "#probabilityThresh2 = -90" << endl;
+		}
+
+		if (m_selI1.GetCheck())
+		{
+			m_inpIndex.GetWindowText(param);
+			CT2CA asciiParam5(param);
+			sParam = asciiParam5;
+			fout << "stubIndexFile = " << sParam << endl;
+		}
+		else
+			fout << "#stubIndexFile = " << endl;
+
+		fout << "sigMinCoverage = 8" << endl;
+		fout << "fileBufferMode = whole" << endl;
+		fout << "fracToKeep = 1" << endl;
+		fout << "useCode" << endl;
+		fout << "interestingCodeThresh = 13" << endl;
+
+		m_inpIMM.GetWindowText(param);
+		CT2CA asciiParam6(param);
+		sParam = asciiParam6;
+		fout << "immCountsFile = " << sParam << endl;
+		fout << "minNonLibOverLibRatio = 0.2" << endl;
+
+		fout.close();
+		m_eCFG.EnableWindow(TRUE);
+		m_start.EnableWindow(TRUE);
+	}
 }
 
 void StubMapDlg::OnBnClickedBtnEcfg()
 {
 	// TODO: Add code for editing a cfg file
+	EditCFGDlg ecfg(m_cfgname);
+	ecfg.DoModal();
 }
 
 void StubMapDlg::OnBnClickedOk()

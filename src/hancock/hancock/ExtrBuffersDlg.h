@@ -1,5 +1,6 @@
 #pragma once
 #include "afxwin.h"
+#include <string>
 
 
 // ExtrBuffersDlg dialog
@@ -32,4 +33,5 @@ private:
 	CEdit m_mode;
 	CButton m_eCFG;
 	CButton m_start;
+	std::string m_cfgname;
 };

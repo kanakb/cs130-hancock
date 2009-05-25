@@ -1,5 +1,6 @@
 #pragma once
 #include "afxwin.h"
+#include <string>
 
 
 // PreprocDlg dialog
@@ -32,13 +33,14 @@ public:
 	afx_msg void OnBnClickedBtnSelout1();
 private:
 	CEdit m_input;
-public:
 	CEdit m_inpMD5;
-private:
 	CEdit m_inpIDA;
 	CEdit m_inpIDAScr;
 	CEdit m_inpDefs;
 	CEdit m_output;
 	CButton m_eCFG;
 	CButton m_start;
+	CEdit m_maxProcs;
+	CEdit m_timeOut;
+	std::string m_cfgname;
 };

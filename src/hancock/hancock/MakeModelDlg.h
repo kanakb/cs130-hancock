@@ -1,5 +1,6 @@
 #pragma once
 #include "afxwin.h"
+#include <string>
 
 
 // MakeModelDlg dialog
@@ -50,4 +51,14 @@ private:
 	CButton m_crCFG;
 	CButton m_eCFG;
 	CButton m_start;
+	CEdit m_outSize;
+public:
+	afx_msg void OnBnClickedCheck3();
+	afx_msg void OnBnClickedCheck4();
+	afx_msg void OnBnClickedCheck5();
+private:
+	CButton m_selTS1;
+	CButton m_selTS2;
+	CButton m_selTS3;
+	std::string m_cfgname;
 };

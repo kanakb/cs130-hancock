@@ -1,5 +1,6 @@
 #pragma once
 #include "afxwin.h"
+#include <string>
 
 
 // FindSigsDlg dialog
@@ -52,4 +53,7 @@ private:
 	CButton m_depI2;
 	CButton m_browseC2;
 	CButton m_depC2;
+	CEdit m_minCov;
+	CEdit m_stdev;
+	std::string m_cfgname;
 };

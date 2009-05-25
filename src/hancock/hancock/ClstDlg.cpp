@@ -5,6 +5,11 @@
 #include "hancock.h"
 #include "ClstDlg.h"
 #include "FolderDlg.h"
+#include "EditCFGDlg.h"
+#include <iostream>
+#include <fstream>
+#include <string>
+using namespace std;
 
 
 // ClstDlg dialog
@@ -46,13 +51,52 @@ END_MESSAGE_MAP()
 void ClstDlg::OnBnClickedBtnCrcfg()
 {
 	// TODO: Add code for creating a cfg file
-	m_eCFG.EnableWindow(TRUE);
-	m_start.EnableWindow(TRUE);
+	CFileDialog cfgBox(FALSE, NULL, NULL, OFN_OVERWRITEPROMPT, _T("Configuration Files(*.cfg)|*.cfg|All Files(*.*)|*.*||"));
+	if (cfgBox.DoModal() == IDOK)
+	{
+		// Get file path from dialog
+		CString fullFilePath = cfgBox.GetFolderPath() + _T("\\") + cfgBox.GetFileName();
+		if (cfgBox.GetFileExt() == _T(""))
+			fullFilePath += _T(".cfg");
+
+		// Open file for writing
+		CT2CA asciiPath(fullFilePath);
+		string sPath(asciiPath);
+		m_cfgname = sPath;
+		ofstream fout(sPath.c_str());
+
+		// Write each parameter
+		CString param;
+		m_input.GetWindowText(param);
+		CT2CA asciiParam(param);
+		string sParam(asciiParam);
+		fout << "sampleDir = " << sParam << endl;
+
+		m_type.GetWindowText(param);
+		CT2CA asciiParam2(param);
+		sParam = asciiParam2;
+		fout << "testType = " << sParam << endl;
+
+		m_maxDiff.GetWindowText(param);
+		CT2CA asciiParam3(param);
+		sParam = asciiParam3;
+		fout << "maxDiff = " << sParam << endl;
+
+		fout << "#findBestCluster" << endl;
+		fout << "#useCentroid" << endl;
+		fout << "#minFiles" << endl;
+
+		fout.close();
+		m_eCFG.EnableWindow(TRUE);
+		m_start.EnableWindow(TRUE);
+	}
 }
 
 void ClstDlg::OnBnClickedBtnEcfg()
 {
 	// TODO: Add code for editing a cfg file
+	EditCFGDlg ecfg(m_cfgname);
+	ecfg.DoModal();
 }
 
 void ClstDlg::OnBnClickedOk()

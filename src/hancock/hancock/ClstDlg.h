@@ -1,5 +1,6 @@
 #pragma once
 #include "afxwin.h"
+#include <string>
 
 
 // ClstDlg dialog
@@ -31,4 +32,5 @@ private:
 	CEdit m_maxDiff;
 	CButton m_eCFG;
 	CButton m_start;
+	std::string m_cfgname;
 };

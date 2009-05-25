@@ -5,7 +5,11 @@
 #include "hancock.h"
 #include "MakeModelDlg.h"
 #include "FolderDlg.h"
-
+#include "EditCFGDlg.h"
+#include <iostream>
+#include <fstream>
+#include <string>
+using namespace std;
 
 // MakeModelDlg dialog
 
@@ -41,6 +45,10 @@ void MakeModelDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_BTN_CRCFG, m_crCFG);
 	DDX_Control(pDX, IDC_BTN_ECFG, m_eCFG);
 	DDX_Control(pDX, IDOK, m_start);
+	DDX_Control(pDX, IDC_EDIT11, m_outSize);
+	DDX_Control(pDX, IDC_CHECK3, m_selTS1);
+	DDX_Control(pDX, IDC_CHECK4, m_selTS2);
+	DDX_Control(pDX, IDC_CHECK5, m_selTS3);
 }
 
 
@@ -56,6 +64,9 @@ BEGIN_MESSAGE_MAP(MakeModelDlg, CDialog)
 	ON_BN_CLICKED(IDC_BTN_ECFG, &MakeModelDlg::OnBnClickedBtnEcfg)
 	ON_BN_CLICKED(IDC_CHECK1, &MakeModelDlg::OnBnClickedCheck1)
 	ON_BN_CLICKED(IDC_CHECK2, &MakeModelDlg::OnBnClickedCheck2)
+	ON_BN_CLICKED(IDC_CHECK3, &MakeModelDlg::OnBnClickedCheck3)
+	ON_BN_CLICKED(IDC_CHECK4, &MakeModelDlg::OnBnClickedCheck4)
+	ON_BN_CLICKED(IDC_CHECK5, &MakeModelDlg::OnBnClickedCheck5)
 END_MESSAGE_MAP()
 
 
@@ -131,13 +142,106 @@ void MakeModelDlg::OnBnClickedBtnSelmodout()
 void MakeModelDlg::OnBnClickedBtnCrcfg()
 {
 	// TODO: Add code for creating a cfg file
-	m_eCFG.EnableWindow(TRUE);
-	m_start.EnableWindow(TRUE);
+	CFileDialog cfgBox(FALSE, NULL, NULL, OFN_OVERWRITEPROMPT, _T("Configuration Files(*.cfg)|*.cfg|All Files(*.*)|*.*||"));
+	if (cfgBox.DoModal() == IDOK)
+	{
+		// Get file path from dialog
+		CString fullFilePath = cfgBox.GetFolderPath() + _T("\\") + cfgBox.GetFileName();
+		if (cfgBox.GetFileExt() == _T(""))
+			fullFilePath += _T(".cfg");
+
+		// Open file for writing
+		CT2CA asciiPath(fullFilePath);
+		string sPath(asciiPath);
+		m_cfgname = sPath;
+		ofstream fout(sPath.c_str());
+
+		// Write each parameter
+		CString param;
+		m_output.GetWindowText(param);
+		CT2CA asciiParam(param);
+		string sParam(asciiParam);
+		fout << "modelFilename = " << sParam << endl;
+
+		m_outSize.GetWindowText(param);
+		CT2CA asciiParam2(param);
+		sParam = asciiParam2;
+		fout << "totalTrainingSize = " << sParam << endl;
+
+		m_input1.GetWindowText(param);
+		CT2CA asciiParam3(param);
+		sParam = asciiParam3;
+		fout << "trainingDir0 = " << sParam << endl;
+
+		if (m_selTS1.GetCheck())
+		{
+			m_size1.GetWindowText(param);
+			CT2CA asciiParam4(param);
+			sParam = asciiParam4;
+			fout << "trainingSize0 = " << sParam << endl;
+		}
+		else
+			fout << "#trainingSize0 = " << endl;
+
+		if (m_selTD2.GetCheck())
+		{
+			m_input2.GetWindowText(param);
+			CT2CA asciiParam5(param);
+			sParam = asciiParam5;
+			fout << "trainingDir1 = " << sParam << endl;
+		}
+		else
+			fout << "#trainingDir1 = " << endl;
+
+		if (m_selTS2.GetCheck())
+		{
+			m_size2.GetWindowText(param);
+			CT2CA asciiParam6(param);
+			sParam = asciiParam6;
+			fout << "trainingSize1 = " << sParam << endl;
+		}
+		else
+			fout << "#trainingSize1 = " << endl;
+
+		if (m_selTD3.GetCheck())
+		{
+			m_input3.GetWindowText(param);
+			CT2CA asciiParam7(param);
+			sParam = asciiParam7;
+			fout << "trainingDir2 = " << sParam << endl;
+		}
+		else
+			fout << "#trainingDir2 = " << endl;
+
+		if (m_selTS3.GetCheck())
+		{
+			m_size3.GetWindowText(param);
+			CT2CA asciiParam8(param);
+			sParam = asciiParam8;
+			fout << "trainingSize2 = " << sParam << endl;
+		}
+		else
+			fout << "#trainingSize2 = " << endl;
+		
+		m_mode.GetWindowText(param);
+		CT2CA asciiParam9(param);
+		sParam = asciiParam9;
+		fout << "inputFileMode = " << sParam << endl;
+		fout << "#bufferMode = whole" << endl;
+		fout << "#modelDepth = 5" << endl;
+		fout << "#fileCountMax = 1" << endl;
+
+		fout.close();
+		m_eCFG.EnableWindow(TRUE);
+		m_start.EnableWindow(TRUE);
+	}
 }
 
 void MakeModelDlg::OnBnClickedBtnEcfg()
 {
 	// TODO: Add code for editing a cfg file
+	EditCFGDlg ecfg(m_cfgname);
+	ecfg.DoModal();
 }
 
 void MakeModelDlg::OnBnClickedCheck1()
@@ -145,7 +249,6 @@ void MakeModelDlg::OnBnClickedCheck1()
 	// TODO: Add code for enabling input 2
 	BOOL checkState = m_selTD2.GetCheck();
 	m_input2.EnableWindow(checkState);
-	m_size2.EnableWindow(checkState);
 	m_browseTD2.EnableWindow(checkState);
 	m_depTD2.EnableWindow(checkState);
 }
@@ -155,7 +258,27 @@ void MakeModelDlg::OnBnClickedCheck2()
 	// TODO: Add code for enabling input 3
 	BOOL checkState = m_selTD3.GetCheck();
 	m_input3.EnableWindow(checkState);
-	m_size3.EnableWindow(checkState);
 	m_browseTD3.EnableWindow(checkState);
 	m_depTD3.EnableWindow(checkState);
+}
+
+void MakeModelDlg::OnBnClickedCheck3()
+{
+	// TODO: Add code for entering size 1
+	BOOL checkState = m_selTS1.GetCheck();
+	m_size1.EnableWindow(checkState);
+}
+
+void MakeModelDlg::OnBnClickedCheck4()
+{
+	// TODO: Add code for entering size 2
+	BOOL checkState = m_selTS2.GetCheck();
+	m_size2.EnableWindow(checkState);
+}
+
+void MakeModelDlg::OnBnClickedCheck5()
+{
+	// TODO: Add code for entering size 3
+	BOOL checkState = m_selTS3.GetCheck();
+	m_size3.EnableWindow(checkState);
 }
