@@ -58,8 +58,9 @@
 #define ID_CMFCTREECTRL (WM_USER + 130)
 #define ID_RPANE_A (WM_USER + 133)
 #define WM_FILEDATA (WM_USER + 134)
+#define WM_THRESHOLD (WM_USER + 135)
 
-//next = 135
+//next = 136
 
 class COutlookBar : public CMFCOutlookBar
 {
@@ -139,6 +140,7 @@ protected:
 	afx_msg void OnViewLogger();
 	afx_msg void OnSaveLog();
 	afx_msg void OnViewRPane();
+	afx_msg void OnSetThreshold();
 	afx_msg void OnViewType(UINT nID);
 	afx_msg void OnUpdateViewFiles(CCmdUI* pCmdUI);
 	afx_msg void OnChangeFolder(NMHDR * pNotifyStruct, LRESULT * result);

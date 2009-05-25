@@ -40,6 +40,7 @@
 #define IDS_RIBBON_VIEWLOG              124
 #define IDS_RIBBON_LOGSAVE              125
 #define IDS_RIBBON_VIEWRPANE            126
+#define IDS_RIBBON_THRESHOLD            127
 #define IDR_MAINFRAME                   128
 #define IDR_MAINFRAME_256               129
 #define IDR_hancockTYPE                 130
@@ -107,8 +108,9 @@
 #define IDD_STUBMAP                     320
 #define IDD_PREPROC                     321
 #define IDD_CLSTFILES                   322
-#define IDD_DIALOG1                     323
 #define IDD_CFGDLG                      323
+#define IDD_DIALOG1                     324
+#define IDD_THRESHOLD                   324
 #define IDC_LOGLIST                     1001
 #define IDC_LOGTEXT                     1002
 #define IDC_EDIT1                       1003
@@ -195,7 +197,7 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        324
+#define _APS_NEXT_RESOURCE_VALUE        325
 #define _APS_NEXT_COMMAND_VALUE         32789
 #define _APS_NEXT_CONTROL_VALUE         1047
 #define _APS_NEXT_SYMED_VALUE           310
