@@ -626,6 +626,8 @@ string MPane::getCnfData(string filename)
 {
 	string return_string = "";
 
+	int fileType = UNKNOWN;
+
 	string full_cnf_path = getCnfFullPath(filename);
 	if (!checkCnfExists(full_cnf_path)) {
 		return return_string;
@@ -637,14 +639,257 @@ string MPane::getCnfData(string filename)
 		return return_string;
 	}
 
-	//Read each line from the original cnf file
 	string line;
-	while(getline(infile, line))
+
+	return_string = return_string + "File Name: " + filename + "\n";
+
+	while(getline(infile,line))
 	{
-		return_string = return_string + line + "\n";
+		string::size_type tagloc = line.find("<type>");	// search for the type tag in the line
+		if(tagloc != string::npos)	// type tag was found, extract type and return it
+		{				
+			string type = line.substr(6, 3);
+
+			return_string = return_string + "Type: ";
+
+			if (type == "100")
+				return_string = return_string + "UNKNOWN" + "\n";
+			else if (type == "200")
+				return_string = return_string + "GOODWARE" + "\n";
+			else if (type == "300")
+				return_string = return_string + "MALWARE" + "\n";
+			else if (type == "400")
+				return_string = return_string + "PRE PROCESSED MALWARE" + "\n";
+			else if (type == "500")
+				return_string = return_string + "MODEL" + "\n";
+			else if (type == "600")
+				return_string = return_string + "SIGNATURE" + "\n";
+			else if (type == "700")
+				return_string = return_string + "STUBMAP" + "\n";
+			else if (type == "800")
+				return_string = return_string + "CLUSTER" + "\n";
+			else if (type == "900")
+				return_string = return_string + "INDEX" + "\n";
+		}
+
+		tagloc = line.find("<operations>");	// search for the operations tag in the line
+		if(tagloc != string::npos)	// type tag was found, extract type and return it
+		{
+			return_string = return_string + "Operations:" + "\n";
+			while(getline(infile,line))
+			{
+				string::size_type tagloc = line.find("</operations>");	// search for the /operations tag in the line
+				if(tagloc != string::npos)
+				{
+					infile.close();
+					return return_string;
+				}
+				return_string = return_string + line + "\n";
+			}
+		}
 	}
-	//Close the IO stream
+
 	infile.close();
-	
 	return return_string;
+
+}
+
+/* Updates the .conf file after an action has been performed:
+   Inputs:	int action_int is the type of action performed:
+
+			100 Extract Buffers, 101 Create Model, 102 Create Index
+			200 Prune Model, 201 Merge Models, 202 Compile Models, 203 Create Stub Map
+			300 Find Signatures
+			400 Preprocess Malware
+			500 Cluster Files
+
+			const list<string> &inputs is the list of all the input files to the action
+			const list<string> &outputs is the list of all the output files of the action
+	Outputs: TRUE if success, FALSE if fail
+*/
+//TODO: Buggy, needs to be fixed
+bool MPane::updateCnfAction(int action_int, const list<string> &inputs, const list<string>  &outputs)
+{
+	string TMP = ".tmp";
+
+	string action_string = getActionStringFromInt(action_int);
+
+	//The current list we will be iterating through
+	list<string> current_list;
+	//A temp char array to hold the type info (for entering into .conf files)
+	char type_buffer [5];
+
+	string current_filename = ""; //The current file being processed
+	
+	string line; //For reading lines of a input file
+
+	//We need to iterate through this process twice:
+	//Once for the input files list, once for the output files list
+	for (int i = 0; i < 1; i++)
+	{
+		if (i == 0)
+		{
+			_itoa_s(UNKNOWN, type_buffer, 10);	
+			current_list = inputs;
+		}
+		if (i == 1)
+		{
+			_itoa_s( getFiletypeIntFromActionInt(action_int) , type_buffer, 10);
+			current_list = outputs;
+		}
+
+		for (list<string>::iterator it = current_list.begin(); it != current_list.end(); it++)
+		{
+
+			current_filename = *it;
+
+
+			//Generate location of .cnf file and .cnf.tmp files
+			string cnf_location = getCnfFullPath(current_filename);
+			string cnf_location_temp = cnf_location + TMP;
+
+
+
+			//Open the temporary output file (*.cnf.tmp)
+			fstream outfile;
+			outfile.open(cnf_location_temp.c_str(), ios_base::out);
+			//File cannot be opened, return failure
+			if(!outfile) {	
+				return FALSE;
+			}
+
+			//If no .cnf file exists, make it
+			if (!checkCnfExists(cnf_location)) 
+			{
+				//Make a *conf.tmp file
+				outfile << "<filename>" << current_filename << "</filename>" << endl;
+				outfile << "<type>" << type_buffer << "</type>" << endl;
+				outfile << "<operations>" << endl;
+
+				outfile << "Action: " <<  getActionStringFromInt(action_int) << endl;
+
+				for (list<string>::const_iterator it = inputs.begin(); it != inputs.end(); it++)
+				{
+					outfile << "Input: " << *it << endl;
+				}
+				for (list<string>::const_iterator it = outputs.begin(); it != outputs.end(); it++)
+				{
+					outfile << "Output: " << *it << endl;
+				}		
+
+				outfile << "</operations>";		
+
+				//Close the IO stream
+				outfile.close();
+
+				//Rename the *.cnf.tmp to *.cnf file
+				//Now correctly formatted to be used by other functions
+				rename(cnf_location_temp.c_str(), cnf_location.c_str());
+			}
+
+			//File exists, append to its <operations> section
+			else {
+
+				// Open the original cnf file as input (read only)
+				fstream infile;
+				infile.open(cnf_location.c_str(), ios_base::in);
+				if (!infile) {
+					infile.close();
+					outfile.close();
+					remove(cnf_location_temp.c_str());
+					return false;
+				}
+
+				while(getline(infile,line))
+				{
+					string::size_type tagloc = line.find("<operations>");	// search for the operations tag in the line
+					outfile << line << endl;
+					if(tagloc != string::npos)
+					{
+						outfile << "Action: " <<  getActionStringFromInt(action_int);
+
+						for (list<string>::const_iterator it = inputs.begin(); it != inputs.end(); it++)
+						{
+							outfile << "Input: " << *it << endl;
+						}
+						for (list<string>::const_iterator it = outputs.begin(); it != outputs.end(); it++)
+						{
+							outfile << "Output: " << *it << endl;
+						}	
+					}			
+				}
+
+				//Close both of these IO streams
+				infile.close();
+				outfile.close();
+
+				//Replace the old cnf file with the newly created .cnf.tmp > .cnf file
+				remove(cnf_location.c_str());
+				rename(cnf_location_temp.c_str(), cnf_location.c_str());
+			}
+		}
+	}
+}
+		
+
+
+string MPane::getActionStringFromInt(int action_int)
+{
+	string action_string = "";
+
+	if(action_int == 100)
+		action_string = "Extract Buffers";
+	else if (action_int == 101)
+		action_string = "Create Model";
+	else if (action_int == 102)
+		action_string = "Create Index";
+	else if (action_int == 200)
+		action_string = "Prune Model";
+	else if (action_int == 201)
+		action_string = "Merge Models";
+	else if (action_int == 202)
+		action_string = "Compile Models";
+	else if (action_int == 202)
+		action_string = "Create Stub Map";
+	else if (action_int == 300)
+		action_string = "Find Signatures";
+	else if (action_int == 400)
+		action_string = "Preprocess Malware";
+	else if (action_int == 500)
+		action_string = "Cluster Files";
+
+	return action_string;
+}
+
+/*This function takes the action type (int) and returns the filetype of the output file.
+ie. A PreProcess Malware action (int action_int = 400) will return 400,
+	which is the PreProcessed Malware filetype (see MPane.h)
+*/
+//TODO: Implement function
+int MPane::getFiletypeIntFromActionInt(int action_int)
+{
+	/*
+	if(action_type == 100)
+		action_string = "Extract Buffers";
+	else if (action_type == 101)
+		action_string = "Create Model";
+	else if (action_type == 102)
+		action_string = "Create Index";
+	else if (action_type == 200)
+		action_string = "Prune Model";
+	else if (action_type == 201)
+		action_string = "Merge Models";
+	else if (action_type == 202)
+		action_string = "Compile Models";
+	else if (action_type == 202)
+		action_string = "Create Stub Map";
+	else if (action_type == 300)
+		action_string = "Find Signatures";
+	else if (action_type == 400)
+		action_string = "Preprocess Malware";
+	else if (action_type == 500)
+		action_string = "Cluster Files";
+	*/
+
+	return 100;
 }
