@@ -70,6 +70,7 @@ BEGIN_MESSAGE_MAP(MakeModelDlg, CDialog)
 	ON_BN_CLICKED(IDC_CHECK3, &MakeModelDlg::OnBnClickedCheck3)
 	ON_BN_CLICKED(IDC_CHECK4, &MakeModelDlg::OnBnClickedCheck4)
 	ON_BN_CLICKED(IDC_CHECK5, &MakeModelDlg::OnBnClickedCheck5)
+	ON_BN_CLICKED(IDOK, &MakeModelDlg::OnBnClickedOk)
 END_MESSAGE_MAP()
 
 
