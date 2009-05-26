@@ -707,7 +707,6 @@ string MPane::getCnfData(string filename)
 			const list<string> &outputs is the list of all the output files of the action
 	Outputs: TRUE if success, FALSE if fail
 */
-//TODO: Buggy, needs to be fixed
 bool MPane::updateCnfAction(int action_int, const list<string> &inputs, const list<string>  &outputs)
 {
 	string TMP = ".tmp";
@@ -725,8 +724,9 @@ bool MPane::updateCnfAction(int action_int, const list<string> &inputs, const li
 
 	//We need to iterate through this process twice:
 	//Once for the input files list, once for the output files list
-	for (int i = 0; i < 1; i++)
+	for (int i = 0; i < 2; i++)
 	{
+		cout << i << endl;
 		if (i == 0)
 		{
 			_itoa_s(UNKNOWN, type_buffer, 10);	
@@ -748,9 +748,10 @@ bool MPane::updateCnfAction(int action_int, const list<string> &inputs, const li
 			string cnf_location = getCnfFullPath(current_filename);
 			string cnf_location_temp = cnf_location + TMP;
 
+			if (!cnfFolderUpdate())
+				return FALSE;
 
-
-			//Open the temporary output file (*.cnf.tmp)
+			//Open the temporary output file (*.conf.tmp)
 			fstream outfile;
 			outfile.open(cnf_location_temp.c_str(), ios_base::out);
 			//File cannot be opened, return failure
@@ -770,11 +771,11 @@ bool MPane::updateCnfAction(int action_int, const list<string> &inputs, const li
 
 				for (list<string>::const_iterator it = inputs.begin(); it != inputs.end(); it++)
 				{
-					outfile << "Input: " << *it << endl;
+					outfile << "  Input: " << *it << endl;
 				}
 				for (list<string>::const_iterator it = outputs.begin(); it != outputs.end(); it++)
 				{
-					outfile << "Output: " << *it << endl;
+					outfile << "  Output: " << *it << endl;
 				}		
 
 				outfile << "</operations>";		
@@ -806,15 +807,15 @@ bool MPane::updateCnfAction(int action_int, const list<string> &inputs, const li
 					outfile << line << endl;
 					if(tagloc != string::npos)
 					{
-						outfile << "Action: " <<  getActionStringFromInt(action_int);
+						outfile << "Action: " <<  getActionStringFromInt(action_int) << endl;
 
 						for (list<string>::const_iterator it = inputs.begin(); it != inputs.end(); it++)
 						{
-							outfile << "Input: " << *it << endl;
+							outfile << "  Input: " << *it << endl;
 						}
 						for (list<string>::const_iterator it = outputs.begin(); it != outputs.end(); it++)
 						{
-							outfile << "Output: " << *it << endl;
+							outfile << "  Output: " << *it << endl;
 						}	
 					}			
 				}
@@ -829,6 +830,8 @@ bool MPane::updateCnfAction(int action_int, const list<string> &inputs, const li
 			}
 		}
 	}
+
+	return TRUE;
 }
 		
 
@@ -865,31 +868,41 @@ string MPane::getActionStringFromInt(int action_int)
 ie. A PreProcess Malware action (int action_int = 400) will return 400,
 	which is the PreProcessed Malware filetype (see MPane.h)
 */
-//TODO: Implement function
 int MPane::getFiletypeIntFromActionInt(int action_int)
 {
-	/*
-	if(action_type == 100)
-		action_string = "Extract Buffers";
-	else if (action_type == 101)
-		action_string = "Create Model";
-	else if (action_type == 102)
-		action_string = "Create Index";
-	else if (action_type == 200)
-		action_string = "Prune Model";
-	else if (action_type == 201)
-		action_string = "Merge Models";
-	else if (action_type == 202)
-		action_string = "Compile Models";
-	else if (action_type == 202)
-		action_string = "Create Stub Map";
-	else if (action_type == 300)
-		action_string = "Find Signatures";
-	else if (action_type == 400)
-		action_string = "Preprocess Malware";
-	else if (action_type == 500)
-		action_string = "Cluster Files";
-	*/
+	//Default filetype, UNKNOWN = 100
+	int FiletypeInt = 100;
 
-	return 100;
+	if(action_int == 100)
+		// Extract Buffers
+		FiletypeInt = 100; //???
+	else if (action_int == 101)
+		// Create Model
+		FiletypeInt = 500;
+	else if (action_int == 102)
+		// Create Index
+		FiletypeInt = 900;
+	else if (action_int == 200)
+		// Prune Model
+		FiletypeInt = 500;
+	else if (action_int == 201)
+		// Merge Models
+		FiletypeInt = 500;
+	else if (action_int == 202)
+		// Compile Models
+		FiletypeInt = 500;
+	else if (action_int == 202)
+		// Create Stub Map
+		FiletypeInt = 700;
+	else if (action_int == 300)
+		// Find Signatures
+		FiletypeInt = 600;
+	else if (action_int == 400)
+		// Preprocess Malware
+		FiletypeInt = 400;
+	else if (action_int == 500)
+		//Cluster Files
+		FiletypeInt = 800;
+
+	return FiletypeInt;
 }
