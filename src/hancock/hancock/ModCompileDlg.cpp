@@ -79,7 +79,7 @@ void ModCompileDlg::OnBnClickedOk()
 
 void ModCompileDlg::OnBnClickedBtnSelinp1()
 {
-	// TODO: Add code for picking input files
+	// code for picking input files
 	CString fileList;
 	m_input.GetWindowText(fileList);
 	CFileDialog inBox(TRUE, NULL, NULL, OFN_OVERWRITEPROMPT, _T("Models (*.mdl)|*.mdl|All Files(*.*)|*.*||"));

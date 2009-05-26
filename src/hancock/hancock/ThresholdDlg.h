@@ -1,6 +1,7 @@
 #pragma once
 #include "afxwin.h"
 #include "log.h"
+#include "Scheduler.h"
 
 
 // ThresholdDlg dialog
@@ -10,7 +11,7 @@ class ThresholdDlg : public CDialog
 	DECLARE_DYNAMIC(ThresholdDlg)
 
 public:
-	ThresholdDlg(HancockLog *log, CWnd* pParent = NULL);   // standard constructor
+	ThresholdDlg(Scheduler *sched, HancockLog *log, CWnd* pParent = NULL);   // standard constructor
 	virtual ~ThresholdDlg();
 
 // Dialog Data
@@ -23,6 +24,7 @@ protected:
 private:
 	CEdit m_val;
 	HancockLog *m_log;
+	Scheduler *m_sched;
 public:
 	afx_msg void OnBnClickedOk();
 	afx_msg void OnBnClickedCancel();

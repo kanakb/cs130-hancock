@@ -78,7 +78,7 @@ END_MESSAGE_MAP()
 
 void MakeModelDlg::OnBnClickedOk()
 {
-	// TODO: Add code for starting the action
+	// code for starting the action
 	Action *act = new Action("C:\\sandbox\\CreateModel\\", "CreateModel.exe", m_cfgname);
 	std::list<string> inputs;
 	std::list<string> outputs;
@@ -118,7 +118,7 @@ void MakeModelDlg::OnBnClickedOk()
 
 void MakeModelDlg::OnBnClickedBtnSelinp1()
 {
-	// TODO: Add code for picking an input directory (#1)
+	// code for picking an input directory (#1)
 	CString defPath = _T("");
 	CFolderDialog inDir1(_T("Training Directory 1"), defPath, this, BIF_RETURNONLYFSDIRS | BIF_NEWDIALOGSTYLE);
 	if (inDir1.DoModal() == IDOK)
@@ -134,7 +134,7 @@ void MakeModelDlg::OnBnClickedSeldep1()
 
 void MakeModelDlg::OnBnClickedBtnSelmodinp2()
 {
-	// TODO: Add code for picking an input directory (#2)
+	// code for picking an input directory (#2)
 	CString defPath = _T("");
 	CFolderDialog inDir2(_T("Training Directory 2"), defPath, this, BIF_RETURNONLYFSDIRS | BIF_NEWDIALOGSTYLE);
 	if (inDir2.DoModal() == IDOK)
@@ -150,7 +150,7 @@ void MakeModelDlg::OnBnClickedDepCmod2()
 
 void MakeModelDlg::OnBnClickedBtnSelmodinp3()
 {
-	// TODO: Add code for picking an input directory (#3)
+	// code for picking an input directory (#3)
 	CString defPath = _T("");
 	CFolderDialog inDir3(_T("Training Directory 3"), defPath, this, BIF_RETURNONLYFSDIRS | BIF_NEWDIALOGSTYLE);
 	if (inDir3.DoModal() == IDOK)
@@ -166,7 +166,7 @@ void MakeModelDlg::OnBnClickedDepCmod3()
 
 void MakeModelDlg::OnBnClickedBtnSelmodout()
 {
-	// TODO: Add code for picking an output file
+	// code for picking an output file
 	CFileDialog outBox(FALSE, NULL, NULL, OFN_OVERWRITEPROMPT, _T("Models (*.mdl)|*.mdl|All Files(*.*)|*.*||"));
 	if (outBox.DoModal() == IDOK)
 	{
@@ -179,7 +179,7 @@ void MakeModelDlg::OnBnClickedBtnSelmodout()
 
 void MakeModelDlg::OnBnClickedBtnCrcfg()
 {
-	// TODO: Add code for creating a cfg file
+	// code for creating a cfg file
 	CFileDialog cfgBox(FALSE, NULL, NULL, OFN_OVERWRITEPROMPT, _T("Configuration Files(*.cfg)|*.cfg|All Files(*.*)|*.*||"));
 	if (cfgBox.DoModal() == IDOK)
 	{
@@ -277,14 +277,14 @@ void MakeModelDlg::OnBnClickedBtnCrcfg()
 
 void MakeModelDlg::OnBnClickedBtnEcfg()
 {
-	// TODO: Add code for editing a cfg file
+	// code for editing a cfg file
 	EditCFGDlg ecfg(m_cfgname);
 	ecfg.DoModal();
 }
 
 void MakeModelDlg::OnBnClickedCheck1()
 {
-	// TODO: Add code for enabling input 2
+	// code for enabling input 2
 	BOOL checkState = m_selTD2.GetCheck();
 	m_input2.EnableWindow(checkState);
 	m_browseTD2.EnableWindow(checkState);
@@ -293,7 +293,7 @@ void MakeModelDlg::OnBnClickedCheck1()
 
 void MakeModelDlg::OnBnClickedCheck2()
 {
-	// TODO: Add code for enabling input 3
+	// code for enabling input 3
 	BOOL checkState = m_selTD3.GetCheck();
 	m_input3.EnableWindow(checkState);
 	m_browseTD3.EnableWindow(checkState);
@@ -302,21 +302,21 @@ void MakeModelDlg::OnBnClickedCheck2()
 
 void MakeModelDlg::OnBnClickedCheck3()
 {
-	// TODO: Add code for entering size 1
+	// code for entering size 1
 	BOOL checkState = m_selTS1.GetCheck();
 	m_size1.EnableWindow(checkState);
 }
 
 void MakeModelDlg::OnBnClickedCheck4()
 {
-	// TODO: Add code for entering size 2
+	// code for entering size 2
 	BOOL checkState = m_selTS2.GetCheck();
 	m_size2.EnableWindow(checkState);
 }
 
 void MakeModelDlg::OnBnClickedCheck5()
 {
-	// TODO: Add code for entering size 3
+	// code for entering size 3
 	BOOL checkState = m_selTS3.GetCheck();
 	m_size3.EnableWindow(checkState);
 }

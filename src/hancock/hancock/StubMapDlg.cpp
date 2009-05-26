@@ -71,7 +71,7 @@ END_MESSAGE_MAP()
 
 void StubMapDlg::OnBnClickedBtnCrcfg()
 {
-	// TODO: Add code for creating a cfg file
+	// code for creating a cfg file
 	CFileDialog cfgBox(FALSE, NULL, NULL, OFN_OVERWRITEPROMPT, _T("Configuration Files(*.cfg)|*.cfg|All Files(*.*)|*.*||"));
 	if (cfgBox.DoModal() == IDOK)
 	{
@@ -149,14 +149,14 @@ void StubMapDlg::OnBnClickedBtnCrcfg()
 
 void StubMapDlg::OnBnClickedBtnEcfg()
 {
-	// TODO: Add code for editing a cfg file
+	// code for editing a cfg file
 	EditCFGDlg ecfg(m_cfgname);
 	ecfg.DoModal();
 }
 
 void StubMapDlg::OnBnClickedOk()
 {
-	// TODO: Add  code for starting the action
+	// code for starting the action
 	Action *act = new Action("C:\\sandbox\\StubGen\\", "StubGen.exe", m_cfgname);
 	std::list<string> inputs;
 	std::list<string> outputs;
@@ -200,7 +200,7 @@ void StubMapDlg::OnBnClickedOk()
 
 void StubMapDlg::OnBnClickedBtnSelinp1()
 {
-	// TODO: Add code for picking an input cluster
+	// code for picking an input cluster
 	CFileDialog inBox1(TRUE, NULL, NULL, OFN_OVERWRITEPROMPT, _T("Clusterings(*.txt)|*.txt|All Files(*.*)|*.*||"));
 	if (inBox1.DoModal() == IDOK)
 	{
@@ -216,7 +216,7 @@ void StubMapDlg::OnBnClickedSeldep1()
 
 void StubMapDlg::OnBnClickedBtnSelinp2()
 {
-	// TODO: Add code for picking an input model (#1)
+	// code for picking an input model (#1)
 	CFileDialog inBox1(TRUE, NULL, NULL, OFN_OVERWRITEPROMPT, _T("Models(*.mdl)|*.mdl|All Files(*.*)|*.*||"));
 	if (inBox1.DoModal() == IDOK)
 	{
@@ -232,7 +232,7 @@ void StubMapDlg::OnBnClickedSeldep2()
 
 void StubMapDlg::OnBnClickedBtnSelsminp3()
 {
-	// TODO: Add code for picking an input model (#2)
+	// code for picking an input model (#2)
 	CFileDialog inBox1(TRUE, NULL, NULL, OFN_OVERWRITEPROMPT, _T("Models(*.mdl)|*.mdl|All Files(*.*)|*.*||"));
 	if (inBox1.DoModal() == IDOK)
 	{
@@ -248,7 +248,7 @@ void StubMapDlg::OnBnClickedDepCsm3()
 
 void StubMapDlg::OnBnClickedBtnSelsminp4()
 {
-	// TODO: Add code for picking an input index
+	// code for picking an input index
 	CFileDialog inBox1(TRUE, NULL, NULL, OFN_OVERWRITEPROMPT, _T("All Files(*.*)|*.*||"));
 	if (inBox1.DoModal() == IDOK)
 	{
@@ -264,7 +264,7 @@ void StubMapDlg::OnBnClickedDepCsm4()
 
 void StubMapDlg::OnBnClickedBtnSelinp3()
 {
-	// TODO: Add code for picking an IMM counts file
+	// code for picking an IMM counts file
 	CFileDialog inBox1(TRUE, NULL, NULL, OFN_OVERWRITEPROMPT, _T("IMM Counts(*.bin)|*.bin|All Files(*.*)|*.*||"));
 	if (inBox1.DoModal() == IDOK)
 	{
@@ -275,7 +275,7 @@ void StubMapDlg::OnBnClickedBtnSelinp3()
 
 void StubMapDlg::OnBnClickedBtnSelmodout()
 {
-	// TODO: Add code for picking an output stub map
+	// code for picking an output stub map
 	CFileDialog outBox(FALSE, NULL, NULL, OFN_OVERWRITEPROMPT, _T("Stub Maps(*.bin)|*.bin|All Files(*.*)|*.*||"));
 	if (outBox.DoModal() == IDOK)
 	{
@@ -288,7 +288,7 @@ void StubMapDlg::OnBnClickedBtnSelmodout()
 
 void StubMapDlg::OnBnClickedCheck1()
 {
-	// TODO: Add code for enabling selection of model 2
+	// code for enabling selection of model 2
 	BOOL checkState = m_selM2.GetCheck();
 	m_inpMod2.EnableWindow(checkState);
 	m_browseM2.EnableWindow(checkState);
@@ -297,7 +297,7 @@ void StubMapDlg::OnBnClickedCheck1()
 
 void StubMapDlg::OnBnClickedCheck2()
 {
-	// TODO: Add code for enabling selection of an index
+	// code for enabling selection of an index
 	BOOL checkState = m_selI1.GetCheck();
 	m_inpIndex.EnableWindow(checkState);
 	m_browseI1.EnableWindow(checkState);

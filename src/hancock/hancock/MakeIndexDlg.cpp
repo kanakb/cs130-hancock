@@ -47,7 +47,7 @@ END_MESSAGE_MAP()
 
 void MakeIndexDlg::OnBnClickedOk()
 {
-	// TODO: Add code for starting the action
+	// code for starting the action
 	std::vector<string> vParam;
 	std::list<string> inputs;
 	std::list<string> outputs;
@@ -84,7 +84,7 @@ void MakeIndexDlg::OnBnClickedOk()
 
 void MakeIndexDlg::OnBnClickedBtnSelinp1()
 {
-	// TODO: Add code for picking an input directory
+	// code for picking an input directory
 	CString defPath = _T("");
 	CFolderDialog inDir1(_T("Input Directory"), defPath, this, BIF_RETURNONLYFSDIRS | BIF_NEWDIALOGSTYLE);
 	if (inDir1.DoModal() == IDOK)
@@ -100,7 +100,7 @@ void MakeIndexDlg::OnBnClickedSeldep1()
 
 void MakeIndexDlg::OnBnClickedBtnSelout1()
 {
-	// TODO: Add code for picking an input file
+	// code for picking an input file
 	CFileDialog outBox(FALSE, NULL, NULL, OFN_OVERWRITEPROMPT, _T("All Files(*.*)|*.*||"));
 	if (outBox.DoModal() == IDOK)
 	{

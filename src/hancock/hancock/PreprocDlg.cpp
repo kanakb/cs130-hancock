@@ -63,7 +63,7 @@ END_MESSAGE_MAP()
 
 void PreprocDlg::OnBnClickedBtnCrcfg()
 {
-	// TODO: Add code for creating a cfg file
+	// code for creating a cfg file
 	CFileDialog cfgBox(FALSE, NULL, NULL, OFN_OVERWRITEPROMPT, _T("Configuration Files(*.cfg)|*.cfg|All Files(*.*)|*.*||"));
 	if (cfgBox.DoModal() == IDOK)
 	{
@@ -129,14 +129,14 @@ void PreprocDlg::OnBnClickedBtnCrcfg()
 
 void PreprocDlg::OnBnClickedBtnEcfg()
 {
-	// TODO: Add code for editing a cfg file
+	// code for editing a cfg file
 	EditCFGDlg ecfg(m_cfgname);
 	ecfg.DoModal();
 }
 
 void PreprocDlg::OnBnClickedOk()
 {
-	// TODO: Add code for starting the action
+	// code for starting the action
 	Action *act = new Action("C:\\sandbox\\PreProcMalware\\", "PreProcMalware.exe", m_cfgname);
 	std::list<string> inputs;
 	std::list<string> outputs;
@@ -160,7 +160,7 @@ void PreprocDlg::OnBnClickedOk()
 
 void PreprocDlg::OnBnClickedBtnSelinp1()
 {
-	// TODO: Add code for picking an input directory
+	// code for picking an input directory
 	CString defPath = _T("");
 	CFolderDialog inDir1(_T("Input Directory"), defPath, this, BIF_RETURNONLYFSDIRS | BIF_NEWDIALOGSTYLE);
 	if (inDir1.DoModal() == IDOK)
@@ -176,7 +176,7 @@ void PreprocDlg::OnBnClickedSeldep1()
 
 void PreprocDlg::OnBnClickedBtnSelinp2()
 {
-	// TODO: Add code for picking an MD5 file
+	// code for picking an MD5 file
 	CFileDialog inBox1(TRUE, NULL, NULL, OFN_OVERWRITEPROMPT, _T("MD5 List Files(*.bin)|*.bin|All Files(*.*)|*.*||"));
 	if (inBox1.DoModal() == IDOK)
 	{
@@ -187,7 +187,7 @@ void PreprocDlg::OnBnClickedBtnSelinp2()
 
 void PreprocDlg::OnBnClickedBtnSelinp3()
 {
-	// TODO: Add code for picking an IDA file
+	// code for picking an IDA file
 	CFileDialog inBox1(TRUE, NULL, NULL, OFN_OVERWRITEPROMPT, _T("Executables(*.exe)|*.exe|All Files(*.*)|*.*||"));
 	if (inBox1.DoModal() == IDOK)
 	{
@@ -198,7 +198,7 @@ void PreprocDlg::OnBnClickedBtnSelinp3()
 
 void PreprocDlg::OnBnClickedBtnSelinp4()
 {
-	// TODO: Add code for picking an IDA script file
+	// code for picking an IDA script file
 	CFileDialog inBox1(TRUE, NULL, NULL, OFN_OVERWRITEPROMPT, _T("IDA Scripts(*.idc)|*.idc|All Files(*.*)|*.*||"));
 	if (inBox1.DoModal() == IDOK)
 	{
@@ -209,7 +209,7 @@ void PreprocDlg::OnBnClickedBtnSelinp4()
 
 void PreprocDlg::OnBnClickedBtnSelinp5()
 {
-	// TODO: Add code for picking the defs directory
+	// code for picking the defs directory
 	CString defPath = _T("");
 	CFolderDialog inDir1(_T("Defs Directory"), defPath, this, BIF_RETURNONLYFSDIRS | BIF_NEWDIALOGSTYLE);
 	if (inDir1.DoModal() == IDOK)
@@ -220,7 +220,7 @@ void PreprocDlg::OnBnClickedBtnSelinp5()
 
 void PreprocDlg::OnBnClickedBtnSelout1()
 {
-	// TODO: Add code for picking the output directory
+	// code for picking the output directory
 	CString defPath = _T("");
 	CFolderDialog outDir1(_T("Output Directory"), defPath, this, BIF_RETURNONLYFSDIRS | BIF_NEWDIALOGSTYLE);
 	if (outDir1.DoModal() == IDOK)

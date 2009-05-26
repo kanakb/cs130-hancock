@@ -75,7 +75,7 @@ END_MESSAGE_MAP()
 
 void FindSigsDlg::OnBnClickedBtnCrcfg()
 {
-	// TODO: Add code for creating a cfg file
+	// code for creating a cfg file
 	CFileDialog cfgBox(FALSE, NULL, NULL, OFN_OVERWRITEPROMPT, _T("Configuration Files(*.cfg)|*.cfg|All Files(*.*)|*.*||"));
 	if (cfgBox.DoModal() == IDOK)
 	{
@@ -158,14 +158,14 @@ void FindSigsDlg::OnBnClickedBtnCrcfg()
 
 void FindSigsDlg::OnBnClickedBtnEcfg()
 {
-	// TODO: Add code for editing a cfg file
+	// code for editing a cfg file
 	EditCFGDlg ecfg(m_cfgname);
 	ecfg.DoModal();
 }
 
 void FindSigsDlg::OnBnClickedOk()
 {
-	// TODO: Add code for starting the action
+	// code for starting the action
 	Action *act = new Action("C:\\sandbox\\FindSigs\\", "FindSigs.exe", m_cfgname);
 	std::list<string> inputs;
 	std::list<string> outputs;
@@ -213,7 +213,7 @@ void FindSigsDlg::OnBnClickedOk()
 
 void FindSigsDlg::OnBnClickedBtnSelinp1()
 {
-	// TODO: Add code for picking an input stub map
+	// code for picking an input stub map
 	CFileDialog inBox1(TRUE, NULL, NULL, OFN_OVERWRITEPROMPT, _T("Stub Maps(*.bin)|*.bin|All Files(*.*)|*.*||"));
 	if (inBox1.DoModal() == IDOK)
 	{
@@ -229,7 +229,7 @@ void FindSigsDlg::OnBnClickedSeldep1()
 
 void FindSigsDlg::OnBnClickedBtnSelinp2()
 {
-	// TODO: Add code for picking an input cluster (#1)
+	// code for picking an input cluster (#1)
 	CFileDialog inBox2(TRUE, NULL, NULL, OFN_OVERWRITEPROMPT, _T("Clusterings(*.txt)|*.txt|All Files(*.*)|*.*||"));
 	if (inBox2.DoModal() == IDOK)
 	{
@@ -245,7 +245,7 @@ void FindSigsDlg::OnBnClickedSeldep2()
 
 void FindSigsDlg::OnBnClickedBtnSelinp3()
 {
-	// TODO: Add code for picking an input index (#1)
+	// code for picking an input index (#1)
 	CFileDialog inBox3(TRUE, NULL, NULL, OFN_OVERWRITEPROMPT, _T("All Files(*.*)|*.*||"));
 	if (inBox3.DoModal() == IDOK)
 	{
@@ -261,7 +261,7 @@ void FindSigsDlg::OnBnClickedSeldep3()
 
 void FindSigsDlg::OnBnClickedBtnSelinp4()
 {
-	// TODO: Add code for picking an input index (#2)
+	// code for picking an input index (#2)
 	CFileDialog inBox3(TRUE, NULL, NULL, OFN_OVERWRITEPROMPT, _T("All Files(*.*)|*.*||"));
 	if (inBox3.DoModal() == IDOK)
 	{
@@ -277,7 +277,7 @@ void FindSigsDlg::OnBnClickedSeldep4()
 
 void FindSigsDlg::OnBnClickedBtnSelinp5()
 {
-	// TODO: Add code for picking an input cluster (#2)
+	// code for picking an input cluster (#2)
 	CFileDialog inBox2(TRUE, NULL, NULL, OFN_OVERWRITEPROMPT, _T("Clusterings(*.txt)|*.txt|All Files(*.*)|*.*||"));
 	if (inBox2.DoModal() == IDOK)
 	{
@@ -293,7 +293,7 @@ void FindSigsDlg::OnBnClickedSeldep5()
 
 void FindSigsDlg::OnBnClickedBtnSelfsout()
 {
-	// TODO: Add code for selecting output
+	// code for selecting output
 	CFileDialog outBox(FALSE, NULL, NULL, OFN_OVERWRITEPROMPT, _T("All Files(*.*)|*.*||"));
 	if (outBox.DoModal() == IDOK)
 	{
@@ -304,7 +304,7 @@ void FindSigsDlg::OnBnClickedBtnSelfsout()
 
 void FindSigsDlg::OnBnClickedCheck1()
 {
-	// TODO: Add code for enabling input index 2
+	// code for enabling input index 2
 	BOOL checkState = m_selI2.GetCheck();
 	m_inpInd2.EnableWindow(checkState);
 	m_browseI2.EnableWindow(checkState);
@@ -313,7 +313,7 @@ void FindSigsDlg::OnBnClickedCheck1()
 
 void FindSigsDlg::OnBnClickedCheck2()
 {
-	// TODO: Add code for enabling input cluster 2
+	// code for enabling input cluster 2
 	BOOL checkState = m_selC2.GetCheck();
 	m_inpClst2.EnableWindow(checkState);
 	m_browseC2.EnableWindow(checkState);

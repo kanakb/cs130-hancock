@@ -190,10 +190,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\CalendarBar.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\ChildView.cpp"
 				>
 			</File>
@@ -309,10 +305,6 @@
 			>
 			<File
 				RelativePath=".\Action.h"
-				>
-			</File>
-			<File
-				RelativePath=".\CalendarBar.h"
 				>
 			</File>
 			<File
