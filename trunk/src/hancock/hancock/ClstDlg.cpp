@@ -52,7 +52,7 @@ END_MESSAGE_MAP()
 
 void ClstDlg::OnBnClickedBtnCrcfg()
 {
-	// TODO: Add code for creating a cfg file
+	// code for creating a cfg file
 	CFileDialog cfgBox(FALSE, NULL, NULL, OFN_OVERWRITEPROMPT, _T("Configuration Files(*.cfg)|*.cfg|All Files(*.*)|*.*||"));
 	if (cfgBox.DoModal() == IDOK)
 	{
@@ -96,7 +96,7 @@ void ClstDlg::OnBnClickedBtnCrcfg()
 
 void ClstDlg::OnBnClickedBtnEcfg()
 {
-	// TODO: Add code for editing a cfg file
+	// code for editing a cfg file
 	EditCFGDlg ecfg(m_cfgname);
 	ecfg.DoModal();
 }
@@ -123,7 +123,7 @@ void ClstDlg::OnBnClickedOk()
 
 void ClstDlg::OnBnClickedBtnSelinp1()
 {
-	// TODO: Add code for picking an input directory
+	// code for picking an input directory
 	CString defPath = _T("");
 	CFolderDialog inDir1(_T("Input Directory"), defPath, this, BIF_RETURNONLYFSDIRS | BIF_NEWDIALOGSTYLE);
 	if (inDir1.DoModal() == IDOK)

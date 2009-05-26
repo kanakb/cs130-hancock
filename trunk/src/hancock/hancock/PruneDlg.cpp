@@ -72,7 +72,7 @@ void PruneDlg::OnBnClickedOk()
 
 void PruneDlg::OnBnClickedBtnSelinp1()
 {
-	// TODO: Add code for picking an input file
+	// code for picking an input file
 	CFileDialog inBox1(TRUE, NULL, NULL, OFN_OVERWRITEPROMPT, _T("Models(*.mdl)|*.mdl|All Files(*.*)|*.*||"));
 	if (inBox1.DoModal() == IDOK)
 	{

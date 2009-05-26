@@ -33,9 +33,10 @@ void ScheduleUI::DoDataExchange(CDataExchange* pDX)
 	// Show save button if selecting dependencies
 	m_btnSave.ShowWindow(m_dep);
 
-	m_taskList.InsertColumn(0, _T("Task"), LVCFMT_LEFT, 200);
-	m_taskList.InsertColumn(1, _T("Time Added"), LVCFMT_LEFT, 200);
-	m_taskList.InsertColumn(2, _T("Status"), LVCFMT_LEFT, 200);
+	m_taskList.InsertColumn(0, _T("Task"), LVCFMT_LEFT, 150);
+	m_taskList.InsertColumn(1, _T("Time Started"), LVCFMT_LEFT, 100);
+	m_taskList.InsertColumn(2, _T("Time Ended"), LVCFMT_LEFT, 100);
+	m_taskList.InsertColumn(3, _T("Status"), LVCFMT_LEFT, 90);
 
 	list<Scheduler::actData *> *actList = m_sched->getActList();
 	m_actions = actList;
@@ -46,14 +47,25 @@ void ScheduleUI::DoDataExchange(CDataExchange* pDX)
 		// Get all tasks, start times, statuses
 		string aName = (*it)->m_action->getName();
 		string aTime = (*it)->startTime;
+		string aETime = (*it)->endTime;
 		int aStatus = (*it)->status;
 		CString taskName(aName.c_str());
 		CString taskTime(aTime.c_str());
+		CString endTime(aETime.c_str());
 		CString taskStatus;
-		taskStatus.Format(_T("%d"), aStatus);
+
+		if (aStatus == WAITING)
+			taskStatus = _T("Waiting");
+		else if (aStatus == RUNNING)
+			taskStatus = _T("Running");
+		else if (aStatus == COMPLETED)
+			taskStatus = _T("Completed");
+		else
+			taskStatus = _T("Unknown");
 		m_taskList.InsertItem(row, taskName);
 		m_taskList.SetItemText(row, 1, taskTime);
-		m_taskList.SetItemText(row, 2, taskStatus);
+		m_taskList.SetItemText(row, 2, endTime);
+		m_taskList.SetItemText(row, 3, taskStatus);
 	}
 }
 

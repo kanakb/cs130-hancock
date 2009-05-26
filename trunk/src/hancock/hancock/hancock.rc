@@ -525,7 +525,7 @@ BEGIN
             VALUE "InternalName", "hancock.exe"
             VALUE "LegalCopyright", "(c) UCLA CS 130 Group 6.  All rights reserved."
             VALUE "OriginalFilename", "hancock.exe"
-            VALUE "ProductName", "TODO: <Product name>"
+            VALUE "ProductName", "Project Hancock Software Manager"
             VALUE "ProductVersion", "1.0.0.1"
         END
     END

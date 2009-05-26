@@ -58,23 +58,12 @@ void LogUI::DoDataExchange(CDataExchange* pDX)
 
 
 BEGIN_MESSAGE_MAP(LogUI, CDialog)
-	ON_EN_CHANGE(IDC_LOGTEXT, &LogUI::OnEnChangeLogtext)
 	ON_LBN_SELCHANGE(IDC_LOGLIST, &LogUI::OnLbnSelchangeLoglist)
 	ON_BN_CLICKED(IDOK, &LogUI::OnBnClickedOk)
 END_MESSAGE_MAP()
 
 
 // LogUI message handlers
-
-void LogUI::OnEnChangeLogtext()
-{
-	// TODO:  If this is a RICHEDIT control, the control will not
-	// send this notification unless you override the CDialog::OnInitDialog()
-	// function and call CRichEditCtrl().SetEventMask()
-	// with the ENM_CHANGE flag ORed into the mask.
-
-	// TODO:  Add your control notification handler code here
-}
 
 void LogUI::OnLbnSelchangeLoglist()
 {
@@ -94,7 +83,6 @@ void LogUI::OnLbnSelchangeLoglist()
 
 void LogUI::OnBnClickedOk()
 {
-	// TODO: Add your control notification handler code here
 	OnOK();
 	DestroyWindow();
 }

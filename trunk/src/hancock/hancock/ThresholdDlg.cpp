@@ -6,14 +6,15 @@
 #include "ThresholdDlg.h"
 #include "log.h"
 #include <string>
+#include <cstdlib>
 
 
 // ThresholdDlg dialog
 
 IMPLEMENT_DYNAMIC(ThresholdDlg, CDialog)
 
-ThresholdDlg::ThresholdDlg(HancockLog *log, CWnd* pParent /*=NULL*/)
-	: CDialog(ThresholdDlg::IDD, pParent), m_log(log)
+ThresholdDlg::ThresholdDlg(Scheduler *sched, HancockLog *log, CWnd* pParent /*=NULL*/)
+	: CDialog(ThresholdDlg::IDD, pParent), m_log(log), m_sched(sched)
 {
 
 }
@@ -39,18 +40,21 @@ END_MESSAGE_MAP()
 
 void ThresholdDlg::OnBnClickedOk()
 {
-	// TODO: Add your control notification handler code here
+	// Tell scheduler to update threshold
 	CString wtext;
 	m_val.GetWindowText(wtext);
 	CT2CA asciiText(wtext);
 	std::string text(asciiText);
-	text = "Changed schedule threshold to " + text;
-	m_log->write(text);
+	if (text != "")
+	{
+		m_sched->SetThreshold(atoi(text.c_str()));
+		text = "Changed schedule threshold to " + text;
+		m_log->write(text);
+	}
 	OnOK();
 }
 
 void ThresholdDlg::OnBnClickedCancel()
 {
-	// TODO: Add your control notification handler code here
 	OnCancel();
 }

@@ -22,7 +22,6 @@ public:
 
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	afx_msg void OnEnChangeLogtext();
 	afx_msg void OnLbnSelchangeLoglist();
 	afx_msg void OnBnClickedOk();
 

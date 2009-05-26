@@ -54,7 +54,7 @@ END_MESSAGE_MAP()
 
 void ExtrBuffersDlg::OnBnClickedBtnCrcfg()
 {
-	// TODO: Add code for creating a cfg file
+	// code for creating a cfg file
 	CFileDialog cfgBox(FALSE, NULL, NULL, OFN_OVERWRITEPROMPT, _T("Configuration Files(*.cfg)|*.cfg|All Files(*.*)|*.*||"));
 	if (cfgBox.DoModal() == IDOK)
 	{
@@ -97,14 +97,14 @@ void ExtrBuffersDlg::OnBnClickedBtnCrcfg()
 
 void ExtrBuffersDlg::OnBnClickedBtnEcfg()
 {
-	// TODO: Add code for editing a cfg file
+	// code for editing a cfg file
 	EditCFGDlg ecfg(m_cfgname);
 	ecfg.DoModal();
 }
 
 void ExtrBuffersDlg::OnBnClickedOk()
 {
-	// TODO: Add code for starting the action
+	// code for starting the action
 	Action *act = new Action("C:\\sandbox\\GetPEBuffers\\", "GetPEBuffers.exe", m_cfgname);
 	std::list<string> inputs;
 	std::list<string> outputs;
@@ -128,7 +128,7 @@ void ExtrBuffersDlg::OnBnClickedOk()
 
 void ExtrBuffersDlg::OnBnClickedBtnSelinp1()
 {
-	// TODO: Add code for picking an input directory
+	// code for picking an input directory
 	CString defPath = _T("");
 	CFolderDialog inDir1(_T("Input Directory"), defPath, this, BIF_RETURNONLYFSDIRS | BIF_NEWDIALOGSTYLE);
 	if (inDir1.DoModal() == IDOK)
@@ -139,7 +139,7 @@ void ExtrBuffersDlg::OnBnClickedBtnSelinp1()
 
 void ExtrBuffersDlg::OnBnClickedBtnSelout1()
 {
-	// TODO: Add code for picking an output directory
+	// code for picking an output directory
 	CString defPath = _T("");
 	CFolderDialog outDir1(_T("Output Directory"), defPath, this, BIF_RETURNONLYFSDIRS | BIF_NEWDIALOGSTYLE);
 	if (outDir1.DoModal() == IDOK)

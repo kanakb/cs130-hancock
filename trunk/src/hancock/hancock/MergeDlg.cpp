@@ -57,7 +57,7 @@ END_MESSAGE_MAP()
 
 void MergeDlg::OnBnClickedBtnCrcfg()
 {
-	// TODO: Add code for creating a cfg file
+	// code for creating a cfg file
 	CFileDialog cfgBox(FALSE, NULL, NULL, OFN_OVERWRITEPROMPT, _T("Configuration Files(*.cfg)|*.cfg|All Files(*.*)|*.*||"));
 	if (cfgBox.DoModal() == IDOK)
 	{
@@ -108,14 +108,14 @@ void MergeDlg::OnBnClickedBtnCrcfg()
 
 void MergeDlg::OnBnClickedBtnEcfg()
 {
-	// TODO: Add code for editing a cfg file
+	// code for editing a cfg file
 	EditCFGDlg ecfg(m_cfgname);
 	ecfg.DoModal();
 }
 
 void MergeDlg::OnBnClickedOk()
 {
-	// TODO: Add code for starting the action
+	// code for starting the action
 	Action *act = new Action("C:\\sandbox\\MergeModels\\", "MergeModels.exe", m_cfgname);
 	std::list<string> inputs;
 	std::list<string> outputs;
@@ -143,7 +143,7 @@ void MergeDlg::OnBnClickedOk()
 
 void MergeDlg::OnBnClickedBtnSelinp1()
 {
-	// TODO: Add code for picking an input model (#1)
+	// code for picking an input model (#1)
 	CFileDialog inBox1(TRUE, NULL, NULL, OFN_OVERWRITEPROMPT, _T("Models(*.mdl)|*.bin|All Files(*.*)|*.*||"));
 	if (inBox1.DoModal() == IDOK)
 	{
@@ -160,7 +160,7 @@ void MergeDlg::OnBnClickedSeldep1()
 
 void MergeDlg::OnBnClickedBtnSelinp2()
 {
-	// TODO: Add code for picking an input model (#2)
+	// code for picking an input model (#2)
 	CFileDialog inBox1(TRUE, NULL, NULL, OFN_OVERWRITEPROMPT, _T("Models(*.mdl)|*.bin|All Files(*.*)|*.*||"));
 	if (inBox1.DoModal() == IDOK)
 	{
@@ -177,7 +177,7 @@ void MergeDlg::OnBnClickedSeldep2()
 
 void MergeDlg::OnBnClickedBtnSelmodout()
 {
-	// TODO: Add code for picking an output model
+	// code for picking an output model
 	CFileDialog outBox(FALSE, NULL, NULL, OFN_OVERWRITEPROMPT, _T("Models (*.mdl)|*.mdl|All Files(*.*)|*.*||"));
 	if (outBox.DoModal() == IDOK)
 	{

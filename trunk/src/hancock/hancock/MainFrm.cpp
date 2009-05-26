@@ -1,15 +1,5 @@
-// This MFC Samples source code demonstrates using MFC Microsoft Office Fluent User Interface 
-// (the "Fluent UI") and is provided only as referential material to supplement the 
-// Microsoft Foundation Classes Reference and related electronic documentation 
-// included with the MFC C++ library software.  
-// License terms to copy, use or distribute the Fluent UI are available separately.  
-// To learn more about our Fluent UI licensing program, please visit 
-// http://msdn.microsoft.com/officeui.
-//
-// Copyright (C) Microsoft Corporation
-// All rights reserved.
-
 // MainFrm.cpp : implementation of the CMainFrame class
+// Note: This code extensively uses Microsoft example code for Fluent UI
 //
 
 #include "stdafx.h"
@@ -161,7 +151,7 @@ BOOL CMainFrame::PreCreateWindow(CREATESTRUCT& cs)
 {
 	if( !CFrameWndEx::PreCreateWindow(cs) )
 		return FALSE;
-	// TODO: Modify the Window class or styles here by modifying
+	// Modify the Window class or styles here by modifying
 	//  the CREATESTRUCT cs
 
 	cs.dwExStyle &= ~WS_EX_CLIENTEDGE;
@@ -189,49 +179,9 @@ void CMainFrame::InitializeRibbon()
 	m_wndRibbonBar.SetApplicationButton(&m_MainButton, CSize (45, 45));
 	CMFCRibbonMainPanel* pMainPanel = m_wndRibbonBar.AddMainCategory(strTemp, IDB_FILESMALL, IDB_FILELARGE);
 
-	//bNameValid = strTemp.LoadString(IDS_RIBBON_NEW);
-	//ASSERT(bNameValid);
-	//pMainPanel->Add(new CMFCRibbonButton(ID_FILE_NEW, strTemp, 0, 0));
-	//bNameValid = strTemp.LoadString(IDS_RIBBON_OPEN);
-	//ASSERT(bNameValid);
-	//pMainPanel->Add(new CMFCRibbonButton(ID_FILE_OPEN, strTemp, 1, 1));
-	//bNameValid = strTemp.LoadString(IDS_RIBBON_SAVE);
-	//ASSERT(bNameValid);
-	//pMainPanel->Add(new CMFCRibbonButton(ID_FILE_SAVE, strTemp, 2, 2));
-	//bNameValid = strTemp.LoadString(IDS_RIBBON_SAVEAS);
-	//ASSERT(bNameValid);
-	//pMainPanel->Add(new CMFCRibbonButton(ID_FILE_SAVE_AS, strTemp, 3, 3));
-
-	//bNameValid = strTemp.LoadString(IDS_RIBBON_PRINT);
-	//ASSERT(bNameValid);
-	//CMFCRibbonButton* pBtnPrint = new CMFCRibbonButton(ID_FILE_PRINT, strTemp, 6, 6);
-	//pBtnPrint->SetKeys(_T("p"), _T("w"));
-	//bNameValid = strTemp.LoadString(IDS_RIBBON_PRINT_LABEL);
-	//ASSERT(bNameValid);
-	//pBtnPrint->AddSubItem(new CMFCRibbonLabel(strTemp));
-	//bNameValid = strTemp.LoadString(IDS_RIBBON_PRINT_QUICK);
-	//ASSERT(bNameValid);
-	//pBtnPrint->AddSubItem(new CMFCRibbonButton(ID_FILE_PRINT_DIRECT, strTemp, 7, 7, TRUE));
-	//bNameValid = strTemp.LoadString(IDS_RIBBON_PRINT_PREVIEW);
-	//ASSERT(bNameValid);
-	//pBtnPrint->AddSubItem(new CMFCRibbonButton(ID_FILE_PRINT_PREVIEW, strTemp, 8, 8, TRUE));
-	//bNameValid = strTemp.LoadString(IDS_RIBBON_PRINT_SETUP);
-	//ASSERT(bNameValid);
-	//pBtnPrint->AddSubItem(new CMFCRibbonButton(ID_FILE_PRINT_SETUP, strTemp, 11, 11, TRUE));
-	//pMainPanel->Add(pBtnPrint);
-	//pMainPanel->Add(new CMFCRibbonSeparator(TRUE));
-
 	bNameValid = strTemp.LoadString(IDS_RIBBON_EXIT);
 	ASSERT(bNameValid);
 	pMainPanel->Add(new CMFCRibbonButton(ID_APP_EXIT, strTemp, 9, 9));
-
-	//bNameValid = strTemp.LoadString(IDS_RIBBON_RECENT_DOCS);
-	//ASSERT(bNameValid);
-	//pMainPanel->AddRecentFilesList(strTemp);
-
-	/*bNameValid = strTemp.LoadString(IDS_RIBBON_EXIT);
-	ASSERT(bNameValid);
-	pMainPanel->AddToBottom(new CMFCRibbonMainPanelButton(ID_APP_EXIT, strTemp, 15));*/
 
 	// Add "Home" category with "File Types" panel:
 	bNameValid = strTemp.LoadString(IDS_RIBBON_ACTIONS);
@@ -242,26 +192,6 @@ void CMainFrame::InitializeRibbon()
 	bNameValid = strTemp.LoadStringW(IDS_RIBBON_TOOLS);
 	ASSERT(bNameValid);
 	CMFCRibbonCategory* pCategoryTools = m_wndRibbonBar.AddCategory(strTemp, IDB_WRITESMALL, IDB_WRITELARGE);
-
-	// Create "View" panel:
-	/*bNameValid = strTemp.LoadString(IDS_RIBBON_VIEW);
-	ASSERT(bNameValid);
-	CMFCRibbonPanel* pPanelClipboard = pCategoryHome->AddPanel(strTemp, m_PanelImages.ExtractIcon(27));
-
-	bNameValid = strTemp.LoadString(IDS_RIBBON_PASTE);
-	ASSERT(bNameValid);
-	CMFCRibbonButton* pBtnPaste = new CMFCRibbonButton(ID_EDIT_PASTE, strTemp, 0, 0);
-	pPanelClipboard->Add(pBtnPaste);
-
-	bNameValid = strTemp.LoadString(IDS_RIBBON_CUT);
-	ASSERT(bNameValid);
-	pPanelClipboard->Add(new CMFCRibbonButton(ID_EDIT_CUT, strTemp, 1));
-	bNameValid = strTemp.LoadString(IDS_RIBBON_COPY);
-	ASSERT(bNameValid);
-	pPanelClipboard->Add(new CMFCRibbonButton(ID_EDIT_COPY, strTemp, 2));
-	bNameValid = strTemp.LoadString(IDS_RIBBON_SELECTALL);
-	ASSERT(bNameValid);
-	pPanelClipboard->Add(new CMFCRibbonButton(ID_EDIT_SELECT_ALL, strTemp, -1));*/
 
 	// Create and add a "File Types" panel:
 	bNameValid = strTemp.LoadString(IDS_RIBBON_FILETYPES);
@@ -555,11 +485,6 @@ BOOL CMainFrame::CreateOutlookBar(CMFCOutlookBar& bar, UINT uiID, CMFCShellTreeC
 	ASSERT(bNameValid);
 	pOutlookBar->AddControl(&tree, strTemp, 2, TRUE, dwStyle);
 
-	/*calendar.Create(rectDummy, &bar, 1201);
-	bNameValid = strTemp.LoadString(IDS_CALENDAR);
-	ASSERT(bNameValid);*/
-	//pOutlookBar->AddControl(&calendar, strTemp, 3, TRUE, dwStyle);
-
 	bar.SetPaneStyle(bar.GetPaneStyle() | CBRS_TOOLTIPS | CBRS_FLYBY | CBRS_SIZE_DYNAMIC);
 
 	pOutlookBar->SetImageList(theApp.m_bHiColorIcons ? IDB_PAGES_HC : IDB_PAGES, 24);
@@ -840,7 +765,7 @@ void CMainFrame::OnViewScheduler()
 
 void CMainFrame::OnSetThreshold()
 {
-	ThresholdDlg tDlg(&m_log);
+	ThresholdDlg tDlg(&m_scheduler, &m_log);
 	tDlg.DoModal();
 }
 
