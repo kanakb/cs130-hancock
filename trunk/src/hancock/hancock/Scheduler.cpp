@@ -121,6 +121,7 @@ void Scheduler::removeAction(Action* task)
     {
 		if (((*it)->m_action == task) && ((*it)->m_action->status == COMPLETED))
 		{			
+			(*it)->endTime = formatTime();
             m_actions->remove(*it);
 			delete *it;
 			return;
@@ -131,8 +132,14 @@ void Scheduler::removeAction(Action* task)
 //returns current time in format (mm/dd/yy hh:mm)
 string Scheduler::formatTime()
 {
-	// ...
-	return "";
+	SYSTEMTIME st; 
+	GetSystemTime(&st); 
+
+	char time[256];
+	sprintf_s(time,256, "%02d/%02d/%02d %02d:%02d\n", st.wMonth,st.wDay,st.wYear,st.wHour, st.wMinute);
+
+	return time;
+
 }
 	
 //Adds a new action, starts if no dependencies, under threshold.
@@ -140,7 +147,7 @@ void Scheduler::addAction(Action* task, list<actData*> inDependencies, list<stri
 {
 	actData* toAdd = new actData;
 	toAdd->m_action = task;
-	toAdd->startTime = "";
+	toAdd->startTime = formatTime();
 	toAdd->status = WAITING;
 	toAdd->inputs = inputs;
 	toAdd->outputs = outputs;
