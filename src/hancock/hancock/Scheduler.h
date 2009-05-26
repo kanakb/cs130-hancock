@@ -21,6 +21,7 @@ public:
     struct actData{
 		Action* m_action;
 		string startTime;
+		string endTime;
 		int status;
 		list<actData*> dependencies;
         list<actData*> dependents;
