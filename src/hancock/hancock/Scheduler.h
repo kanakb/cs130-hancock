@@ -8,6 +8,7 @@
 #include <string>
 #include <list>
 #include <windows.h>
+#include <sstream>
 
 #define SLEEP_TIME 1000
 #define WAITING 1

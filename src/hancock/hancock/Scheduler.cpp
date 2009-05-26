@@ -36,8 +36,9 @@ DWORD WINAPI Scheduler::Thread_Loop (LPVOID lpParam)
 				activeCount--;
 
 				// Logs the status of the completed action
-				string logStr = ((Scheduler*)lpParam)->formatTime();
-				logStr += " "+(*it)->m_action->exeName+" completed with status: "+(*it)->m_action->output;
+				(*it)->endTime = ((Scheduler*)lpParam)->formatTime();
+				string logStr = "   "+(*it)->endTime;
+				logStr += "   "+(*it)->m_action->exeName+" completed with status: "+(*it)->m_action->output;
 				((Scheduler*)lpParam)->m_log->write(logStr);
 
 				// TODO: Here is where the call to the MPane function should go
@@ -109,17 +110,22 @@ Scheduler::~Scheduler()
 int Scheduler::getThresholdFromFile()
 {
 	int thresh=0;
+	string toLog;
+	stringstream threshStr;
 	ifstream thresholdFile("threshold.txt",ios_base::in);		// attempt to open threshold file
-	if(!thresholdFile.good())			// threshold file does not exist yet
+	if(!thresholdFile.is_open())			// threshold file does not exist yet
 	{
-		m_log->write("Error: Threshold file does not exist."); 
+		toLog = "Error: Threshold file does not exist.";
+		m_log->write(toLog.c_str()); 
 		threshold = 10;			// this is an arbitrary limit I am setting
 	}
 	else
 	{
 		thresholdFile >> thresh;
 		thresholdFile.close();
-		m_log->write("Setting the threshold to the following value: "+thresh);
+		threshStr << thresh;
+		toLog = "Setting threshold to: "+threshStr.str();
+		m_log->write(toLog.c_str());
 	}
 	return thresh;
 }
@@ -236,15 +242,20 @@ bool Scheduler::canStart(Action* task)
 void Scheduler::SetThreshold(int maxProc)
 {
 	threshold = maxProc;
+	string toLog;
+	stringstream threshStr;
 	ofstream thresholdFile("threshold.txt",ios_base::trunc);		// attempt to open threshold file
 	if(!thresholdFile.is_open())			// file could not be opened ??
 	{
-		m_log->write("Error: Threshold file could not be opened. Update Failed!"); 
+		toLog = "Error: Threshold file could not be opened. Update Failed!";
+		m_log->write(toLog.c_str()); 
 	}
 	else
 	{
 		thresholdFile << maxProc;
 		thresholdFile.close();
-		m_log->write("The threshold file was updated with the following value: "+maxProc);
+		threshStr << maxProc;
+		toLog = "Updating threshold file to: "+threshStr.str();
+		m_log->write(toLog.c_str());
 	}
 }
