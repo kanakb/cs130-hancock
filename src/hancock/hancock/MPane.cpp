@@ -725,8 +725,7 @@ bool MPane::updateCnfAction(int action_int, const list<string> &inputs, const li
 	//We need to iterate through this process twice:
 	//Once for the input files list, once for the output files list
 	for (int i = 0; i < 2; i++)
-	{
-		cout << i << endl;
+	{s
 		if (i == 0)
 		{
 			_itoa_s(UNKNOWN, type_buffer, 10);	
