@@ -63,8 +63,11 @@ void MakeIndexDlg::OnBnClickedOk()
 	CString out;
 	m_output.GetWindowText(out);
 	CT2CA asciiOut(out);
-	outputs.push_back(string(asciiOut));
-	vParam.push_back(string(asciiOut));
+	string aOut(asciiOut);
+	outputs.push_back(aOut + "0.txt");
+	outputs.push_back(aOut + "1.bin");
+	outputs.push_back(aOut + "2.bin");
+	vParam.push_back(aOut);
 
 	CString mode;
 	int nIndex = m_mode.GetCurSel();

@@ -84,16 +84,11 @@ void LogUI::OnLbnSelchangeLoglist()
 void LogUI::OnBnClickedOk()
 {
 	OnOK();
-	DestroyWindow();
 }
 
 BOOL LogUI::Create(UINT nID, CWnd * pWnd)
 {
 	return CDialog::Create(nID,pWnd);
-}
-
-void LogUI::PostNcDestroy() {
-	//delete this;
 }
 
 void LogUI::getLogFiles(list<CString>* fileList){
