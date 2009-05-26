@@ -108,8 +108,20 @@ Scheduler::~Scheduler()
 //imports threshold value from file
 int Scheduler::getThresholdFromFile()
 {
-	// Sargis: You figure this out.
-	return 2;
+	int thresh=0;
+	ifstream thresholdFile("threshold.txt",ios_base::in);		// attempt to open threshold file
+	if(!thresholdFile.good())			// threshold file does not exist yet
+	{
+		m_log->write("Error: Threshold file does not exist."); 
+		threshold = 10;			// this is an arbitrary limit I am setting
+	}
+	else
+	{
+		thresholdFile >> thresh;
+		thresholdFile.close();
+		m_log->write("Setting the threshold to the following value: "+thresh);
+	}
+	return thresh;
 }
 
 //removes completed action
@@ -223,5 +235,16 @@ bool Scheduler::canStart(Action* task)
 //Writes new threshold value to file, member variable
 void Scheduler::SetThreshold(int maxProc)
 {
-		// Sargis: You figure this out.
+	threshold = maxProc;
+	ofstream thresholdFile("threshold.txt",ios_base::trunc);		// attempt to open threshold file
+	if(!thresholdFile.is_open())			// file could not be opened ??
+	{
+		m_log->write("Error: Threshold file could not be opened. Update Failed!"); 
+	}
+	else
+	{
+		thresholdFile << maxProc;
+		thresholdFile.close();
+		m_log->write("The threshold file was updated with the following value: "+maxProc);
+	}
 }
