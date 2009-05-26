@@ -51,7 +51,7 @@ void ModCompileDlg::OnBnClickedOk()
 	std::list<string> outputs;
 	std::vector<string> vParam;
 
-	// Process inputs
+	// Process inputs and outputs
 	CString models;
 	m_input.GetWindowText(models);
 	CT2CA aModels(models);
@@ -66,6 +66,12 @@ void ModCompileDlg::OnBnClickedOk()
 		{
 			inputs.push_back(in);
 			vParam.push_back(in);
+			size_t charIndex = in.find_last_of('.');
+			if (charIndex != std::string::npos)
+				in = in.substr(0, charIndex);
+			in += "_Compiled.mdl";
+			string out = in;
+			outputs.push_back(out);
 		}
 	}
 

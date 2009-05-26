@@ -14,7 +14,6 @@ class LogUI : public CDialog
 public:
 	LogUI(HancockLog *hlog, CWnd* pParent = NULL);   // standard constructor
 	BOOL Create(UINT nID, CWnd * pWnd);
-	virtual void LogUI::PostNcDestroy();
 	virtual ~LogUI();
 
 // Dialog Data

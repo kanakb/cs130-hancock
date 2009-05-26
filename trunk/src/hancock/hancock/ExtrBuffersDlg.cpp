@@ -117,8 +117,8 @@ void ExtrBuffersDlg::OnBnClickedOk()
 
 	//Process outputs
 	CString outDir;
-	m_input.GetWindowText(outDir);
-	CT2CA asciiOut(inDir);
+	m_output.GetWindowText(outDir);
+	CT2CA asciiOut(outDir);
 	outputs.push_back(string(asciiOut));
 
 	// Schedule action

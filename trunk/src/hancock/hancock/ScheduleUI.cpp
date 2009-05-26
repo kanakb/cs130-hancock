@@ -86,21 +86,51 @@ void ScheduleUI::OnLvnItemchangedList3(NMHDR *pNMHDR, LRESULT *pResult)
 	if (pos != NULL)
 	{
 		int nItem = m_taskList.GetNextSelectedItem(pos);
+		int nSize = m_taskList.GetItemCount();
 		list<Scheduler::actData *>::iterator it = m_actions->begin();
 		int index = 0;
-		for (; it != m_actions->end() && index != nItem; it++)
+		for (; it != m_actions->end() && (nSize - index - 1) != nItem; it++)
 			index++;
-		// Get selected action, list dependencies
+		// Get selected action, list dependencies, inputs, outputs
 		if (it != m_actions->end())
 		{
+			// list dependencies
 			list<Scheduler::actData *> deps = (*it)->dependencies;
-			CString depText = _T("Dependencies:\n\r");
+			CString depText = _T("Dependencies:");
 			list<Scheduler::actData *>::iterator it2 = deps.begin();
+			if (it2 == deps.end())
+				depText += _T(" None");
+			depText += _T("\r\n");
 			for (; it2 != deps.end(); it++)
 			{
 				CString name((*it2)->m_action->getName().c_str());
-				depText = depText + name + _T("\n\r");
+				depText = depText + name + _T("\r\n");
 			}
+
+			// list inputs
+			depText += _T("\r\nInputs:");
+			list<string>::iterator itIn = (*it)->inputs.begin();
+			if (itIn == (*it)->inputs.end())
+				depText += _T(" None");
+			depText += _T("\r\n");
+			for (; itIn != (*it)->inputs.end(); itIn++)
+			{
+				CString inp(itIn->c_str());
+				depText += inp + _T("\r\n");
+			}
+
+			//list outputs
+			depText += _T("\r\nOutputs:");
+			list<string>::iterator itOut = (*it)->outputs.begin();
+			if (itOut == (*it)->outputs.end())
+				depText += _T(" None");
+			depText += _T("\r\n");
+			for (; itOut != (*it)->outputs.end(); itOut++)
+			{
+				CString out(itOut->c_str());
+				depText += out + _T("\r\n");
+			}
+			// display everything
 			m_depText.SetWindowText(depText);
 		}
 	}

@@ -45,7 +45,7 @@ END_MESSAGE_MAP()
 
 void PruneDlg::OnBnClickedOk()
 {
-	// TODO: Add code for starting the action
+	// code for starting the action
 	std::list<string> inputs;
 	std::list<string> outputs;
 	std::vector<string> vParam;
@@ -54,15 +54,31 @@ void PruneDlg::OnBnClickedOk()
 	CString in;
 	m_input.GetWindowText(in);
 	CT2CA asciiInp1(in);
-	inputs.push_back(string(asciiInp1));
-	vParam.push_back(string(asciiInp1));
+	string inp1(asciiInp1);
+	inputs.push_back(inp1);
+	vParam.push_back(inp1);
 
 	CString thresholds;
 	m_thresholds.GetWindowText(thresholds);
 	CT2CA asciiThresh(thresholds);
-	vParam.push_back(string(asciiThresh));
+	string thresh(asciiThresh);
+	vParam.push_back(thresh);
 
-	//Process outputs (none at the moment)
+	//Process output
+	size_t charIndex = inp1.find_last_of('.');
+	if (charIndex != string::npos)
+		inp1 = inp1.substr(0, charIndex);
+	inp1 += "_Pruned_";
+	for (size_t i = 0; i < thresh.size() && thresh[i] != ' '; i++)
+	{
+		if (thresh[i] == '.')
+			inp1 += '_';
+		else
+			inp1 += thresh[i];
+	}
+	inp1 += ".mdl";
+	string out1 = inp1;
+	outputs.push_back(out1);
 
 	// Schedule action
 	Action *act = new Action("C:\\sandbox\\PruneModel\\", "PruneModel.exe", vParam);
