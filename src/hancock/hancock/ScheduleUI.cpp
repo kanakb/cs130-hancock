@@ -37,11 +37,6 @@ void ScheduleUI::DoDataExchange(CDataExchange* pDX)
 	m_taskList.InsertColumn(1, _T("Time Added"), LVCFMT_LEFT, 200);
 	m_taskList.InsertColumn(2, _T("Status"), LVCFMT_LEFT, 200);
 
-	// TODO: remove these 3 lines
-	m_taskList.InsertItem(0, _T("Make Model"));
-	m_taskList.SetItemText(0, 1, _T("05/25"));
-	m_taskList.SetItemText(0, 2, _T("Active"));
-
 	list<Scheduler::actData *> *actList = m_sched->getActList();
 	m_actions = actList;
 	list<Scheduler::actData *>::iterator it = actList->begin();
@@ -89,7 +84,7 @@ void ScheduleUI::OnLvnItemchangedList3(NMHDR *pNMHDR, LRESULT *pResult)
 			list<Scheduler::actData *> deps = (*it)->dependencies;
 			CString depText = _T("Dependencies:\n\r");
 			list<Scheduler::actData *>::iterator it2 = deps.begin();
-			for (; it != deps.end(); it++)
+			for (; it2 != deps.end(); it++)
 			{
 				CString name((*it2)->m_action->getName().c_str());
 				depText = depText + name + _T("\n\r");

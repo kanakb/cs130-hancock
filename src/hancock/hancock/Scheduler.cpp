@@ -175,12 +175,14 @@ list<Scheduler::actData*>* Scheduler::getActList()
 list<Scheduler::actData*> Scheduler::getDependencies(Action* task)
 {
 	list<actData*>::iterator it;
+	list<actData*> emptyList;
 			
 	for (it = m_actions->begin(); it != m_actions->end(); it++)
 	{
 		if ((*it)->m_action == task)
 			return ((*it)->dependencies);
 	}
+	return emptyList;
 }
 
 //Returns true if dependencies=0, active actions < threshold

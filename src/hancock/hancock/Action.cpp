@@ -65,7 +65,9 @@ void Action::executeProcess(string cmd){
 	si.hStdError = stdout_in_child;			// set the new handles for the child process	
 
 	//LPTSTR szCmdline = _tcsdup(TEXT("Z:\\test.exe"));
-	LPTSTR szCmdline = (LPTSTR)cmd.c_str();
+	//LPTSTR szCmdline = (LPTSTR)cmd.c_str();
+	CString cmdline(cmd.c_str());
+	LPTSTR szCmdline = T2W(cmdline.GetBuffer());
 
 	if( !CreateProcess( NULL,												// Module name 					   
 					   szCmdline,											// Command line					   
