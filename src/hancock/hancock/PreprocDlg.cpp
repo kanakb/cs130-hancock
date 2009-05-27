@@ -8,6 +8,7 @@
 #include "EditCFGDlg.h"
 #include "Action.h"
 #include "Scheduler.h"
+#include "ScheduleUI.h"
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -137,7 +138,7 @@ void PreprocDlg::OnBnClickedBtnEcfg()
 void PreprocDlg::OnBnClickedOk()
 {
 	// code for starting the action
-	Action *act = new Action("C:\\sandbox\\PreProcMalware\\", "PreProcMalware.exe", m_cfgname);
+	Action *act = new Action("executables\\", "PreProcMalware.exe", m_cfgname);
 	std::list<string> inputs;
 	std::list<string> outputs;
 
@@ -171,7 +172,18 @@ void PreprocDlg::OnBnClickedBtnSelinp1()
 
 void PreprocDlg::OnBnClickedSeldep1()
 {
-	// TODO: Add code for dependencies (if applicable)
+	// code for dependencies (if applicable)
+	ScheduleUI depui(TRUE, m_sched);
+	if (depui.DoModal() == IDOK)
+	{
+		CString depName;
+		depui.getFileString(depName);
+		if (depName != _T(""))
+		{
+			m_deps.push_back(depui.getCurAct());
+			m_input.SetWindowText(depName);
+		}
+	}
 }
 
 void PreprocDlg::OnBnClickedBtnSelinp2()

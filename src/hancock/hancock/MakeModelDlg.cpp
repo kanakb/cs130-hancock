@@ -8,6 +8,7 @@
 #include "EditCFGDlg.h"
 #include "Action.h"
 #include "Scheduler.h"
+#include "ScheduleUI.h"
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -79,7 +80,7 @@ END_MESSAGE_MAP()
 void MakeModelDlg::OnBnClickedOk()
 {
 	// code for starting the action
-	Action *act = new Action("C:\\sandbox\\CreateModel\\", "CreateModel.exe", m_cfgname);
+	Action *act = new Action("executables\\", "CreateModel.exe", m_cfgname);
 	std::list<string> inputs;
 	std::list<string> outputs;
 
@@ -129,7 +130,18 @@ void MakeModelDlg::OnBnClickedBtnSelinp1()
 
 void MakeModelDlg::OnBnClickedSeldep1()
 {
-	// TODO: Add code for dependencies (#1) (if applicable)
+	// code for dependencies (#1) (if applicable)
+	ScheduleUI depui(TRUE, m_sched);
+	if (depui.DoModal() == IDOK)
+	{
+		CString depName;
+		depui.getFileString(depName);
+		if (depName != _T(""))
+		{
+			m_deps.push_back(depui.getCurAct());
+			m_input1.SetWindowText(depName);
+		}
+	}
 }
 
 void MakeModelDlg::OnBnClickedBtnSelmodinp2()
@@ -145,7 +157,18 @@ void MakeModelDlg::OnBnClickedBtnSelmodinp2()
 
 void MakeModelDlg::OnBnClickedDepCmod2()
 {
-	// TODO: Add code for dependencies (#2) (if applicable)
+	// code for dependencies (#2) (if applicable)
+	ScheduleUI depui(TRUE, m_sched);
+	if (depui.DoModal() == IDOK)
+	{
+		CString depName;
+		depui.getFileString(depName);
+		if (depName != _T(""))
+		{
+			m_deps.push_back(depui.getCurAct());
+			m_input2.SetWindowText(depName);
+		}
+	}
 }
 
 void MakeModelDlg::OnBnClickedBtnSelmodinp3()
@@ -161,13 +184,24 @@ void MakeModelDlg::OnBnClickedBtnSelmodinp3()
 
 void MakeModelDlg::OnBnClickedDepCmod3()
 {
-	// TODO: Add code for dependencies (#3) (if applicable)
+	// code for dependencies (#3) (if applicable)
+	ScheduleUI depui(TRUE, m_sched);
+	if (depui.DoModal() == IDOK)
+	{
+		CString depName;
+		depui.getFileString(depName);
+		if (depName != _T(""))
+		{
+			m_deps.push_back(depui.getCurAct());
+			m_input3.SetWindowText(depName);
+		}
+	}
 }
 
 void MakeModelDlg::OnBnClickedBtnSelmodout()
 {
 	// code for picking an output file
-	CFileDialog outBox(FALSE, NULL, NULL, OFN_OVERWRITEPROMPT, _T("Models (*.mdl)|*.mdl|All Files(*.*)|*.*||"));
+	CFileDialog outBox(FALSE, NULL, NULL, OFN_OVERWRITEPROMPT, _T("Models(*.mdl)|*.mdl|All Files(*.*)|*.*||"));
 	if (outBox.DoModal() == IDOK)
 	{
 		CString fullFilePath = outBox.GetFolderPath() + _T("\\") + outBox.GetFileName();

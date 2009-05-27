@@ -8,6 +8,7 @@
 #include "EditCFGDlg.h"
 #include "Action.h"
 #include "Scheduler.h"
+#include "ScheduleUI.h"
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -36,6 +37,7 @@ void ClstDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_EDIT_MODE, m_maxDiff);
 	DDX_Control(pDX, IDC_BTN_ECFG, m_eCFG);
 	DDX_Control(pDX, IDOK, m_start);
+	DDX_Control(pDX, IDC_EDIT_EXTRBUF_INP2, m_output);
 }
 
 
@@ -45,6 +47,7 @@ BEGIN_MESSAGE_MAP(ClstDlg, CDialog)
 	ON_BN_CLICKED(IDOK, &ClstDlg::OnBnClickedOk)
 	ON_BN_CLICKED(IDC_BTN_SELINP1, &ClstDlg::OnBnClickedBtnSelinp1)
 	ON_BN_CLICKED(IDC_SELDEP1, &ClstDlg::OnBnClickedSeldep1)
+	ON_BN_CLICKED(IDC_BTN_SELOUT, &ClstDlg::OnBnClickedBtnSelout)
 END_MESSAGE_MAP()
 
 
@@ -103,8 +106,8 @@ void ClstDlg::OnBnClickedBtnEcfg()
 
 void ClstDlg::OnBnClickedOk()
 {
-	// TODO: Add code for starting the action
-	Action *act = new Action("C:\\sandbox\\FileClust\\", "FileClust.exe", m_cfgname);
+	// code for starting the action
+	Action *act = new Action("executables\\", "FileClust.exe", m_cfgname);
 	std::list<string> inputs;
 	std::list<string> outputs;
 
@@ -114,7 +117,12 @@ void ClstDlg::OnBnClickedOk()
 	CT2CA asciiInp(inDir);
 	inputs.push_back(string(asciiInp));
 
-	//Process outputs (none here)
+	//Process outputs
+	CString out;
+	m_output.GetWindowText(out);
+	CT2CA asciiOut(out);
+	if (out != _T(""))
+		outputs.push_back(string(asciiOut));
 
 	// Schedule action
 	m_sched->addAction(act, m_deps, inputs, outputs);
@@ -134,5 +142,29 @@ void ClstDlg::OnBnClickedBtnSelinp1()
 
 void ClstDlg::OnBnClickedSeldep1()
 {
-	// TODO: Add code for dependencies (if applicable)
+	// code for dependencies (if applicable)
+	ScheduleUI depui(TRUE, m_sched);
+	if (depui.DoModal() == IDOK)
+	{
+		CString depName;
+		depui.getFileString(depName);
+		if (depName != _T(""))
+		{
+			m_deps.push_back(depui.getCurAct());
+			m_input.SetWindowText(depName);
+		}
+	}
+}
+
+void ClstDlg::OnBnClickedBtnSelout()
+{
+	// code for picking an output file
+	CFileDialog outBox(FALSE, NULL, NULL, OFN_OVERWRITEPROMPT, _T("Clusterings(*.txt)|*.txt|All Files(*.*)|*.*||"));
+	if (outBox.DoModal() == IDOK)
+	{
+		CString fullFilePath = outBox.GetFolderPath() + _T("\\") + outBox.GetFileName();
+		if (outBox.GetFileExt() == _T(""))
+			fullFilePath += _T(".txt");
+		m_output.SetWindowText(fullFilePath);
+	}
 }

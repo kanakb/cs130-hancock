@@ -76,6 +76,5 @@ void EditCFGDlg::OnBnClickedOk()
 
 void EditCFGDlg::OnBnClickedCancel()
 {
-	// TODO: Add your control notification handler code here
 	OnCancel();
 }

@@ -58,4 +58,14 @@ private:
 	std::string m_cfgname;
 	Scheduler *m_sched;
 	std::list<Scheduler::actData*> m_deps;
+	CButton m_browseIMM;
+public:
+	afx_msg void OnBnClickedCheck3();
+private:
+	CButton m_selIMM;
+	CEdit m_thresh1;
+	CEdit m_thresh2;
+	CEdit m_bufMode;
+	CEdit m_frac;
+	CEdit m_inpLib;
 };

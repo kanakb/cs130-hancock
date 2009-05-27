@@ -5,6 +5,7 @@
 #include "hancock.h"
 #include "ScheduleUI.h"
 #include "Scheduler.h"
+#include "SelDepDlg.h"
 #include <list>
 #include <string>
 using namespace std;
@@ -15,7 +16,7 @@ using namespace std;
 IMPLEMENT_DYNAMIC(ScheduleUI, CDialog)
 
 ScheduleUI::ScheduleUI(BOOL dep, Scheduler *sched, CWnd* pParent /*=NULL*/)
-	: CDialog(ScheduleUI::IDD, pParent), m_sched(sched), m_dep(dep)
+	: CDialog(ScheduleUI::IDD, pParent), m_sched(sched), m_dep(dep), m_curAct(NULL), m_depFile(_T(""))
 {
 }
 
@@ -94,6 +95,7 @@ void ScheduleUI::OnLvnItemchangedList3(NMHDR *pNMHDR, LRESULT *pResult)
 		// Get selected action, list dependencies, inputs, outputs
 		if (it != m_actions->end())
 		{
+			m_curAct = *it;
 			// list dependencies
 			list<Scheduler::actData *> deps = (*it)->dependencies;
 			CString depText = _T("Dependencies:");
@@ -101,7 +103,7 @@ void ScheduleUI::OnLvnItemchangedList3(NMHDR *pNMHDR, LRESULT *pResult)
 			if (it2 == deps.end())
 				depText += _T(" None");
 			depText += _T("\r\n");
-			for (; it2 != deps.end(); it++)
+			for (; it2 != deps.end(); it2++)
 			{
 				CString name((*it2)->m_action->getName().c_str());
 				depText = depText + name + _T("\r\n");
@@ -139,12 +141,33 @@ void ScheduleUI::OnLvnItemchangedList3(NMHDR *pNMHDR, LRESULT *pResult)
 
 void ScheduleUI::OnBnClickedCancel()
 {
-	// TODO: Add your control notification handler code here
 	OnCancel();
 }
 
 void ScheduleUI::OnBnClickedOk()
 {
-	// TODO: Add your control notification handler code here
+	// This button only shows up when picking dependencies
+	// Given a selected dependency, spawn a new UI to query for the specific filename
+	if (m_curAct != NULL)
+	{
+		if (m_curAct->status == RUNNING)
+		{
+			SelDepDlg chooser(m_curAct);
+			if (chooser.DoModal() == IDOK)
+			{
+				chooser.getFileString(m_depFile);
+			}
+		}
+	}
 	OnOK();
+}
+
+void ScheduleUI::getFileString(CString &file)
+{
+	file = m_depFile;
+}
+
+Scheduler::actData* ScheduleUI::getCurAct()
+{
+	return m_curAct;
 }

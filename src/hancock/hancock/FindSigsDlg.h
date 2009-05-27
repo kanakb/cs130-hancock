@@ -56,7 +56,6 @@ private:
 	CButton m_browseC2;
 	CButton m_depC2;
 	CEdit m_minCov;
-	CEdit m_stdev;
 	std::string m_cfgname;
 	Scheduler *m_sched;
 	std::list<Scheduler::actData*> m_deps;
