@@ -6,6 +6,7 @@
 #include "PruneDlg.h"
 #include "Action.h"
 #include "Scheduler.h"
+#include "ScheduleUI.h"
 #include <string>
 #include <list>
 #include <vector>
@@ -81,7 +82,7 @@ void PruneDlg::OnBnClickedOk()
 	outputs.push_back(out1);
 
 	// Schedule action
-	Action *act = new Action("C:\\sandbox\\PruneModel\\", "PruneModel.exe", vParam);
+	Action *act = new Action("executables\\", "PruneModel.exe", vParam);
 	m_sched->addAction(act, m_deps, inputs, outputs);
 	OnOK();
 }
@@ -99,5 +100,16 @@ void PruneDlg::OnBnClickedBtnSelinp1()
 
 void PruneDlg::OnBnClickedSeldep1()
 {
-	// TODO: Add code for dependencies (if applicable)
+	// code for dependencies (if applicable)
+	ScheduleUI depui(TRUE, m_sched);
+	if (depui.DoModal() == IDOK)
+	{
+		CString depName;
+		depui.getFileString(depName);
+		if (depName != _T(""))
+		{
+			m_deps.push_back(depui.getCurAct());
+			m_input.SetWindowText(depName);
+		}
+	}
 }

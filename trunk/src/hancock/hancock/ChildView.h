@@ -37,6 +37,7 @@ protected:
 // Implementation
 public:
 	void updateFolder(const CString &newFolder);
+	void updateCurrentFolder();
 	void updateFile(int type);
 	void recalcList();
 	void setRelabeled(BOOL status);

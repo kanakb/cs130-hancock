@@ -112,6 +112,11 @@ void CChildView::updateFolder(const CString &newFolder)
 	//MessageBox(newFolder);
 }
 
+void CChildView::updateCurrentFolder()
+{
+	updateFolder(m_curDir);
+}
+
 // Gets currently selected item (if changed) and gets cnf data (if available)
 void CChildView::OnChangeFileList(NMHDR * pNotifyStruct, LRESULT * result)
 {

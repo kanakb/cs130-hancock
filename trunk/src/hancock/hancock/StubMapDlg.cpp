@@ -7,6 +7,7 @@
 #include "EditCFGDlg.h"
 #include "Action.h"
 #include "Scheduler.h"
+#include "ScheduleUI.h"
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -45,6 +46,13 @@ void StubMapDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_DEP_CSM3, m_depM2);
 	DDX_Control(pDX, IDC_BTN_SELSMINP4, m_browseI1);
 	DDX_Control(pDX, IDC_DEP_CSM4, m_depI1);
+	DDX_Control(pDX, IDC_BTN_SELINP3, m_browseIMM);
+	DDX_Control(pDX, IDC_CHECK3, m_selIMM);
+	DDX_Control(pDX, IDC_EDIT13, m_thresh1);
+	DDX_Control(pDX, IDC_EDIT14, m_thresh2);
+	DDX_Control(pDX, IDC_EDIT15, m_bufMode);
+	DDX_Control(pDX, IDC_EDIT16, m_frac);
+	DDX_Control(pDX, IDC_EDIT17, m_inpLib);
 }
 
 
@@ -64,6 +72,7 @@ BEGIN_MESSAGE_MAP(StubMapDlg, CDialog)
 	ON_BN_CLICKED(IDC_BTN_SELMODOUT, &StubMapDlg::OnBnClickedBtnSelmodout)
 	ON_BN_CLICKED(IDC_CHECK1, &StubMapDlg::OnBnClickedCheck1)
 	ON_BN_CLICKED(IDC_CHECK2, &StubMapDlg::OnBnClickedCheck2)
+	ON_BN_CLICKED(IDC_CHECK3, &StubMapDlg::OnBnClickedCheck3)
 END_MESSAGE_MAP()
 
 
@@ -103,7 +112,11 @@ void StubMapDlg::OnBnClickedBtnCrcfg()
 		CT2CA asciiParam3(param);
 		sParam = asciiParam3;
 		fout << "modelFile1 = " << sParam << endl;
-		fout << "probabilityThresh1 = -80" << endl;
+
+		m_thresh1.GetWindowText(param);
+		CT2CA asciiParam7(param);
+		sParam = asciiParam7;
+		fout << "probabilityThresh1 = " << sParam << endl;
 
 		if (m_selM2.GetCheck())
 		{
@@ -111,12 +124,16 @@ void StubMapDlg::OnBnClickedBtnCrcfg()
 			CT2CA asciiParam4(param);
 			sParam = asciiParam4;
 			fout << "modelFile2 = " << sParam << endl;
-			fout << "probabilityThresh2 = -90" << endl;
+
+			m_thresh2.GetWindowText(param);
+			CT2CA asciiParam8(param);
+			sParam = asciiParam8;
+			fout << "probabilityThresh2 = " << sParam << endl;
 		}
 		else
 		{
 			fout << "#modelFile2 = " << endl;
-			fout << "#probabilityThresh2 = -90" << endl;
+			fout << "#probabilityThresh2 = " << endl;
 		}
 
 		if (m_selI1.GetCheck())
@@ -129,17 +146,35 @@ void StubMapDlg::OnBnClickedBtnCrcfg()
 		else
 			fout << "#stubIndexFile = " << endl;
 
-		fout << "sigMinCoverage = 8" << endl;
-		fout << "fileBufferMode = whole" << endl;
-		fout << "fracToKeep = 1" << endl;
-		fout << "useCode" << endl;
-		fout << "interestingCodeThresh = 13" << endl;
+		fout << "#sigMinCoverage = 8" << endl;
 
-		m_inpIMM.GetWindowText(param);
-		CT2CA asciiParam6(param);
-		sParam = asciiParam6;
-		fout << "immCountsFile = " << sParam << endl;
-		fout << "minNonLibOverLibRatio = 0.2" << endl;
+		m_bufMode.GetWindowText(param);
+		CT2CA asciiParam9(param);
+		sParam = asciiParam9;
+		fout << "fileBufferMode = " << sParam << endl;
+
+		m_frac.GetWindowText(param);
+		CT2CA asciiParam10(param);
+		sParam = asciiParam10;
+		fout << "fracToKeep = " << sParam << endl;
+
+		fout << "#useCode" << endl;
+		fout << "#interestingCodeThresh = 13" << endl;
+
+		if (m_selIMM.GetCheck())
+		{
+			m_inpIMM.GetWindowText(param);
+			CT2CA asciiParam6(param);
+			sParam = asciiParam6;
+			fout << "immCountsFile = " << sParam << endl;
+		}
+		else
+			fout << "#immCountsFile = " << endl;
+
+		m_inpLib.GetWindowText(param);
+		CT2CA asciiParam11(param);
+		sParam = asciiParam11;
+		fout << "minNonLibOverLibRatio = " << sParam << endl;
 
 		fout.close();
 		m_eCFG.EnableWindow(TRUE);
@@ -157,7 +192,7 @@ void StubMapDlg::OnBnClickedBtnEcfg()
 void StubMapDlg::OnBnClickedOk()
 {
 	// code for starting the action
-	Action *act = new Action("C:\\sandbox\\StubGen\\", "StubGen.exe", m_cfgname);
+	Action *act = new Action("executables\\", "StubGen.exe", m_cfgname);
 	std::list<string> inputs;
 	std::list<string> outputs;
 
@@ -211,7 +246,18 @@ void StubMapDlg::OnBnClickedBtnSelinp1()
 
 void StubMapDlg::OnBnClickedSeldep1()
 {
-	// TODO: Add code for dependencies on the input cluster (if applicable)
+	// code for dependencies on the input cluster (if applicable)
+	ScheduleUI depui(TRUE, m_sched);
+	if (depui.DoModal() == IDOK)
+	{
+		CString depName;
+		depui.getFileString(depName);
+		if (depName != _T(""))
+		{
+			m_deps.push_back(depui.getCurAct());
+			m_inpClst.SetWindowText(depName);
+		}
+	}
 }
 
 void StubMapDlg::OnBnClickedBtnSelinp2()
@@ -227,7 +273,18 @@ void StubMapDlg::OnBnClickedBtnSelinp2()
 
 void StubMapDlg::OnBnClickedSeldep2()
 {
-	// TODO: Add code for dependencies on the input model (#1) (if applicable)
+	// code for dependencies on the input model (#1) (if applicable)
+	ScheduleUI depui(TRUE, m_sched);
+	if (depui.DoModal() == IDOK)
+	{
+		CString depName;
+		depui.getFileString(depName);
+		if (depName != _T(""))
+		{
+			m_deps.push_back(depui.getCurAct());
+			m_inpMod1.SetWindowText(depName);
+		}
+	}
 }
 
 void StubMapDlg::OnBnClickedBtnSelsminp3()
@@ -243,7 +300,18 @@ void StubMapDlg::OnBnClickedBtnSelsminp3()
 
 void StubMapDlg::OnBnClickedDepCsm3()
 {
-	// TODO: Add code for dependencies on the input model (#2) (if applicable)
+	// code for dependencies on the input model (#2) (if applicable)
+	ScheduleUI depui(TRUE, m_sched);
+	if (depui.DoModal() == IDOK)
+	{
+		CString depName;
+		depui.getFileString(depName);
+		if (depName != _T(""))
+		{
+			m_deps.push_back(depui.getCurAct());
+			m_inpMod2.SetWindowText(depName);
+		}
+	}
 }
 
 void StubMapDlg::OnBnClickedBtnSelsminp4()
@@ -259,7 +327,18 @@ void StubMapDlg::OnBnClickedBtnSelsminp4()
 
 void StubMapDlg::OnBnClickedDepCsm4()
 {
-	// TODO: Add code for dependencies on the input index (if applicable)
+	// code for dependencies on the input index (if applicable)
+	ScheduleUI depui(TRUE, m_sched);
+	if (depui.DoModal() == IDOK)
+	{
+		CString depName;
+		depui.getFileString(depName);
+		if (depName != _T(""))
+		{
+			m_deps.push_back(depui.getCurAct());
+			m_inpIndex.SetWindowText(depName);
+		}
+	}
 }
 
 void StubMapDlg::OnBnClickedBtnSelinp3()
@@ -291,6 +370,7 @@ void StubMapDlg::OnBnClickedCheck1()
 	// code for enabling selection of model 2
 	BOOL checkState = m_selM2.GetCheck();
 	m_inpMod2.EnableWindow(checkState);
+	m_thresh2.EnableWindow(checkState);
 	m_browseM2.EnableWindow(checkState);
 	m_depM2.EnableWindow(checkState);
 }
@@ -302,4 +382,12 @@ void StubMapDlg::OnBnClickedCheck2()
 	m_inpIndex.EnableWindow(checkState);
 	m_browseI1.EnableWindow(checkState);
 	m_depI1.EnableWindow(checkState);
+}
+
+void StubMapDlg::OnBnClickedCheck3()
+{
+	// code for enabling selection of the IMM counts file
+	BOOL checkState = m_selIMM.GetCheck();
+	m_browseIMM.EnableWindow(checkState);
+	m_inpIMM.EnableWindow(checkState);
 }

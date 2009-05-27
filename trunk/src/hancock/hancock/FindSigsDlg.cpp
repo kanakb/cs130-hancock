@@ -7,6 +7,7 @@
 #include "EditCFGDlg.h"
 #include "Action.h"
 #include "Scheduler.h"
+#include "ScheduleUI.h"
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -47,7 +48,6 @@ void FindSigsDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_BTN_SELINP5, m_browseC2);
 	DDX_Control(pDX, IDC_SELDEP6, m_depC2);
 	DDX_Control(pDX, IDC_EDIT11, m_minCov);
-	DDX_Control(pDX, IDC_EDIT12, m_stdev);
 }
 
 
@@ -123,11 +123,7 @@ void FindSigsDlg::OnBnClickedBtnCrcfg()
 		CT2CA asciiParam5(param);
 		sParam = asciiParam5;
 		fout << "sigMinCoverage = " << sParam << endl;
-
-		m_stdev.GetWindowText(param);
-		CT2CA asciiParam6(param);
-		sParam = asciiParam6;
-		fout << "StDevFileOffset = " << sParam << endl;
+		fout << "#StDevFileOffset = " << sParam << endl;
 
 		m_mode.GetWindowText(param);
 		CT2CA asciiParam7(param);
@@ -166,7 +162,7 @@ void FindSigsDlg::OnBnClickedBtnEcfg()
 void FindSigsDlg::OnBnClickedOk()
 {
 	// code for starting the action
-	Action *act = new Action("C:\\sandbox\\FindSigs\\", "FindSigs.exe", m_cfgname);
+	Action *act = new Action("executables\\", "FindSigs.exe", m_cfgname);
 	std::list<string> inputs;
 	std::list<string> outputs;
 
@@ -204,7 +200,8 @@ void FindSigsDlg::OnBnClickedOk()
 	CString out;
 	m_output.GetWindowText(out);
 	CT2CA asciiOut(out);
-	outputs.push_back(string(asciiOut));
+	if (out != _T(""))
+		outputs.push_back(string(asciiOut));
 
 	// Schedule action
 	m_sched->addAction(act, m_deps, inputs, outputs);
@@ -224,7 +221,18 @@ void FindSigsDlg::OnBnClickedBtnSelinp1()
 
 void FindSigsDlg::OnBnClickedSeldep1()
 {
-	// TODO: Add code for dependencies for an input stub map (if applicable)
+	// code for dependencies for an input stub map (if applicable)
+	ScheduleUI depui(TRUE, m_sched);
+	if (depui.DoModal() == IDOK)
+	{
+		CString depName;
+		depui.getFileString(depName);
+		if (depName != _T(""))
+		{
+			m_deps.push_back(depui.getCurAct());
+			m_inpStubMap.SetWindowText(depName);
+		}
+	}
 }
 
 void FindSigsDlg::OnBnClickedBtnSelinp2()
@@ -240,7 +248,18 @@ void FindSigsDlg::OnBnClickedBtnSelinp2()
 
 void FindSigsDlg::OnBnClickedSeldep2()
 {
-	// TODO: Add code for dependencies for an input cluster (#1) (if applicable)
+	// code for dependencies for an input cluster (#1) (if applicable)
+	ScheduleUI depui(TRUE, m_sched);
+	if (depui.DoModal() == IDOK)
+	{
+		CString depName;
+		depui.getFileString(depName);
+		if (depName != _T(""))
+		{
+			m_deps.push_back(depui.getCurAct());
+			m_inpClst1.SetWindowText(depName);
+		}
+	}
 }
 
 void FindSigsDlg::OnBnClickedBtnSelinp3()
@@ -256,7 +275,18 @@ void FindSigsDlg::OnBnClickedBtnSelinp3()
 
 void FindSigsDlg::OnBnClickedSeldep3()
 {
-	// TODO: Add code for dependencies for an input index (#1) (if applicable)
+	// code for dependencies for an input index (#1) (if applicable)
+	ScheduleUI depui(TRUE, m_sched);
+	if (depui.DoModal() == IDOK)
+	{
+		CString depName;
+		depui.getFileString(depName);
+		if (depName != _T(""))
+		{
+			m_deps.push_back(depui.getCurAct());
+			m_inpInd1.SetWindowText(depName);
+		}
+	}
 }
 
 void FindSigsDlg::OnBnClickedBtnSelinp4()
@@ -272,7 +302,18 @@ void FindSigsDlg::OnBnClickedBtnSelinp4()
 
 void FindSigsDlg::OnBnClickedSeldep4()
 {
-	// TODO: Add code for dependencies for an input index (#2) (if applicable)
+	// code for dependencies for an input index (#2) (if applicable)
+	ScheduleUI depui(TRUE, m_sched);
+	if (depui.DoModal() == IDOK)
+	{
+		CString depName;
+		depui.getFileString(depName);
+		if (depName != _T(""))
+		{
+			m_deps.push_back(depui.getCurAct());
+			m_inpInd2.SetWindowText(depName);
+		}
+	}
 }
 
 void FindSigsDlg::OnBnClickedBtnSelinp5()
@@ -288,7 +329,18 @@ void FindSigsDlg::OnBnClickedBtnSelinp5()
 
 void FindSigsDlg::OnBnClickedSeldep5()
 {
-	// TODO: Add code for dependencies for an input cluster (#2) (if applicable)
+	// code for dependencies for an input cluster (#2) (if applicable)
+	ScheduleUI depui(TRUE, m_sched);
+	if (depui.DoModal() == IDOK)
+	{
+		CString depName;
+		depui.getFileString(depName);
+		if (depName != _T(""))
+		{
+			m_deps.push_back(depui.getCurAct());
+			m_inpClst2.SetWindowText(depName);
+		}
+	}
 }
 
 void FindSigsDlg::OnBnClickedBtnSelfsout()

@@ -7,6 +7,7 @@
 #include "FolderDlg.h"
 #include "Action.h"
 #include "Scheduler.h"
+#include "ScheduleUI.h"
 #include <list>
 #include <string>
 #include <vector>
@@ -78,7 +79,7 @@ void MakeIndexDlg::OnBnClickedOk()
 		else
 			vParam.push_back("textBuffer");
 	}
-	Action *act = new Action("C:\\sandbox\\CreateBinIndex\\", "CreateBinIndex.exe", vParam);
+	Action *act = new Action("executables\\", "CreateBinIndex.exe", vParam);
 
 	// Schedule action
 	m_sched->addAction(act, m_deps, inputs, outputs);
@@ -98,7 +99,18 @@ void MakeIndexDlg::OnBnClickedBtnSelinp1()
 
 void MakeIndexDlg::OnBnClickedSeldep1()
 {
-	// TODO: Add code for dependencies (if applicable)
+	// code for dependencies (if applicable)
+	ScheduleUI depui(TRUE, m_sched);
+	if (depui.DoModal() == IDOK)
+	{
+		CString depName;
+		depui.getFileString(depName);
+		if (depName != _T(""))
+		{
+			m_deps.push_back(depui.getCurAct());
+			m_input.SetWindowText(depName);
+		}
+	}
 }
 
 void MakeIndexDlg::OnBnClickedBtnSelout1()

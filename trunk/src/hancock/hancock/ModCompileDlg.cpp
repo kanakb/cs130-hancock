@@ -6,6 +6,7 @@
 #include "ModCompileDlg.h"
 #include "Action.h"
 #include "Scheduler.h"
+#include "ScheduleUI.h"
 #include <string>
 #include <list>
 #include <iostream>
@@ -46,7 +47,7 @@ END_MESSAGE_MAP()
 
 void ModCompileDlg::OnBnClickedOk()
 {
-	// TODO: Add code for starting the action
+	// code for starting the action
 	std::list<string> inputs;
 	std::list<string> outputs;
 	std::vector<string> vParam;
@@ -78,7 +79,7 @@ void ModCompileDlg::OnBnClickedOk()
 	//Process outputs (none at the moment)
 
 	// Schedule action
-	Action *act = new Action("C:\\sandbox\\CompileModel\\", "CompileModel.exe", vParam);
+	Action *act = new Action("executables\\", "CompileModel.exe", vParam);
 	m_sched->addAction(act, m_deps, inputs, outputs);
 	OnOK();
 }
@@ -102,5 +103,24 @@ void ModCompileDlg::OnBnClickedBtnSelinp1()
 
 void ModCompileDlg::OnBnClickedSeldep1()
 {
-	// TODO: Add code for dependencies (if applicable)
+	// code for dependencies (if applicable)
+	CString fileList;
+	m_input.GetWindowText(fileList);
+
+	// This is somewhat different from other EXEs: need to add to current list instead of setting directly
+	ScheduleUI depui(TRUE, m_sched);
+	if (depui.DoModal() == IDOK)
+	{
+		CString depName;
+		depui.getFileString(depName);
+		if (depName != _T(""))
+		{
+			m_deps.push_back(depui.getCurAct());
+			if (fileList == _T(""))
+				fileList += depName;
+			else
+				fileList += _T("\r\n") + depName;
+			m_input.SetWindowText(fileList);
+		}
+	}
 }

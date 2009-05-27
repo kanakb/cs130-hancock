@@ -37,4 +37,7 @@ private:
 	std::string m_cfgname;
 	Scheduler *m_sched;
 	std::list<Scheduler::actData*> m_deps;
+	CEdit m_output;
+public:
+	afx_msg void OnBnClickedBtnSelout();
 };

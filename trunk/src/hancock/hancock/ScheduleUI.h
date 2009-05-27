@@ -27,11 +27,15 @@ private:
 	CEdit m_depText;
 	Scheduler *m_sched;
 	std::list<Scheduler::actData *> *m_actions;
+	Scheduler::actData *m_curAct;
+	CString m_depFile;
 
 public:
 	afx_msg void OnLvnItemchangedList3(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnBnClickedCancel();
 	afx_msg void OnBnClickedOk();
+	void getFileString(CString &file);
+	Scheduler::actData* getCurAct();
 private:
 	CButton m_btnSave;
 	BOOL m_dep;

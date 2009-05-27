@@ -7,6 +7,7 @@
 #include "EditCFGDlg.h"
 #include "Action.h"
 #include "Scheduler.h"
+#include "ScheduleUI.h"
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -116,7 +117,7 @@ void MergeDlg::OnBnClickedBtnEcfg()
 void MergeDlg::OnBnClickedOk()
 {
 	// code for starting the action
-	Action *act = new Action("C:\\sandbox\\MergeModels\\", "MergeModels.exe", m_cfgname);
+	Action *act = new Action("executables\\", "MergeModels.exe", m_cfgname);
 	std::list<string> inputs;
 	std::list<string> outputs;
 
@@ -155,7 +156,18 @@ void MergeDlg::OnBnClickedBtnSelinp1()
 
 void MergeDlg::OnBnClickedSeldep1()
 {
-	// TODO: Add code for dependencies (#1) (if applicable)
+	// code for dependencies (#1) (if applicable)
+	ScheduleUI depui(TRUE, m_sched);
+	if (depui.DoModal() == IDOK)
+	{
+		CString depName;
+		depui.getFileString(depName);
+		if (depName != _T(""))
+		{
+			m_deps.push_back(depui.getCurAct());
+			m_input1.SetWindowText(depName);
+		}
+	}
 }
 
 void MergeDlg::OnBnClickedBtnSelinp2()
@@ -172,7 +184,18 @@ void MergeDlg::OnBnClickedBtnSelinp2()
 
 void MergeDlg::OnBnClickedSeldep2()
 {
-	// TODO: Add code for dependencies (#2) (if applicable)
+	// code for dependencies (#2) (if applicable)
+	ScheduleUI depui(TRUE, m_sched);
+	if (depui.DoModal() == IDOK)
+	{
+		CString depName;
+		depui.getFileString(depName);
+		if (depName != _T(""))
+		{
+			m_deps.push_back(depui.getCurAct());
+			m_input2.SetWindowText(depName);
+		}
+	}
 }
 
 void MergeDlg::OnBnClickedBtnSelmodout()
