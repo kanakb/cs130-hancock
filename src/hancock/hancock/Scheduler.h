@@ -60,6 +60,9 @@ public:
 	//returns current time in format (mm/dd/yy hh:mm)
 	string formatTime();
 
+	//returns the integer encoding of the action given the action's executable name
+	int getActionInt(string exeName);
+
 private:	
 	HANDLE Handle_of_Thread_Loop;	// variable to hold handle of Thread
     list<actData*>* m_actions;
