@@ -52,6 +52,8 @@ void SelDepDlg::OnBnClickedOk()
 	int nIndex = m_fileList.GetCurSel();
 	if (nIndex != LB_ERR)
 		m_fileList.GetText(nIndex, m_filename);
+	else
+		MessageBox(_T("No dependency selected."));
 	OnOK();
 }
 

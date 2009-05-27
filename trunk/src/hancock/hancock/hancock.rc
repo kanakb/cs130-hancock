@@ -146,7 +146,7 @@ BEGIN
         MENUITEM "&Status Bar",                 ID_VIEW_STATUS_BAR
         MENUITEM "&Goodware",                   IDM_VIEW_GOODWARE, CHECKED
         MENUITEM "&Models",                     IDM_VIEW_MODELS
-        MENUITEM "&Indeces",                    IDM_VIEW_INDECES
+        MENUITEM "&Indexes",                    IDM_VIEW_INDECES
         MENUITEM "M&alware",                    IDM_VIEW_MALWARE32779
         MENUITEM "&Clusterings",                IDM_VIEW_CLUSTERINGS
         MENUITEM "S&tub Maps",                  IDM_VIEW_STUBMAPS
@@ -883,7 +883,7 @@ BEGIN
     IDS_EDIT_MENU           "Edit"
     IDS_RIBBON_GOODWARE     "Goodware\ng"
     IDS_RIBBON_MODELS       "Models\nm"
-    IDS_RIBBON_INDECES      "Indeces\ni"
+    IDS_RIBBON_INDECES      "Indexes\ni"
     IDS_RIBBON_MALWARE      "Malware\na"
     IDS_RIBBON_PREMALWARE   "Preprocessed Malware\np"
     IDS_RIBBON_CLUSTERINGS  "Clusterings\nc"

@@ -150,7 +150,7 @@ void ScheduleUI::OnBnClickedOk()
 	// Given a selected dependency, spawn a new UI to query for the specific filename
 	if (m_curAct != NULL)
 	{
-		if (m_curAct->status == RUNNING)
+		if (m_curAct->status == RUNNING || m_curAct->status == WAITING)
 		{
 			SelDepDlg chooser(m_curAct);
 			if (chooser.DoModal() == IDOK)
@@ -158,6 +158,8 @@ void ScheduleUI::OnBnClickedOk()
 				chooser.getFileString(m_depFile);
 			}
 		}
+		else
+			MessageBox(_T("Dependencies can only be selected for queued or running actions."));
 	}
 	OnOK();
 }

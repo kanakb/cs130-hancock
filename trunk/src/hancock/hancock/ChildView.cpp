@@ -181,6 +181,7 @@ void CChildView::updateFile(int type)
 		CT2CA filename(itemText);
 		m_mPane->labelFileAsFlag(type, std::string(filename));
 		m_relabeled = TRUE;
+		updateCurrentFolder();
 		recalcList();
 		m_rPane->clear();
 
