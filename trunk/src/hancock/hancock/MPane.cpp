@@ -851,7 +851,7 @@ string MPane::getActionStringFromInt(int action_int)
 		action_string = "Merge Models";
 	else if (action_int == 202)
 		action_string = "Compile Models";
-	else if (action_int == 202)
+	else if (action_int == 203)
 		action_string = "Create Stub Map";
 	else if (action_int == 300)
 		action_string = "Find Signatures";
@@ -890,7 +890,7 @@ int MPane::getFiletypeIntFromActionInt(int action_int)
 	else if (action_int == 202)
 		// Compile Models
 		FiletypeInt = 500;
-	else if (action_int == 202)
+	else if (action_int == 203)
 		// Create Stub Map
 		FiletypeInt = 700;
 	else if (action_int == 300)

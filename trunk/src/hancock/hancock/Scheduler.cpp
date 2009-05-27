@@ -40,17 +40,9 @@ DWORD WINAPI Scheduler::Thread_Loop (LPVOID lpParam)
 				string logStr = "   "+(*it)->endTime;
 				logStr += "   "+(*it)->m_action->exeName+" completed with status: "+(*it)->m_action->output;
 				((Scheduler*)lpParam)->m_log->write(logStr);
-
-				// TODO: Here is where the call to the MPane function should go
-				// Prabhu, Kanak I have added 2 variables to the actData structure soleley for the purpose
-				// of making this task easier: list<string> inputs   &   list<string outputs
-				// They can be accessed in this manner:  (*it)->inputs   and   (*it)->outputs
-				// This also means that the MPane function signature needs to be:
-				//      function(list<string> inputs, list<string outputs)
-				// Also, Kanak, you will need to pass these in to the addAction call as well so that they
-				// are properly initialized.
-				// Below I have written a placeholder for the call to the MPane function:
-				//		((Scheduler*)lpParam)->m_mpane->the_function_here((*it)->inputs,(*it)->outputs);
+				
+				// Send a status update to the MPane
+				((Scheduler*)lpParam)->m_mpane->updateCnfAction(((Scheduler*)lpParam)->getActionInt((*it)->m_action->exeName),(*it)->inputs,(*it)->outputs);
 			}
 
 			else if ((*it)->status == RUNNING)
@@ -258,4 +250,52 @@ void Scheduler::SetThreshold(int maxProc)
 		toLog = "Updating threshold file to: "+threshStr.str();
 		m_log->write(toLog.c_str());
 	}
+}
+
+// Returns the integer encoding of the action given the action's executable name
+int Scheduler::getActionInt(string exeName)
+{
+	int actionInt = 0; // unknown initially
+	
+	if(exeName == "GetPEBuffers.exe")
+	{
+		actionInt = 100;
+	}
+	else if(exeName == "CreateModel.exe")
+	{
+		actionInt = 101;
+	}
+	else if(exeName == "CreateBinIndex.exe")
+	{
+		actionInt = 102;
+	}
+	else if(exeName == "PruneModel.exe")
+	{
+		actionInt = 200;
+	}
+	else if(exeName == "MergeModels.exe")
+	{
+		actionInt = 201;
+	}
+	else if(exeName == "CompileModel.exe")
+	{
+		actionInt = 202;
+	}	
+	else if(exeName == "StubGen.exe")
+	{
+		actionInt = 203;
+	}
+	else if(exeName == "FindSigs.exe")
+	{
+		actionInt = 300;
+	}
+	else if(exeName == "PreProcMalware.exe")
+	{
+		actionInt = 400;
+	}
+	else if(exeName == "FileClust.exe")
+	{
+		actionInt = 500;
+	}
+	return actionInt;
 }
