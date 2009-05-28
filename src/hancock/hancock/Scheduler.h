@@ -14,7 +14,7 @@
 #define WAITING 1
 #define RUNNING 2
 #define COMPLETED 3
-#define FAILED 4
+#define UNSUCCESSFUL 4
 
 class Scheduler{
 
