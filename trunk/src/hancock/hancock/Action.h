@@ -41,7 +41,7 @@ public:
 	string m_symantecCfg;				//Path of the .cfg file used as input for the executable
 	int status;							//status of action
 	string output;
-	string m_optionalOutFile;			//Specifies the optional output file to save the action out in
+	string m_optionalOutfile;			//Specifies the optional output file to save the action out in
 
 protected:
 	void executeProcess(string cmd);

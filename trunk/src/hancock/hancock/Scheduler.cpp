@@ -35,7 +35,7 @@ DWORD WINAPI Scheduler::Thread_Loop (LPVOID lpParam)
 				if((*it)->m_action->status == 0)		// action returned with 0 status, completed sucessfully
 					(*it)->status = COMPLETED;
 				else
-					(*it)->status = FAILED;
+					(*it)->status = UNSUCCESSFUL;
 				activeCount--;
 
 				// Logs the status of the completed action
@@ -53,22 +53,25 @@ DWORD WINAPI Scheduler::Thread_Loop (LPVOID lpParam)
 
 				// For Cluster File and Find Signature actions, we must also write the output
 				// of the actions to the file specified by optionalOutfile
-				if((*it)->m_action->exeName == "FileClust.exe" || (*it)->m_action->exeName == "FindSigs.exe")
+				if((*it)->status == COMPLETED)
 				{
-					ofstream output((*it)->m_action->m_optionalOutFile.c_str(),ios_base::app|ios_base::out);
-					if(output.is_open())	// file opened successfully
+					if((*it)->m_action->exeName == "FileClust.exe" || (*it)->m_action->exeName == "FindSigs.exe")
 					{
-						output << endl;		// begin adding output to the next line
-						output << (*it)->m_action->output;	// write the output to the file
-						output.close();		// close file
-						// log that the action output was saved to the user specified file
-						((Scheduler*)lpParam)->m_log->write("Output of action saved in the file: "+(*it)->m_action->m_optionalOutFile);
-					}
-					else
-					{
-						// there was an error in opening the file, output an error to the log file
-						((Scheduler*)lpParam)->m_log->write("The following file could not be opened for writing: ");
-						((Scheduler*)lpParam)->m_log->write("		"+(*it)->m_action->m_optionalOutFile);
+						ofstream output((*it)->m_action->m_optionalOutfile.c_str(),ios_base::app|ios_base::out);
+						if(output.is_open())	// file opened successfully
+						{
+							output << endl;		// begin adding output to the next line
+							output << (*it)->m_action->output;	// write the output to the file
+							output.close();		// close file
+							// log that the action output was saved to the user specified file
+							((Scheduler*)lpParam)->m_log->write("Output of action saved in the file: "+(*it)->m_action->m_optionalOutfile);
+						}
+						else
+						{
+							// there was an error in opening the file, output an error to the log file
+							((Scheduler*)lpParam)->m_log->write("The following file could not be opened for writing: ");
+							((Scheduler*)lpParam)->m_log->write("		"+(*it)->m_action->m_optionalOutfile);
+						}
 					}
 				}
 			}
@@ -107,7 +110,6 @@ Scheduler::Scheduler(HancockLog* hlog,MPane* mpane)
 	//cout<<"Initializing Scheduler..."<<endl;
 	threshold = getThresholdFromFile();
 	activeCount = 0;
-	m_optionalOutfile = "";
 	//m_actions = (list<actData*>*) HeapAlloc(GetProcessHeap(),HEAP_ZERO_MEMORY,sizeof(list<Scheduler::actData>));
 	m_actions = new list<actData*>;
 	
