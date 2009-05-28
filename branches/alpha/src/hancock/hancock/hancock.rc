@@ -1,0 +1,921 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#ifndef APSTUDIO_INVOKED
+#include "targetver.h"
+#endif
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#ifndef APSTUDIO_INVOKED\r\n"
+    "#include ""targetver.h""\r\n"
+    "#endif\r\n"
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "#define _AFX_NO_OLE_RESOURCES\r\n"
+    "#define _AFX_NO_TRACKER_RESOURCES\r\n"
+    "#define _AFX_NO_PROPERTY_RESOURCES\r\n"
+    "\r\n"
+    "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)\r\n"
+    "LANGUAGE 9, 1\r\n"
+    "#pragma code_page(1252)\r\n"
+    "#include ""res\\hancock.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
+    "#include ""afxres.rc""         // Standard components\r\n"
+    "#if !defined(_AFXDLL)\r\n"
+    "#include ""afxribbon.rc""              // MFC ribbon and control bar resources\r\n"
+    "#endif\r\n"
+    "#endif\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDR_MAINFRAME           ICON                    "res\\hancock.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDR_MAINFRAME           BITMAP                  "res\\Toolbar.bmp"
+IDR_MAINFRAME_256       BITMAP                  "res\\Toolbar256.bmp"
+IDB_MAIN                BITMAP                  "res\\main.bmp"
+IDB_FILELARGE           BITMAP                  "res\\filelarge.bmp"
+IDB_FILESMALL           BITMAP                  "res\\filesmall.bmp"
+IDB_WRITELARGE          BITMAP                  "res\\writelarge.bmp"
+IDB_WRITESMALL          BITMAP                  "res\\writesmall.bmp"
+IDB_BUTTONS             BITMAP                  "res\\buttons.bmp"
+IDB_NAVIGATION_LARGE    BITMAP                  "res\\nav_large.bmp"
+IDB_NAVIGATION_LARGE_HC BITMAP                  "res\\nav_large_hc.bmp"
+IDB_PAGES               BITMAP                  "res\\pages.bmp"
+IDB_PAGES_HC            BITMAP                  "res\\pages_hc.bmp"
+IDB_PAGES_SMALL         BITMAP                  "res\\pages_small.bmp"
+IDB_PAGES_SMALL_HC      BITMAP                  "res\\pages_small_hc.bmp"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Toolbar
+//
+
+IDR_MAINFRAME TOOLBAR  16, 16
+BEGIN
+    BUTTON      ID_FILE_NEW
+    SEPARATOR
+    BUTTON      ID_EDIT_CUT
+    BUTTON      ID_EDIT_COPY
+    BUTTON      ID_EDIT_PASTE
+    SEPARATOR
+    BUTTON      ID_APP_ABOUT
+END
+
+IDR_MAINFRAME_256 TOOLBAR  16, 16
+BEGIN
+    BUTTON      ID_FILE_NEW
+    SEPARATOR
+    BUTTON      ID_EDIT_CUT
+    BUTTON      ID_EDIT_COPY
+    BUTTON      ID_EDIT_PASTE
+    SEPARATOR
+    BUTTON      ID_APP_ABOUT
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDR_MAINFRAME MENU 
+BEGIN
+    POPUP "&File"
+    BEGIN
+        MENUITEM "E&xit",                       ID_APP_EXIT
+    END
+    POPUP "&Edit"
+    BEGIN
+        MENUITEM "&Undo\tCtrl+Z",               ID_EDIT_UNDO
+        MENUITEM SEPARATOR
+        MENUITEM "Cu&t\tCtrl+X",                ID_EDIT_CUT
+        MENUITEM "&Copy\tCtrl+C",               ID_EDIT_COPY
+        MENUITEM "&Paste\tCtrl+V",              ID_EDIT_PASTE
+    END
+    POPUP "&View"
+    BEGIN
+        MENUITEM "&Status Bar",                 ID_VIEW_STATUS_BAR
+        MENUITEM "&Goodware",                   IDM_VIEW_GOODWARE, CHECKED
+        MENUITEM "&Models",                     IDM_VIEW_MODELS
+        MENUITEM "&Indexes",                    IDM_VIEW_INDECES
+        MENUITEM "M&alware",                    IDM_VIEW_MALWARE32779
+        MENUITEM "&Clusterings",                IDM_VIEW_CLUSTERINGS
+        MENUITEM "S&tub Maps",                  IDM_VIEW_STUBMAPS
+        MENUITEM "&Find Signatures Output",     IDM_VIEW_FINDSIGS
+        MENUITEM "&Unclassified",               IDM_VIEW_UNCLASSIFIED
+    END
+    POPUP "&Help"
+    BEGIN
+        MENUITEM "&About hancock...",           ID_APP_ABOUT
+    END
+END
+
+IDR_POPUP_EDIT MENU 
+BEGIN
+    POPUP "Edit"
+    BEGIN
+        MENUITEM "Cu&t\tCtrl+X",                ID_EDIT_CUT
+        MENUITEM "&Copy\tCtrl+C",               ID_EDIT_COPY
+        MENUITEM "&Paste\tCtrl+V",              ID_EDIT_PASTE
+    END
+END
+
+IDR_WINDOWS_MENU MENU 
+BEGIN
+    MENUITEM "&New Window",                 ID_WINDOW_NEW
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Accelerator
+//
+
+IDR_MAINFRAME ACCELERATORS 
+BEGIN
+    "C",            ID_EDIT_COPY,           VIRTKEY, CONTROL, NOINVERT
+    "V",            ID_EDIT_PASTE,          VIRTKEY, CONTROL, NOINVERT
+    VK_BACK,        ID_EDIT_UNDO,           VIRTKEY, ALT, NOINVERT
+    VK_DELETE,      ID_EDIT_CUT,            VIRTKEY, SHIFT, NOINVERT
+    VK_F6,          ID_NEXT_PANE,           VIRTKEY, NOINVERT
+    VK_F6,          ID_PREV_PANE,           VIRTKEY, SHIFT, NOINVERT
+    VK_INSERT,      ID_EDIT_COPY,           VIRTKEY, CONTROL, NOINVERT
+    VK_INSERT,      ID_EDIT_PASTE,          VIRTKEY, SHIFT, NOINVERT
+    "X",            ID_EDIT_CUT,            VIRTKEY, CONTROL, NOINVERT
+    "Z",            ID_EDIT_UNDO,           VIRTKEY, CONTROL, NOINVERT
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_ABOUTBOX DIALOGEX 0, 0, 196, 67
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "About"
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
+BEGIN
+    ICON            IDR_MAINFRAME,IDC_STATIC,14,14,21,20
+    LTEXT           "Project Hancock Software Manager, Version 1.0",IDC_STATIC,42,14,136,16,SS_NOPREFIX
+    LTEXT           "Copyright (C) 2009",IDC_STATIC,42,35,114,8
+    DEFPUSHBUTTON   "OK",IDOK,139,46,50,14,WS_GROUP
+END
+
+IDD_LOGUI DIALOGEX 0, 0, 383, 215
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Log Viewer"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "Close",IDOK,326,194,50,14
+    LISTBOX         IDC_LOGLIST,7,15,104,177,LBS_SORT | LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_LOGTEXT,125,16,240,176,ES_MULTILINE | ES_AUTOVSCROLL | ES_AUTOHSCROLL | ES_READONLY | ES_WANTRETURN | WS_VSCROLL
+END
+
+IDD_MAKEMODEL DIALOGEX 0, 0, 400, 222
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Create a Model"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "Start",IDOK,343,201,50,14,WS_DISABLED | NOT WS_TABSTOP
+    EDITTEXT        IDC_EDIT1,114,15,161,14,ES_AUTOHSCROLL
+    LTEXT           "Training Directory",IDC_STATIC,43,17,58,8
+    PUSHBUTTON      "Select...",IDC_BTN_SELINP1,285,15,50,14,NOT WS_TABSTOP
+    EDITTEXT        IDC_EDIT2,114,34,161,14,ES_AUTOHSCROLL | ES_NUMBER | WS_DISABLED
+    EDITTEXT        IDC_EDIT3,114,136,161,14,ES_AUTOHSCROLL
+    LTEXT           "Input File Mode",IDC_STATIC,51,140,50,8
+    LTEXT           "Output Model",IDC_STATIC,57,160,44,8
+    EDITTEXT        IDC_EDIT4,114,157,161,14,ES_AUTOHSCROLL
+    PUSHBUTTON      "Select...",IDC_BTN_SELMODOUT,285,157,50,14,NOT WS_TABSTOP
+    PUSHBUTTON      "Create CFG File",IDC_BTN_CRCFG,136,201,55,14,NOT WS_TABSTOP
+    PUSHBUTTON      "Edit CFG File",IDC_BTN_ECFG,198,201,50,14,WS_DISABLED | NOT WS_TABSTOP
+    PUSHBUTTON      "Dependency",IDC_SELDEP1,343,15,50,14,NOT WS_TABSTOP
+    EDITTEXT        IDC_EDIT5,114,53,161,14,ES_AUTOHSCROLL | WS_DISABLED
+    PUSHBUTTON      "Select...",IDC_BTN_SELMODINP2,285,53,50,14,WS_DISABLED | NOT WS_TABSTOP
+    PUSHBUTTON      "Dependency",IDC_DEP_CMOD2,343,53,50,14,WS_DISABLED | NOT WS_TABSTOP
+    EDITTEXT        IDC_EDIT6,114,73,161,14,ES_AUTOHSCROLL | ES_NUMBER | WS_DISABLED
+    EDITTEXT        IDC_EDIT7,114,94,161,14,ES_AUTOHSCROLL | WS_DISABLED
+    PUSHBUTTON      "Select...",IDC_BTN_SELMODINP3,285,94,50,14,WS_DISABLED | NOT WS_TABSTOP
+    PUSHBUTTON      "Dependency",IDC_DEP_CMOD3,343,94,50,14,WS_DISABLED | NOT WS_TABSTOP
+    EDITTEXT        IDC_EDIT8,114,114,161,14,ES_AUTOHSCROLL | ES_NUMBER | WS_DISABLED
+    CONTROL         "Training Directory 2",IDC_CHECK1,"Button",BS_AUTOCHECKBOX,26,57,79,10
+    CONTROL         "Training Directory 3",IDC_CHECK2,"Button",BS_AUTOCHECKBOX,26,98,79,10
+    EDITTEXT        IDC_EDIT11,114,177,161,14,ES_AUTOHSCROLL | ES_NUMBER
+    LTEXT           "Total Training Size",IDC_STATIC,42,180,59,8
+    CONTROL         "Training Size",IDC_CHECK3,"Button",BS_AUTOCHECKBOX,49,36,56,10
+    CONTROL         "Training Size",IDC_CHECK4,"Button",BS_AUTOCHECKBOX,49,76,56,10
+    CONTROL         "Training Size",IDC_CHECK5,"Button",BS_AUTOCHECKBOX,49,116,56,10
+END
+
+IDD_MAKEINDEX DIALOGEX 0, 0, 361, 97
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Create an Index"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "Start",IDOK,304,76,50,14
+    EDITTEXT        IDC_EDIT_MAKEIND_INP,81,15,161,14,ES_AUTOHSCROLL
+    LTEXT           "Input Directory",IDC_STATIC,18,17,50,8
+    PUSHBUTTON      "Select...",IDC_BTN_SELINP1,252,15,50,14,NOT WS_TABSTOP
+    LTEXT           "Output File",IDC_STATIC,32,37,36,8
+    EDITTEXT        IDC_EDIT4,81,34,161,14,ES_AUTOHSCROLL
+    PUSHBUTTON      "Select...",IDC_BTN_SELOUT1,252,34,50,14,NOT WS_TABSTOP
+    PUSHBUTTON      "Dependency",IDC_SELDEP1,304,15,50,14,NOT WS_TABSTOP
+    COMBOBOX        IDC_COMBO_INDMODE,81,54,161,30,CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Mode",IDC_STATIC,50,56,18,8
+END
+
+IDD_EXTRBUFFERS DIALOGEX 0, 0, 361, 100
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Extract Buffers"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "Start",IDOK,304,79,50,14,WS_DISABLED
+    EDITTEXT        IDC_EDIT_EXTRBUF_INP,81,15,161,14,ES_AUTOHSCROLL
+    LTEXT           "Input Directory",IDC_STATIC,18,17,50,8
+    PUSHBUTTON      "Select...",IDC_BTN_SELINP1,252,15,50,14,NOT WS_TABSTOP
+    LTEXT           "Output Directory",IDC_STATIC,13,37,55,8
+    EDITTEXT        IDC_EDIT4,81,34,161,14,ES_AUTOHSCROLL
+    PUSHBUTTON      "Select...",IDC_BTN_SELOUT1,252,34,50,14,NOT WS_TABSTOP
+    PUSHBUTTON      "Dependency",IDC_SELDEP1,304,15,50,14,NOT WS_TABSTOP
+    LTEXT           "Mode",IDC_STATIC,50,56,18,8
+    EDITTEXT        IDC_EDIT_MODE,81,54,161,14,ES_AUTOHSCROLL | ES_NOHIDESEL
+    PUSHBUTTON      "Create CFG File",IDC_BTN_CRCFG,117,79,55,14
+    PUSHBUTTON      "Edit CFG File",IDC_BTN_ECFG,179,79,50,14,WS_DISABLED
+END
+
+IDD_COMPILEMOD DIALOGEX 0, 0, 402, 150
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Compile Model"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "Start",IDOK,345,129,50,14
+    EDITTEXT        IDC_EDIT_COMPILE_INP,66,15,219,111,ES_MULTILINE | ES_AUTOVSCROLL | ES_AUTOHSCROLL | ES_WANTRETURN | WS_VSCROLL | WS_HSCROLL
+    LTEXT           "Input Files",-1,19,16,34,8
+    PUSHBUTTON      "Select...",IDC_BTN_SELINP1,291,15,50,14
+    PUSHBUTTON      "Dependency",IDC_SELDEP1,345,15,50,14
+END
+
+IDD_PRUNEMOD DIALOGEX 0, 0, 346, 68
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Prune Model"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "Start",IDOK,289,47,50,14
+    EDITTEXT        IDC_EDIT_PRUNE_INP,66,15,161,14,ES_AUTOHSCROLL
+    LTEXT           "Input File",-1,22,17,31,8
+    PUSHBUTTON      "Select...",IDC_BTN_SELINP1,237,15,50,14,NOT WS_TABSTOP
+    LTEXT           "Thresholds",-1,17,37,36,8
+    EDITTEXT        IDC_EDIT4,66,34,161,14,ES_AUTOHSCROLL
+    PUSHBUTTON      "Dependency",IDC_SELDEP1,289,15,50,14,NOT WS_TABSTOP
+END
+
+IDD_MERGEMODEL DIALOGEX 0, 0, 362, 142
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Merge Models"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "Start",IDOK,305,121,50,14,WS_DISABLED | NOT WS_TABSTOP
+    EDITTEXT        IDC_EDIT_INP1,76,15,161,14,ES_AUTOHSCROLL
+    LTEXT           "Model 1",IDC_STATIC,37,17,26,8
+    PUSHBUTTON      "Select...",IDC_BTN_SELINP1,247,15,50,14,NOT WS_TABSTOP
+    LTEXT           "Model 1 Path",IDC_STATIC,21,37,42,8
+    EDITTEXT        IDC_EDIT2,76,34,161,14,ES_AUTOHSCROLL
+    LTEXT           "Output Model",IDC_STATIC,19,94,44,8
+    EDITTEXT        IDC_EDIT_OUT1,76,91,161,14,ES_AUTOHSCROLL
+    PUSHBUTTON      "Select...",IDC_BTN_SELMODOUT,247,91,50,14,NOT WS_TABSTOP
+    PUSHBUTTON      "Create CFG File",IDC_BTN_CRCFG,125,121,55,14,NOT WS_TABSTOP
+    PUSHBUTTON      "Edit CFG File",IDC_BTN_ECFG,187,121,50,14,WS_DISABLED | NOT WS_TABSTOP
+    PUSHBUTTON      "Dependency",IDC_SELDEP1,305,15,50,14,NOT WS_TABSTOP
+    EDITTEXT        IDC_EDIT_INP2,76,53,161,14,ES_AUTOHSCROLL
+    LTEXT           "Model 2",IDC_STATIC,37,56,26,8
+    PUSHBUTTON      "Select...",IDC_BTN_SELINP2,247,53,50,14,NOT WS_TABSTOP
+    LTEXT           "Model 2 Path",IDC_STATIC,21,76,42,8
+    EDITTEXT        IDC_EDIT3,76,72,161,14,ES_AUTOHSCROLL
+    PUSHBUTTON      "Dependency",IDC_SELDEP2,305,53,50,14,NOT WS_TABSTOP
+END
+
+IDD_FINDSIGS DIALOGEX 0, 0, 374, 201
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Find Signatures"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "Start",IDOK,317,180,50,14,WS_DISABLED | NOT WS_TABSTOP
+    EDITTEXT        IDC_EDIT1,88,15,161,14,ES_AUTOHSCROLL
+    LTEXT           "Input Stub Map",IDC_STATIC,25,17,50,8
+    PUSHBUTTON      "Select...",IDC_BTN_SELINP1,259,15,50,14,NOT WS_TABSTOP
+    LTEXT           "Output File",IDC_STATIC,39,159,36,8
+    EDITTEXT        IDC_EDIT4,88,156,161,14,ES_AUTOHSCROLL
+    PUSHBUTTON      "Select...",IDC_BTN_SELFSOUT,259,156,50,14,NOT WS_TABSTOP
+    PUSHBUTTON      "Create CFG File",IDC_BTN_CRCFG,136,180,55,14,NOT WS_TABSTOP
+    PUSHBUTTON      "Edit CFG File",IDC_BTN_ECFG,198,180,50,14,WS_DISABLED | NOT WS_TABSTOP
+    PUSHBUTTON      "Dependency",IDC_SELDEP1,317,15,50,14,NOT WS_TABSTOP
+    EDITTEXT        IDC_EDIT_SMIM2,88,76,161,14,ES_AUTOHSCROLL | WS_DISABLED
+    PUSHBUTTON      "Select...",IDC_BTN_SELINP4,259,76,50,14,WS_DISABLED | NOT WS_TABSTOP
+    PUSHBUTTON      "Dependency",IDC_SELDEP5,317,76,50,14,WS_DISABLED | NOT WS_TABSTOP
+    EDITTEXT        IDC_EDIT7,88,96,161,14,ES_AUTOHSCROLL | WS_DISABLED
+    PUSHBUTTON      "Select...",IDC_BTN_SELINP5,259,96,50,14,WS_DISABLED | NOT WS_TABSTOP
+    PUSHBUTTON      "Dependency",IDC_SELDEP6,317,96,50,14,WS_DISABLED | NOT WS_TABSTOP
+    CONTROL         "Input Index 2",IDC_CHECK1,"Button",BS_AUTOCHECKBOX,19,80,60,10
+    CONTROL         "Input Cluster 2",IDC_CHECK2,"Button",BS_AUTOCHECKBOX,15,101,64,10
+    EDITTEXT        IDC_EDIT9,88,35,161,14,ES_AUTOHSCROLL
+    LTEXT           "Input Cluster 1",IDC_STATIC,26,38,49,8
+    PUSHBUTTON      "Select...",IDC_BTN_SELINP2,259,35,50,14,NOT WS_TABSTOP
+    PUSHBUTTON      "Dependency",IDC_SELDEP3,317,35,50,14,NOT WS_TABSTOP
+    EDITTEXT        IDC_EDIT10,88,56,161,14,ES_AUTOHSCROLL
+    LTEXT           "Input Index 1",IDC_STATIC,30,59,45,8
+    PUSHBUTTON      "Select...",IDC_BTN_SELINP3,259,56,50,14,NOT WS_TABSTOP
+    PUSHBUTTON      "Dependency",IDC_SELDEP4,317,56,50,14,NOT WS_TABSTOP
+    EDITTEXT        IDC_EDIT3,88,136,161,14,ES_AUTOHSCROLL
+    LTEXT           "File Mode",IDC_STATIC,44,140,31,8
+    EDITTEXT        IDC_EDIT11,88,116,161,14,ES_AUTOHSCROLL | ES_NUMBER
+    LTEXT           "Minimum Coverage",IDC_STATIC,14,120,61,8
+END
+
+IDD_STUBMAP DIALOGEX 0, 0, 374, 260
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Create a Stub Map"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "Start",IDOK,317,239,50,14,WS_DISABLED | NOT WS_TABSTOP
+    EDITTEXT        IDC_EDIT1,88,15,161,14,ES_AUTOHSCROLL
+    LTEXT           "Input Cluster",-1,32,17,43,8
+    PUSHBUTTON      "Select...",IDC_BTN_SELINP1,259,15,50,14,NOT WS_TABSTOP
+    LTEXT           "Output File",-1,39,219,36,8
+    EDITTEXT        IDC_EDIT4,88,216,161,14,ES_AUTOHSCROLL
+    PUSHBUTTON      "Select...",IDC_BTN_SELMODOUT,259,216,50,14,NOT WS_TABSTOP
+    PUSHBUTTON      "Create CFG File",IDC_BTN_CRCFG,136,239,55,14,NOT WS_TABSTOP
+    PUSHBUTTON      "Edit CFG File",IDC_BTN_ECFG,198,239,50,14,WS_DISABLED | NOT WS_TABSTOP
+    PUSHBUTTON      "Dependency",IDC_SELDEP1,317,15,50,14,NOT WS_TABSTOP
+    EDITTEXT        IDC_EDIT_SMIM2,88,75,161,14,ES_AUTOHSCROLL | WS_DISABLED
+    PUSHBUTTON      "Select...",IDC_BTN_SELSMINP3,259,75,50,14,WS_DISABLED | NOT WS_TABSTOP
+    PUSHBUTTON      "Dependency",IDC_DEP_CSM3,317,75,50,14,WS_DISABLED | NOT WS_TABSTOP
+    EDITTEXT        IDC_EDIT7,88,117,161,14,ES_AUTOHSCROLL | WS_DISABLED
+    PUSHBUTTON      "Select...",IDC_BTN_SELSMINP4,259,117,50,14,WS_DISABLED | NOT WS_TABSTOP
+    PUSHBUTTON      "Dependency",IDC_DEP_CSM4,317,117,50,14,WS_DISABLED | NOT WS_TABSTOP
+    CONTROL         "Input Model 2",IDC_CHECK1,"Button",BS_AUTOCHECKBOX,19,79,60,10
+    CONTROL         "Input Index",IDC_CHECK2,"Button",BS_AUTOCHECKBOX,25,122,54,10
+    EDITTEXT        IDC_EDIT9,88,35,161,14,ES_AUTOHSCROLL
+    LTEXT           "Input Model 1",-1,30,38,45,8
+    PUSHBUTTON      "Select...",IDC_BTN_SELINP2,259,35,50,14,NOT WS_TABSTOP
+    PUSHBUTTON      "Dependency",IDC_SELDEP3,317,35,50,14,NOT WS_TABSTOP
+    EDITTEXT        IDC_EDIT2,88,138,161,14,ES_AUTOHSCROLL | WS_DISABLED
+    PUSHBUTTON      "Select...",IDC_BTN_SELINP3,259,138,50,14,WS_DISABLED | NOT WS_TABSTOP
+    CONTROL         "IMM Counts File",IDC_CHECK3,"Button",BS_AUTOCHECKBOX,12,141,67,10
+    EDITTEXT        IDC_EDIT13,88,55,161,14,ES_AUTOHSCROLL
+    LTEXT           "Probability Thresh 1",-1,11,58,64,8
+    EDITTEXT        IDC_EDIT14,88,96,161,14,ES_AUTOHSCROLL | WS_DISABLED
+    LTEXT           "Probability Thresh 2",-1,11,99,64,8
+    EDITTEXT        IDC_EDIT15,88,158,161,14,ES_AUTOHSCROLL
+    LTEXT           "File Buffer Mode",-1,22,161,53,8
+    EDITTEXT        IDC_EDIT16,88,177,161,14,ES_AUTOHSCROLL
+    LTEXT           "Fraction to Keep",-1,21,180,54,8
+    EDITTEXT        IDC_EDIT17,88,196,161,14,ES_AUTOHSCROLL
+    LTEXT           "Min Non-LibOverLib",-1,13,199,62,8
+END
+
+IDD_PREPROC DIALOGEX 0, 0, 361, 198
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Preprocess Malware"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "Start",IDOK,304,177,50,14,WS_DISABLED | NOT WS_TABSTOP
+    EDITTEXT        IDC_EDIT_EXTRBUF_INP,81,15,161,14,ES_AUTOHSCROLL
+    LTEXT           "Input Directory",IDC_STATIC,18,17,50,8
+    PUSHBUTTON      "Select...",IDC_BTN_SELINP1,252,15,50,14,NOT WS_TABSTOP
+    LTEXT           "Output Directory",IDC_STATIC,13,160,55,8
+    EDITTEXT        IDC_EDIT4,81,157,161,14,ES_AUTOHSCROLL
+    PUSHBUTTON      "Select...",IDC_BTN_SELOUT1,252,157,50,14,NOT WS_TABSTOP
+    PUSHBUTTON      "Dependency",IDC_SELDEP1,304,15,50,14,NOT WS_TABSTOP
+    PUSHBUTTON      "Create CFG File",IDC_BTN_CRCFG,117,177,55,14,NOT WS_TABSTOP
+    PUSHBUTTON      "Edit CFG File",IDC_BTN_ECFG,179,177,50,14,WS_DISABLED | NOT WS_TABSTOP
+    EDITTEXT        IDC_EDIT_EXTRBUF_INP2,81,35,161,14,ES_AUTOHSCROLL
+    LTEXT           "MD5 File",IDC_STATIC,40,38,28,8
+    PUSHBUTTON      "Select...",IDC_BTN_SELINP2,251,35,50,14,NOT WS_TABSTOP
+    EDITTEXT        IDC_EDIT_EXTRBUF_INP3,82,96,161,14,ES_AUTOHSCROLL
+    LTEXT           "IDA File",IDC_STATIC,42,99,26,8
+    PUSHBUTTON      "Select...",IDC_BTN_SELINP6,252,96,50,14,NOT WS_TABSTOP
+    EDITTEXT        IDC_EDIT_EXTRBUF_INP4,82,117,161,14,ES_AUTOHSCROLL
+    LTEXT           "IDA Script File",IDC_STATIC,22,120,46,8
+    PUSHBUTTON      "Select...",IDC_BTN_SELINP7,252,117,50,14,NOT WS_TABSTOP
+    EDITTEXT        IDC_EDIT_EXTRBUF_INP5,82,137,161,14,ES_AUTOHSCROLL
+    LTEXT           "Defs Directory",IDC_STATIC,21,140,47,8
+    PUSHBUTTON      "Select...",IDC_BTN_SELINP8,252,137,50,14,NOT WS_TABSTOP
+    EDITTEXT        IDC_EDIT_EXTRBUF_INP6,81,55,161,14,ES_AUTOHSCROLL | ES_NUMBER
+    LTEXT           "Max IDA Procs",IDC_STATIC,20,58,48,8
+    EDITTEXT        IDC_EDIT_EXTRBUF_INP7,81,76,161,14,ES_AUTOHSCROLL | ES_NUMBER
+    LTEXT           "Proc Time Out",IDC_STATIC,22,79,46,8
+END
+
+IDD_CLSTFILES DIALOGEX 0, 0, 361, 117
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Cluster Files"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "Start",IDOK,304,96,50,14,WS_DISABLED | NOT WS_TABSTOP
+    EDITTEXT        IDC_EDIT_EXTRBUF_INP,81,15,161,14,ES_AUTOHSCROLL
+    LTEXT           "Input Directory",IDC_STATIC,18,17,50,8
+    PUSHBUTTON      "Select...",IDC_BTN_SELINP1,252,15,50,14,NOT WS_TABSTOP
+    LTEXT           "Test Type",IDC_STATIC,35,37,33,8
+    EDITTEXT        IDC_EDIT4,81,34,161,14,ES_AUTOHSCROLL
+    PUSHBUTTON      "Dependency",IDC_SELDEP1,304,15,50,14,NOT WS_TABSTOP
+    LTEXT           "Max Diff",IDC_STATIC,40,56,28,8
+    EDITTEXT        IDC_EDIT_MODE,81,54,161,14,ES_AUTOHSCROLL | ES_NOHIDESEL | ES_NUMBER
+    PUSHBUTTON      "Create CFG File",IDC_BTN_CRCFG,117,96,55,14,NOT WS_TABSTOP
+    PUSHBUTTON      "Edit CFG File",IDC_BTN_ECFG,179,96,50,14,WS_DISABLED | NOT WS_TABSTOP
+    EDITTEXT        IDC_EDIT_EXTRBUF_INP2,81,74,161,14,ES_AUTOHSCROLL
+    LTEXT           "Output File",IDC_STATIC,32,77,36,8
+    PUSHBUTTON      "Select...",IDC_BTN_SELOUT,252,74,50,14,NOT WS_TABSTOP
+END
+
+IDD_CFGDLG DIALOGEX 0, 0, 316, 183
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "CFG File Editor"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "Save",IDOK,205,162,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,259,162,50,14
+    EDITTEXT        IDC_EDIT1,7,7,302,153,ES_MULTILINE | ES_AUTOVSCROLL | ES_AUTOHSCROLL | ES_WANTRETURN | WS_VSCROLL | WS_HSCROLL
+END
+
+IDD_THRESHOLD DIALOGEX 0, 0, 127, 56
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Set Threshold"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,7,35,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,70,35,50,14
+    EDITTEXT        IDC_EDIT1,16,13,94,14,ES_AUTOHSCROLL | ES_NUMBER
+END
+
+IDD_SCHEDUI DIALOGEX 0, 0, 316, 201
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Schedule UI"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "Select",IDOK,203,180,50,14,NOT WS_VISIBLE
+    CONTROL         "",IDC_LIST3,"SysListView32",LVS_REPORT | LVS_SINGLESEL | LVS_ALIGNLEFT | WS_BORDER | WS_TABSTOP,7,7,302,129
+    EDITTEXT        IDC_EDIT1,7,136,302,42,ES_MULTILINE | ES_AUTOVSCROLL | ES_AUTOHSCROLL | ES_READONLY | WS_VSCROLL
+    PUSHBUTTON      "Close",IDCANCEL,259,180,50,14
+END
+
+IDD_SELDEP DIALOGEX 0, 0, 316, 183
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Select Dependency"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,205,162,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,259,162,50,14
+    LISTBOX         IDC_LIST1,7,7,302,149,LBS_SORT | LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,0,0,1
+ PRODUCTVERSION 1,0,0,1
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904e4"
+        BEGIN
+            VALUE "CompanyName", "UCLA CS 130 Group 6"
+            VALUE "FileDescription", "Project Hancock Software Manager"
+            VALUE "FileVersion", "1.0.0.1"
+            VALUE "InternalName", "hancock.exe"
+            VALUE "LegalCopyright", "(c) UCLA CS 130 Group 6.  All rights reserved."
+            VALUE "OriginalFilename", "hancock.exe"
+            VALUE "ProductName", "Project Hancock Software Manager"
+            VALUE "ProductVersion", "1.0.0.1"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1252
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO 
+BEGIN
+    IDD_ABOUTBOX, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 189
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 60
+    END
+
+    IDD_LOGUI, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 376
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 208
+    END
+
+    IDD_MAKEMODEL, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 393
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 215
+    END
+
+    IDD_MAKEINDEX, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 354
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 90
+    END
+
+    IDD_EXTRBUFFERS, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 354
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 93
+    END
+
+    IDD_COMPILEMOD, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 395
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 143
+    END
+
+    IDD_PRUNEMOD, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 339
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 61
+    END
+
+    IDD_MERGEMODEL, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 355
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 135
+    END
+
+    IDD_FINDSIGS, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 367
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 194
+    END
+
+    IDD_STUBMAP, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 367
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 253
+    END
+
+    IDD_PREPROC, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 354
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 191
+    END
+
+    IDD_CLSTFILES, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 354
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 110
+    END
+
+    IDD_CFGDLG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 309
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 176
+    END
+
+    IDD_THRESHOLD, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 120
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 49
+    END
+
+    IDD_SCHEDUI, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 309
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 194
+    END
+
+    IDD_SELDEP, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 309
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 176
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog Info
+//
+
+IDD_MAKEINDEX DLGINIT
+BEGIN
+    IDC_COMBO_INDMODE, 0x403, 10, 0
+0x6962, 0x426e, 0x6675, 0x6566, 0x0072, 
+    IDC_COMBO_INDMODE, 0x403, 11, 0
+0x6574, 0x7478, 0x7542, 0x6666, 0x7265, "\000" 
+    0
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE 
+BEGIN
+    IDP_OLE_INIT_FAILED     "OLE initialization failed.  Make sure that the OLE libraries are the correct version."
+    IDS_RIBBON_MAKEMODEL    "Create a Model"
+    IDS_RIBBON_EXTRBUFFERS  "Extract Buffers"
+    IDS_RIBBON_MAKEINDEX    "Create an Index"
+    IDS_RIBBON_LABELGOOD    "Label as Goodware"
+    IDS_RIBBON_PRUNE        "Prune Model"
+    IDS_RIBBON_MERGE        "Merge Models"
+    IDS_RIBBON_COMPILE      "Compile Model"
+    IDS_RIBBON_MAKESTUB     "Create Stub Map"
+    IDS_RIBBON_LABELMODEL   "Label as Model"
+    IDS_RIBBON_LOCSIGS      "Find Signatures"
+    IDS_RIBBON_LABELINDEX   "Label as Index"
+END
+
+STRINGTABLE 
+BEGIN
+    IDR_MAINFRAME           "Project Hancock Software Manager"
+END
+
+STRINGTABLE 
+BEGIN
+    AFX_IDS_APP_TITLE       "hancock"
+    AFX_IDS_IDLEMESSAGE     "Ready"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_INDICATOR_EXT        "EXT"
+    ID_INDICATOR_CAPS       "CAP"
+    ID_INDICATOR_NUM        "NUM"
+    ID_INDICATOR_SCRL       "SCRL"
+    ID_INDICATOR_OVR        "OVR"
+    ID_INDICATOR_REC        "REC"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_APP_ABOUT            "Display program information, version number and copyright\nAbout"
+    ID_APP_EXIT             "Quit the application\nExit"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_NEXT_PANE            "Switch to the next window pane\nNext Pane"
+    ID_PREV_PANE            "Switch back to the previous window pane\nPrevious Pane"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_WINDOW_SPLIT         "Split the active window into panes\nSplit"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_EDIT_CLEAR           "Erase the selection\nErase"
+    ID_EDIT_CLEAR_ALL       "Erase everything\nErase All"
+    ID_EDIT_COPY            "Copy the selection and put it on the Clipboard\nCopy"
+    ID_EDIT_CUT             "Cut the selection and put it on the Clipboard\nCut"
+    ID_EDIT_FIND            "Find the specified text\nFind"
+    ID_EDIT_PASTE           "Insert Clipboard contents\nPaste"
+    ID_EDIT_REPEAT          "Repeat the last action\nRepeat"
+    ID_EDIT_REPLACE         "Replace specific text with different text\nReplace"
+    ID_EDIT_SELECT_ALL      "Select the entire document\nSelect All"
+    ID_EDIT_UNDO            "Undo the last action\nUndo"
+    ID_EDIT_REDO            "Redo the previously undone action\nRedo"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_VIEW_TOOLBAR         "Show or hide the toolbar\nToggle ToolBar"
+    ID_VIEW_STATUS_BAR      "Show or hide the status bar\nToggle Status Bar"
+END
+
+STRINGTABLE 
+BEGIN
+    AFX_IDS_SCSIZE          "Change the window size"
+    AFX_IDS_SCMOVE          "Change the window position"
+    AFX_IDS_SCMINIMIZE      "Reduce the window to an icon"
+    AFX_IDS_SCMAXIMIZE      "Enlarge the window to full size"
+    AFX_IDS_SCNEXTWINDOW    "Switch to the next document window"
+    AFX_IDS_SCPREVWINDOW    "Switch to the previous document window"
+    AFX_IDS_SCCLOSE         "Close the active window and prompts to save the documents"
+END
+
+STRINGTABLE 
+BEGIN
+    AFX_IDS_SCRESTORE       "Restore the window to normal size"
+    AFX_IDS_SCTASKLIST      "Activate Task List"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_RIBBON_PREPROC      "Preprocess Malware"
+    IDS_RIBBON_LABELMALWARE "Label as Malware"
+    IDS_RIBBON_CLSTFILES    "Cluster Files"
+    IDS_RIBBON_LABELPREMALWARE "Label as Preprocessed Malware"
+    IDS_RIBBON_LABELCLUSTER "Label as Clustering"
+    IDS_RIBBON_LABELSTUBMAP "Label as Stub Map"
+    IDS_RIBBON_LABELFINDSIGS "Label as Find Signatures Output"
+    IDS_RIBBON_SCHEDULER    "Scheduler"
+    IDS_RIBBON_LOGGING      "Logging"
+    IDS_RIBBON_VIEWSCHED    "View Scheduler"
+    IDS_STATUS_PANE1        "Pane 1"
+    IDS_STATUS_PANE2        "Pane 2"
+    IDS_RIBBON_VIEWLOG      "View Log UI"
+    IDS_RIBBON_LOGSAVE      "Save Logs To..."
+    IDS_RIBBON_VIEWRPANE    "View File Info"
+    IDS_RIBBON_THRESHOLD    "Set Threshold"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_MYCALENDARS         "My Calendars"
+    IDS_CALENDAR            "Calendar"
+    IDS_SHORTCUTS           "Shortcuts"
+    IDS_FOLDERS             "Folders"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_OUTLOOKBAR          "Outlook Bar"
+    IDS_RIBBON_FILE         "File"
+    IDS_RIBBON_NEW          "&New"
+    IDS_RIBBON_OPEN         "&Open..."
+    IDS_RIBBON_SAVE         "&Save"
+    IDS_RIBBON_SAVEAS       "Save &As..."
+    IDS_RIBBON_PRINT        "Print"
+    IDS_RIBBON_PRINT_LABEL  "Preview and print the document"
+    IDS_RIBBON_PRINT_QUICK  "&Quick Print"
+    IDS_RIBBON_PRINT_PREVIEW "Print Pre&view"
+    IDS_RIBBON_PRINT_SETUP  "Print Set&up"
+    IDS_RIBBON_CLOSE        "&Close"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_RIBBON_RECENT_DOCS  "Recent Documents"
+    IDS_RIBBON_EXIT         "E&xit"
+    IDS_RIBBON_HOME         "&Home"
+    IDS_RIBBON_CLIPBOARD    "Clipboard\nd"
+    IDS_RIBBON_PASTE        "Paste\nv"
+    IDS_RIBBON_CUT          "Cut\nx"
+    IDS_RIBBON_COPY         "Copy\nc"
+    IDS_RIBBON_SELECTALL    "Select All\na"
+    IDS_RIBBON_WINDOW       "Window\nw"
+    IDS_RIBBON_WINDOWS      "Windows\ni"
+    IDS_RIBBON_STYLE        "Style"
+    IDS_RIBBON_STYLE_TIP    "Modify Visual Style"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_RIBBON_STYLE_DESC   "Choose one of the Office 2007 themes"
+    IDS_RIBBON_STATUSBAR    "Status Bar"
+    IDS_RIBBON_VIEW         "View"
+    IDS_RIBBON_ACTIONS      "A&ctions"
+    IDS_RIBBON_TOOLS        "&Tools"
+    IDS_RIBBON_FILETYPES    "File Types"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_EDIT_MENU           "Edit"
+    IDS_RIBBON_GOODWARE     "Goodware\ng"
+    IDS_RIBBON_MODELS       "Models\nm"
+    IDS_RIBBON_INDECES      "Indexes\ni"
+    IDS_RIBBON_MALWARE      "Malware\na"
+    IDS_RIBBON_PREMALWARE   "Preprocessed Malware\np"
+    IDS_RIBBON_CLUSTERINGS  "Clusterings\nc"
+    IDS_RIBBON_STUBMAPS     "Stub Maps\ns"
+    IDS_RIBBON_FINDOUTPUT   "Find Signatures Output\nf"
+    IDS_RIBBON_UNLABELED    "Unclassified Types\nu"
+END
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#define _AFX_NO_OLE_RESOURCES
+#define _AFX_NO_TRACKER_RESOURCES
+#define _AFX_NO_PROPERTY_RESOURCES
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+LANGUAGE 9, 1
+#pragma code_page(1252)
+#include "res\hancock.rc2"  // non-Microsoft Visual C++ edited resources
+#include "afxres.rc"         // Standard components
+#if !defined(_AFXDLL)
+#include "afxribbon.rc"              // MFC ribbon and control bar resources
+#endif
+#endif
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+
