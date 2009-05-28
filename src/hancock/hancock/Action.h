@@ -29,7 +29,6 @@ class Action {
 public:
 	Action();
 	Action(string path, string name, string cfg);	//used for most actions
-	Action(string path, string name, string cfg, string optionalOutfile);	//used for Cluster File and Find Signatures actions
 	Action(string path, string name, vector<string> &params); //the last parameter is a vector of arguments for the executable.
 	virtual void act();					//builds the cmd and runs the action
 	virtual string getName();			//returns the name of the executable
@@ -41,7 +40,6 @@ public:
 	string m_symantecCfg;				//Path of the .cfg file used as input for the executable
 	int status;							//status of action
 	string output;
-	string m_optionalOutFile;			//Specifies the optional output file to save the action out in
 
 protected:
 	void executeProcess(string cmd);

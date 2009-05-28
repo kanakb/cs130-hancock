@@ -12,8 +12,7 @@ Action::Action()
 	exeName = "";
 	exePath = "";
 	m_symantecCfg = "";
-	status = -1;
-	m_optionalOutfile = "";
+	status = -1;	
 }
 
 Action::Action(string path, string name, vector<string> &params)
@@ -23,7 +22,6 @@ Action::Action(string path, string name, vector<string> &params)
 	m_symantecCfg = "";
 	status = -1;
 	argv = params;
-	m_optionalOutfile = "";
 }
 
 Action::Action(string path, string name, string cfg)
@@ -32,16 +30,6 @@ Action::Action(string path, string name, string cfg)
 	exePath = path;
 	m_symantecCfg = cfg;
 	status = -1;
-	m_optionalOutfile = "";
-}
-
-Action::Action(string path, string name, string cfg, string optionalOutfile)
-{
-	exeName = name;
-	exePath = path;
-	m_symantecCfg = cfg;
-	status = -1;
-	m_optionalOutfile = optionalOutfile;
 }
 
 void Action::executeProcess(string cmd){
