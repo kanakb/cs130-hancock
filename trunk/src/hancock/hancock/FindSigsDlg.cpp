@@ -80,7 +80,7 @@ void FindSigsDlg::OnBnClickedBtnCrcfg()
 	if (cfgBox.DoModal() == IDOK)
 	{
 		// Get file path from dialog
-		CString fullFilePath = cfgBox.GetFolderPath() + _T("\\") + cfgBox.GetFileName();
+		CString fullFilePath = cfgBox.GetPathName();
 		if (cfgBox.GetFileExt() == _T(""))
 			fullFilePath += _T(".cfg");
 
@@ -215,7 +215,7 @@ void FindSigsDlg::OnBnClickedBtnSelinp1()
 	CFileDialog inBox1(TRUE, NULL, NULL, OFN_OVERWRITEPROMPT, _T("Stub Maps(*.bin)|*.bin|All Files(*.*)|*.*||"));
 	if (inBox1.DoModal() == IDOK)
 	{
-		CString fullFilePath = inBox1.GetFolderPath() + _T("\\") + inBox1.GetFileName();
+		CString fullFilePath = inBox1.GetPathName();
 		m_inpStubMap.SetWindowText(fullFilePath);
 	}
 }
@@ -242,7 +242,7 @@ void FindSigsDlg::OnBnClickedBtnSelinp2()
 	CFileDialog inBox2(TRUE, NULL, NULL, OFN_OVERWRITEPROMPT, _T("Clusterings(*.txt)|*.txt|All Files(*.*)|*.*||"));
 	if (inBox2.DoModal() == IDOK)
 	{
-		CString fullFilePath = inBox2.GetFolderPath() + _T("\\") + inBox2.GetFileName();
+		CString fullFilePath = inBox2.GetPathName();
 		m_inpClst1.SetWindowText(fullFilePath);
 	}
 }
@@ -269,7 +269,7 @@ void FindSigsDlg::OnBnClickedBtnSelinp3()
 	CFileDialog inBox3(TRUE, NULL, NULL, OFN_OVERWRITEPROMPT, _T("All Files(*.*)|*.*||"));
 	if (inBox3.DoModal() == IDOK)
 	{
-		CString fullFilePath = inBox3.GetFolderPath() + _T("\\") + inBox3.GetFileName();
+		CString fullFilePath = inBox3.GetPathName();
 		m_inpInd1.SetWindowText(fullFilePath);
 	}
 }
@@ -296,7 +296,7 @@ void FindSigsDlg::OnBnClickedBtnSelinp4()
 	CFileDialog inBox3(TRUE, NULL, NULL, OFN_OVERWRITEPROMPT, _T("All Files(*.*)|*.*||"));
 	if (inBox3.DoModal() == IDOK)
 	{
-		CString fullFilePath = inBox3.GetFolderPath() + _T("\\") + inBox3.GetFileName();
+		CString fullFilePath = inBox3.GetPathName();
 		m_inpInd2.SetWindowText(fullFilePath);
 	}
 }
@@ -323,7 +323,7 @@ void FindSigsDlg::OnBnClickedBtnSelinp5()
 	CFileDialog inBox2(TRUE, NULL, NULL, OFN_OVERWRITEPROMPT, _T("Clusterings(*.txt)|*.txt|All Files(*.*)|*.*||"));
 	if (inBox2.DoModal() == IDOK)
 	{
-		CString fullFilePath = inBox2.GetFolderPath() + _T("\\") + inBox2.GetFileName();
+		CString fullFilePath = inBox2.GetPathName();
 		m_inpClst2.SetWindowText(fullFilePath);
 	}
 }
@@ -350,7 +350,7 @@ void FindSigsDlg::OnBnClickedBtnSelfsout()
 	CFileDialog outBox(FALSE, NULL, NULL, OFN_OVERWRITEPROMPT, _T("All Files(*.*)|*.*||"));
 	if (outBox.DoModal() == IDOK)
 	{
-		CString fullFilePath = outBox.GetFolderPath() + _T("\\") + outBox.GetFileName();
+		CString fullFilePath = outBox.GetPathName();
 		m_output.SetWindowText(fullFilePath);
 	}
 }

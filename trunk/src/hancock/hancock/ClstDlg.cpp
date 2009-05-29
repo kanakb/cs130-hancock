@@ -60,7 +60,7 @@ void ClstDlg::OnBnClickedBtnCrcfg()
 	if (cfgBox.DoModal() == IDOK)
 	{
 		// Get file path from dialog
-		CString fullFilePath = cfgBox.GetFolderPath() + _T("\\") + cfgBox.GetFileName();
+		CString fullFilePath = cfgBox.GetPathName();
 		if (cfgBox.GetFileExt() == _T(""))
 			fullFilePath += _T(".cfg");
 
@@ -163,7 +163,7 @@ void ClstDlg::OnBnClickedBtnSelout()
 	CFileDialog outBox(FALSE, NULL, NULL, OFN_OVERWRITEPROMPT, _T("Clusterings(*.txt)|*.txt|All Files(*.*)|*.*||"));
 	if (outBox.DoModal() == IDOK)
 	{
-		CString fullFilePath = outBox.GetFolderPath() + _T("\\") + outBox.GetFileName();
+		CString fullFilePath = outBox.GetPathName();
 		if (outBox.GetFileExt() == _T(""))
 			fullFilePath += _T(".txt");
 		m_output.SetWindowText(fullFilePath);

@@ -119,7 +119,7 @@ void MakeIndexDlg::OnBnClickedBtnSelout1()
 	CFileDialog outBox(FALSE, NULL, NULL, OFN_OVERWRITEPROMPT, _T("All Files(*.*)|*.*||"));
 	if (outBox.DoModal() == IDOK)
 	{
-		CString fullFilePath = outBox.GetFolderPath() + _T("\\") + outBox.GetFileName();
+		CString fullFilePath = outBox.GetPathName();
 		m_output.SetWindowText(fullFilePath);
 	}
 }

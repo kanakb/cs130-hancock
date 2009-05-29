@@ -63,7 +63,7 @@ void MergeDlg::OnBnClickedBtnCrcfg()
 	if (cfgBox.DoModal() == IDOK)
 	{
 		// Get file path from dialog
-		CString fullFilePath = cfgBox.GetFolderPath() + _T("\\") + cfgBox.GetFileName();
+		CString fullFilePath = cfgBox.GetPathName();
 		if (cfgBox.GetFileExt() == _T(""))
 			fullFilePath += _T(".cfg");
 
@@ -148,7 +148,7 @@ void MergeDlg::OnBnClickedBtnSelinp1()
 	CFileDialog inBox1(TRUE, NULL, NULL, OFN_OVERWRITEPROMPT, _T("Models(*.mdl)|*.bin|All Files(*.*)|*.*||"));
 	if (inBox1.DoModal() == IDOK)
 	{
-		CString fullFilePath = inBox1.GetFolderPath() + _T("\\") + inBox1.GetFileName();
+		CString fullFilePath = inBox1.GetPathName();
 		m_input1.SetWindowText(fullFilePath);
 		m_path1.SetWindowText(inBox1.GetFolderPath());
 	}
@@ -176,7 +176,7 @@ void MergeDlg::OnBnClickedBtnSelinp2()
 	CFileDialog inBox1(TRUE, NULL, NULL, OFN_OVERWRITEPROMPT, _T("Models(*.mdl)|*.bin|All Files(*.*)|*.*||"));
 	if (inBox1.DoModal() == IDOK)
 	{
-		CString fullFilePath = inBox1.GetFolderPath() + _T("\\") + inBox1.GetFileName();
+		CString fullFilePath = inBox1.GetPathName();
 		m_input2.SetWindowText(fullFilePath);
 		m_path2.SetWindowText(inBox1.GetFolderPath());
 	}
@@ -204,7 +204,7 @@ void MergeDlg::OnBnClickedBtnSelmodout()
 	CFileDialog outBox(FALSE, NULL, NULL, OFN_OVERWRITEPROMPT, _T("Models (*.mdl)|*.mdl|All Files(*.*)|*.*||"));
 	if (outBox.DoModal() == IDOK)
 	{
-		CString fullFilePath = outBox.GetFolderPath() + _T("\\") + outBox.GetFileName();
+		CString fullFilePath = outBox.GetPathName();
 		if (outBox.GetFileExt() == _T(""))
 			fullFilePath += _T(".mdl");
 		m_output.SetWindowText(fullFilePath);
