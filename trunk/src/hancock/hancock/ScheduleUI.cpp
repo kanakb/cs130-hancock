@@ -61,6 +61,8 @@ void ScheduleUI::DoDataExchange(CDataExchange* pDX)
 			taskStatus = _T("Running");
 		else if (aStatus == COMPLETED)
 			taskStatus = _T("Completed");
+		else if (aStatus == UNSUCCESSFUL)
+			taskStatus = _T("Failed");
 		else
 			taskStatus = _T("Unknown");
 		m_taskList.InsertItem(row, taskName);

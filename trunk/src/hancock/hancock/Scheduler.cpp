@@ -40,8 +40,8 @@ DWORD WINAPI Scheduler::Thread_Loop (LPVOID lpParam)
 
 				// Logs the status of the completed action
 				(*it)->endTime = ((Scheduler*)lpParam)->formatTime();
-				string logStr = "   "+(*it)->endTime;
-				logStr += "   "+(*it)->m_action->exeName;
+				string logStr = "";
+				logStr += (*it)->m_action->exeName;
 				if((*it)->status == COMPLETED)
 					logStr += " completed successfully.";
 				else
@@ -70,7 +70,7 @@ DWORD WINAPI Scheduler::Thread_Loop (LPVOID lpParam)
 						{
 							// there was an error in opening the file, output an error to the log file
 							((Scheduler*)lpParam)->m_log->write("The following file could not be opened for writing: ");
-							((Scheduler*)lpParam)->m_log->write("		"+(*it)->m_action->m_optionalOutfile);
+							((Scheduler*)lpParam)->m_log->write("      "+(*it)->m_action->m_optionalOutfile);
 						}
 					}
 				}
@@ -91,8 +91,8 @@ DWORD WINAPI Scheduler::Thread_Loop (LPVOID lpParam)
 					(*it)->status = RUNNING;
 
 					// Logs that a new action has been started.
-					string logStr = ((Scheduler*)lpParam)->formatTime();
-					logStr += " "+(*it)->m_action->exeName+" has been started.";
+					string logStr = "";
+					logStr += (*it)->m_action->exeName+" has been started.";
 					((Scheduler*)lpParam)->m_log->write(logStr);
 				}
 			}
@@ -177,7 +177,7 @@ string Scheduler::formatTime()
 	GetSystemTime(&st); 
 
 	char time[256];
-	sprintf_s(time,256, "%02d/%02d/%02d %02d:%02d\n", st.wMonth,st.wDay,st.wYear,st.wHour, st.wMinute);
+	sprintf_s(time,256, "%02d/%02d/%02d %02d:%02d", st.wMonth,st.wDay,st.wYear,st.wHour, st.wMinute);
 
 	return time;
 
