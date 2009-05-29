@@ -107,7 +107,6 @@ void ClstDlg::OnBnClickedBtnEcfg()
 void ClstDlg::OnBnClickedOk()
 {
 	// code for starting the action
-	Action *act = new Action("executables\\", "FileClust.exe", m_cfgname);
 	std::list<string> inputs;
 	std::list<string> outputs;
 
@@ -121,10 +120,12 @@ void ClstDlg::OnBnClickedOk()
 	CString out;
 	m_output.GetWindowText(out);
 	CT2CA asciiOut(out);
-	if (out != _T(""))
-		outputs.push_back(string(asciiOut));
+	string outfilename(asciiOut);
+	if (outfilename != "")
+		outputs.push_back(outfilename);
 
 	// Schedule action
+	Action *act = new Action("executables\\", "FileClust.exe", m_cfgname, outfilename);
 	m_sched->addAction(act, m_deps, inputs, outputs);
 	OnOK();
 }

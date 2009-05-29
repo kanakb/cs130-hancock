@@ -162,7 +162,6 @@ void FindSigsDlg::OnBnClickedBtnEcfg()
 void FindSigsDlg::OnBnClickedOk()
 {
 	// code for starting the action
-	Action *act = new Action("executables\\", "FindSigs.exe", m_cfgname);
 	std::list<string> inputs;
 	std::list<string> outputs;
 
@@ -200,10 +199,12 @@ void FindSigsDlg::OnBnClickedOk()
 	CString out;
 	m_output.GetWindowText(out);
 	CT2CA asciiOut(out);
+	string outfilename(asciiOut);
 	if (out != _T(""))
-		outputs.push_back(string(asciiOut));
+		outputs.push_back(outfilename);
 
 	// Schedule action
+	Action *act = new Action("executables\\", "FindSigs.exe", m_cfgname, outfilename);
 	m_sched->addAction(act, m_deps, inputs, outputs);
 	OnOK();
 }
