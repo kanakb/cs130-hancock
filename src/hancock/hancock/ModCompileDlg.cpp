@@ -92,7 +92,7 @@ void ModCompileDlg::OnBnClickedBtnSelinp1()
 	CFileDialog inBox(TRUE, NULL, NULL, OFN_OVERWRITEPROMPT, _T("Models (*.mdl)|*.mdl|All Files(*.*)|*.*||"));
 	if (inBox.DoModal() == IDOK)
 	{
-		CString fullFilePath = inBox.GetFolderPath() + _T("\\") + inBox.GetFileName();
+		CString fullFilePath = inBox.GetPathName();
 		if (fileList == _T(""))
 			fileList += fullFilePath;
 		else

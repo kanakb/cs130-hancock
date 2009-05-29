@@ -69,7 +69,7 @@ void PreprocDlg::OnBnClickedBtnCrcfg()
 	if (cfgBox.DoModal() == IDOK)
 	{
 		// Get file path from dialog
-		CString fullFilePath = cfgBox.GetFolderPath() + _T("\\") + cfgBox.GetFileName();
+		CString fullFilePath = cfgBox.GetPathName();
 		if (cfgBox.GetFileExt() == _T(""))
 			fullFilePath += _T(".cfg");
 
@@ -192,7 +192,7 @@ void PreprocDlg::OnBnClickedBtnSelinp2()
 	CFileDialog inBox1(TRUE, NULL, NULL, OFN_OVERWRITEPROMPT, _T("MD5 List Files(*.bin)|*.bin|All Files(*.*)|*.*||"));
 	if (inBox1.DoModal() == IDOK)
 	{
-		CString fullFilePath = inBox1.GetFolderPath() + _T("\\") + inBox1.GetFileName();
+		CString fullFilePath = inBox1.GetPathName();
 		m_inpMD5.SetWindowText(fullFilePath);
 	}
 }
@@ -203,7 +203,7 @@ void PreprocDlg::OnBnClickedBtnSelinp3()
 	CFileDialog inBox1(TRUE, NULL, NULL, OFN_OVERWRITEPROMPT, _T("Executables(*.exe)|*.exe|All Files(*.*)|*.*||"));
 	if (inBox1.DoModal() == IDOK)
 	{
-		CString fullFilePath = inBox1.GetFolderPath() + _T("\\") + inBox1.GetFileName();
+		CString fullFilePath = inBox1.GetPathName();
 		m_inpIDA.SetWindowText(fullFilePath);
 	}
 }
@@ -214,7 +214,7 @@ void PreprocDlg::OnBnClickedBtnSelinp4()
 	CFileDialog inBox1(TRUE, NULL, NULL, OFN_OVERWRITEPROMPT, _T("IDA Scripts(*.idc)|*.idc|All Files(*.*)|*.*||"));
 	if (inBox1.DoModal() == IDOK)
 	{
-		CString fullFilePath = inBox1.GetFolderPath() + _T("\\") + inBox1.GetFileName();
+		CString fullFilePath = inBox1.GetPathName();
 		m_inpIDAScr.SetWindowText(fullFilePath);
 	}
 }

@@ -85,7 +85,7 @@ void StubMapDlg::OnBnClickedBtnCrcfg()
 	if (cfgBox.DoModal() == IDOK)
 	{
 		// Get file path from dialog
-		CString fullFilePath = cfgBox.GetFolderPath() + _T("\\") + cfgBox.GetFileName();
+		CString fullFilePath = cfgBox.GetPathName();
 		if (cfgBox.GetFileExt() == _T(""))
 			fullFilePath += _T(".cfg");
 
@@ -239,7 +239,7 @@ void StubMapDlg::OnBnClickedBtnSelinp1()
 	CFileDialog inBox1(TRUE, NULL, NULL, OFN_OVERWRITEPROMPT, _T("Clusterings(*.txt)|*.txt|All Files(*.*)|*.*||"));
 	if (inBox1.DoModal() == IDOK)
 	{
-		CString fullFilePath = inBox1.GetFolderPath() + _T("\\") + inBox1.GetFileName();
+		CString fullFilePath = inBox1.GetPathName();
 		m_inpClst.SetWindowText(fullFilePath);
 	}
 }
@@ -266,7 +266,7 @@ void StubMapDlg::OnBnClickedBtnSelinp2()
 	CFileDialog inBox1(TRUE, NULL, NULL, OFN_OVERWRITEPROMPT, _T("Models(*.mdl)|*.mdl|All Files(*.*)|*.*||"));
 	if (inBox1.DoModal() == IDOK)
 	{
-		CString fullFilePath = inBox1.GetFolderPath() + _T("\\") + inBox1.GetFileName();
+		CString fullFilePath = inBox1.GetPathName();
 		m_inpMod1.SetWindowText(fullFilePath);
 	}
 }
@@ -293,7 +293,7 @@ void StubMapDlg::OnBnClickedBtnSelsminp3()
 	CFileDialog inBox1(TRUE, NULL, NULL, OFN_OVERWRITEPROMPT, _T("Models(*.mdl)|*.mdl|All Files(*.*)|*.*||"));
 	if (inBox1.DoModal() == IDOK)
 	{
-		CString fullFilePath = inBox1.GetFolderPath() + _T("\\") + inBox1.GetFileName();
+		CString fullFilePath = inBox1.GetPathName();
 		m_inpMod2.SetWindowText(fullFilePath);
 	}
 }
@@ -320,7 +320,7 @@ void StubMapDlg::OnBnClickedBtnSelsminp4()
 	CFileDialog inBox1(TRUE, NULL, NULL, OFN_OVERWRITEPROMPT, _T("All Files(*.*)|*.*||"));
 	if (inBox1.DoModal() == IDOK)
 	{
-		CString fullFilePath = inBox1.GetFolderPath() + _T("\\") + inBox1.GetFileName();
+		CString fullFilePath = inBox1.GetPathName();
 		m_inpIndex.SetWindowText(fullFilePath);
 	}
 }
@@ -347,7 +347,7 @@ void StubMapDlg::OnBnClickedBtnSelinp3()
 	CFileDialog inBox1(TRUE, NULL, NULL, OFN_OVERWRITEPROMPT, _T("IMM Counts(*.bin)|*.bin|All Files(*.*)|*.*||"));
 	if (inBox1.DoModal() == IDOK)
 	{
-		CString fullFilePath = inBox1.GetFolderPath() + _T("\\") + inBox1.GetFileName();
+		CString fullFilePath = inBox1.GetPathName();
 		m_inpIMM.SetWindowText(fullFilePath);
 	}
 }
@@ -358,7 +358,7 @@ void StubMapDlg::OnBnClickedBtnSelmodout()
 	CFileDialog outBox(FALSE, NULL, NULL, OFN_OVERWRITEPROMPT, _T("Stub Maps(*.bin)|*.bin|All Files(*.*)|*.*||"));
 	if (outBox.DoModal() == IDOK)
 	{
-		CString fullFilePath = outBox.GetFolderPath() + _T("\\") + outBox.GetFileName();
+		CString fullFilePath = outBox.GetPathName();
 		if (outBox.GetFileExt() == _T(""))
 			fullFilePath += _T(".bin");
 		m_output.SetWindowText(fullFilePath);

@@ -93,7 +93,7 @@ void PruneDlg::OnBnClickedBtnSelinp1()
 	CFileDialog inBox1(TRUE, NULL, NULL, OFN_OVERWRITEPROMPT, _T("Models(*.mdl)|*.mdl|All Files(*.*)|*.*||"));
 	if (inBox1.DoModal() == IDOK)
 	{
-		CString fullFilePath = inBox1.GetFolderPath() + _T("\\") + inBox1.GetFileName();
+		CString fullFilePath = inBox1.GetPathName();
 		m_input.SetWindowText(fullFilePath);
 	}
 }
