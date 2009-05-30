@@ -4,6 +4,7 @@
 #include "stdafx.h"
 #include "hancock.h"
 #include "RPane.h"
+#include "HScrollListBox.h"
 #include <string>
 #include <iostream>
 #include <sstream>
@@ -53,6 +54,12 @@ int RPane::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_text.SetFont(&m_Font);
 
 	return 0;
+}
+
+void RPane::DoDataExchange(CDataExchange* pDX)
+{
+	CDockablePane::DoDataExchange(pDX);
+	DDX_Control(pDX, ID_RPANE_BOX, m_text);
 }
 
 void RPane::OnSize(UINT nType, int cx, int cy)
