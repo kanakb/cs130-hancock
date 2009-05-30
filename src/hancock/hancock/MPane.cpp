@@ -321,7 +321,7 @@ bool MPane::labelFileAsFlag(int type, string filename)
 	{
 		//Make a *cnf.tmp file, with only the correct filename value.
 		//Other values are blank
-		outfile << "<filename>" << filename << "</filename>" << endl;
+		outfile << "<filename>" << m_working_dir + filename << "</filename>" << endl;
 		outfile << "<type>" << type_buffer << "</type>" << endl;
 		outfile << "<operations>" << endl << "</operations>";
 
@@ -711,6 +711,9 @@ bool MPane::updateCnfAction(int action_int, const list<string> &inputs, const li
 {
 	string TMP = ".tmp";
 
+	string CNF_EXT = ".conf";
+	string CNF_DIR = "cnf_files\\";
+
 	string action_string = getActionStringFromInt(action_int);
 
 	//The current list we will be iterating through
@@ -742,13 +745,28 @@ bool MPane::updateCnfAction(int action_int, const list<string> &inputs, const li
 
 			current_filename = *it;
 
-
 			//Generate location of .cnf file and .cnf.tmp files
-			string cnf_location = getCnfFullPath(current_filename);
+			string cnf_location = current_filename;
+			unsigned int found;
+			found = cnf_location.find_last_of("\\");
+			string cnf_folder_dir;
+			if (found != -1) {
+				cnf_location.insert(found + 1, CNF_DIR);
+				cnf_folder_dir = cnf_location.substr(0, found + 1 + 9);
+			}
+			else {
+				return FALSE;								
+			}
+
+			cnf_location.append(CNF_EXT);
 			string cnf_location_temp = cnf_location + TMP;
 
-			if (!cnfFolderUpdate())
-				return FALSE;
+			//Create the folder, if it does not exist
+			if (GetFileAttributes(CString(cnf_folder_dir.c_str())) != 0xFFFFFFFF) {
+			}
+			else {
+				CreateDirectory(CString(cnf_folder_dir.c_str()), NULL);
+			}
 
 			//Open the temporary output file (*.conf.tmp)
 			fstream outfile;
