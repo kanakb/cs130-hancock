@@ -107,17 +107,15 @@ DWORD WINAPI Scheduler::Thread_Loop (LPVOID lpParam)
 Scheduler::Scheduler(HancockLog* hlog,MPane* mpane)
 :m_log(hlog),m_mpane(mpane)
 {
-	//cout<<"Initializing Scheduler..."<<endl;
 	threshold = getThresholdFromFile();
 	activeCount = 0;
-	//m_actions = (list<actData*>*) HeapAlloc(GetProcessHeap(),HEAP_ZERO_MEMORY,sizeof(list<Scheduler::actData>));
 	m_actions = new list<actData*>;
 	
 	Handle_of_Thread_Loop = 0;
     Handle_of_Thread_Loop = CreateThread (NULL, 0, &Scheduler::Thread_Start, (LPVOID*)this, 0, NULL);
 	if (Handle_of_Thread_Loop == NULL)
 	{
-		cout << "Thread creation failed." << endl;
+		m_log->write("Scheduler thread creation failed!!");
 		ExitProcess(0);
 	}
 }
@@ -139,8 +137,8 @@ int Scheduler::getThresholdFromFile()
 	if(!thresholdFile.is_open())			// threshold file does not exist yet
 	{
 		toLog = "Error: Threshold file does not exist.";
-		m_log->write(toLog.c_str()); 
-		threshold = 10;			// this is an arbitrary limit I am setting
+		m_log->write(toLog.c_str());
+		threshold = 25;			// this is an arbitrary limit I am setting
 	}
 	else
 	{

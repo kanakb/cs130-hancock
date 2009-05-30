@@ -27,15 +27,13 @@ HancockLog::HancockLog(string path)
 	
 	fout.open(filename);
 	
-	this->write("Log Created.");
-
-		
+	write("Log Created.");
+	fout.close();		
 }
 
 HancockLog::~HancockLog()
 {
 	delete filename;
-	fout.close();
 }
 
 string HancockLog::getTimestamp(){
@@ -50,10 +48,12 @@ char* HancockLog::getFileName(){
 	return filename;
 }
 
-void HancockLog::write(const string &info){
-
+void HancockLog::write(const string &info)
+{
+	fout.open(filename);
 	fout << getTimestamp() + info + "\r\n";
 	curLog = curLog + getTimestamp() + info + "\r\n";
+	fout.close();
 }
 
 string HancockLog::dispCurrLog(){
