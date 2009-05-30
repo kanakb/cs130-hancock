@@ -1,7 +1,10 @@
 #pragma once
+#include "HScrollListBox.h"
 #include <string>
 
 // RPane
+
+#define ID_RPANE_BOX (WM_USER + 400)
 
 class RPane : public CDockablePane
 {
@@ -10,6 +13,7 @@ class RPane : public CDockablePane
 public:
 	RPane();
 	virtual ~RPane();
+	virtual void DoDataExchange(CDataExchange* pDX);
 	void setText(const std::string &text);
 	void clear();
 
@@ -21,7 +25,7 @@ protected:
 	DECLARE_MESSAGE_MAP()
 
 private:
-	CListBox m_text;
+	CHScrollListBox m_text; // horizontal scroll list box from CodeGuru
 	CFont m_Font;
 };
 
