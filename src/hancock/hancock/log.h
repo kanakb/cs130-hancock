@@ -11,7 +11,7 @@ using namespace std;
 class HancockLog{
 
 	char* filename;
-	ofstream fout;
+	//ofstream fout;
 	string curLog;
 	string dir;
 	string getTimestamp();

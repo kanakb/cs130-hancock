@@ -25,10 +25,7 @@ HancockLog::HancockLog(string path)
 	filename = new char[256];
 	sprintf_s(filename,256,"%s%02d.%02d.%d.%02d.%02d.%03d.txt",dir.c_str(),st.wMonth,st.wDay,st.wYear,st.wHour,st.wMinute,st.wMilliseconds);
 	
-	fout.open(filename);
-	
 	write("Log Created.");
-	fout.close();		
 }
 
 HancockLog::~HancockLog()
@@ -50,7 +47,7 @@ char* HancockLog::getFileName(){
 
 void HancockLog::write(const string &info)
 {
-	fout.open(filename);
+	ofstream fout(filename, ios_base::out | ios_base::app);
 	fout << getTimestamp() + info + "\r\n";
 	curLog = curLog + getTimestamp() + info + "\r\n";
 	fout.close();
