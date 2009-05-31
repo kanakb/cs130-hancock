@@ -145,7 +145,7 @@ void MergeDlg::OnBnClickedOk()
 void MergeDlg::OnBnClickedBtnSelinp1()
 {
 	// code for picking an input model (#1)
-	CFileDialog inBox1(TRUE, NULL, NULL, OFN_OVERWRITEPROMPT, _T("Models(*.mdl)|*.bin|All Files(*.*)|*.*||"));
+	CFileDialog inBox1(TRUE, NULL, NULL, OFN_OVERWRITEPROMPT, _T("Models(*.mdl)|*.mdl|All Files(*.*)|*.*||"));
 	if (inBox1.DoModal() == IDOK)
 	{
 		CString fullFilePath = inBox1.GetPathName();
@@ -173,7 +173,7 @@ void MergeDlg::OnBnClickedSeldep1()
 void MergeDlg::OnBnClickedBtnSelinp2()
 {
 	// code for picking an input model (#2)
-	CFileDialog inBox1(TRUE, NULL, NULL, OFN_OVERWRITEPROMPT, _T("Models(*.mdl)|*.bin|All Files(*.*)|*.*||"));
+	CFileDialog inBox1(TRUE, NULL, NULL, OFN_OVERWRITEPROMPT, _T("Models(*.mdl)|*.mdl|All Files(*.*)|*.*||"));
 	if (inBox1.DoModal() == IDOK)
 	{
 		CString fullFilePath = inBox1.GetPathName();
