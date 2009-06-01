@@ -4,7 +4,7 @@
 DWORD WINAPI Scheduler::Thread_Loop (LPVOID lpParam)
 {		
 	list<actData*>::iterator it;
-	list<actData*>* actionList = new list<actData*>;
+	list<actData*>* actionList /*= new list<actData*>*/;
 	actionList = ((Scheduler*)lpParam)->getActList();
 	
 	while(actionList->empty())
@@ -86,14 +86,30 @@ DWORD WINAPI Scheduler::Thread_Loop (LPVOID lpParam)
 				if ((*it)->dependencies.empty() && activeCount < threshold)
 				{
 					(*it)->startTime = formatTime();
-					(*it)->m_action->act();
-					activeCount++;
-					(*it)->status = RUNNING;
+					bool isStarted = (*it)->m_action->act();
+					if (isStarted)
+					{
+						activeCount++;
+						(*it)->status = RUNNING;
 
-					// Logs that a new action has been started.
-					string logStr = "";
-					logStr += (*it)->m_action->exeName+" has been started.";
-					((Scheduler*)lpParam)->m_log->write(logStr);
+						// Logs that a new action has been started.
+						string logStr = "";
+						logStr += (*it)->m_action->exeName+" has been started.";
+						((Scheduler*)lpParam)->m_log->write(logStr);
+					}
+					else
+					{
+						(*it)->status = UNSUCCESSFUL;
+						string logStr = (*it)->m_action->exeName+" could not be started.";
+					}
+				}
+				list<actData*>::iterator itDep = (*it)->dependencies.begin();
+				while (itDep != (*it)->dependencies.end())
+				{
+					if ((*itDep)->status != WAITING && (*itDep)->status != RUNNING)
+						itDep = (*it)->dependencies.erase(itDep);
+					else
+						itDep++;
 				}
 			}
 
@@ -123,6 +139,15 @@ Scheduler::Scheduler(HancockLog* hlog,MPane* mpane)
 Scheduler::~Scheduler()
 {
 	delete m_log;
+	list<actData*>::iterator it = m_actions->begin();
+	for (; it != m_actions->end(); it++)
+	{
+		if (*it != NULL)
+		{
+			delete (*it)->m_action;
+			delete *it;
+		}
+	}
 	delete m_actions;
 	CloseHandle(Handle_of_Thread_Loop);
 }
@@ -163,6 +188,7 @@ void Scheduler::removeAction(Action* task)
 			(*it)->endTime = formatTime();
             m_actions->remove(*it);
 			delete *it;
+			*it = NULL;
 			return;
 		}
 	}

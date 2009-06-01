@@ -44,7 +44,7 @@ Action::Action(string path, string name, string cfg, string optionalOutfile)
 	m_optionalOutfile = optionalOutfile;
 }
 
-void Action::executeProcess(string cmd){
+bool Action::executeProcess(string cmd){
 	
 	
 	//Optionally check for exe existance	
@@ -58,11 +58,11 @@ void Action::executeProcess(string cmd){
 
 	if (!CreatePipe(&stdout_from_child,&stdout_in_child,&sa,0))		// create stdoutpipe
 	{
-		return;
+		return false;
 	}
 
 	if ( ! SetHandleInformation(stdout_from_child, HANDLE_FLAG_INHERIT, 0) )
-      return; 
+      return false; 
 
     //PROCESS_INFORMATION pi;
 		
@@ -95,16 +95,17 @@ void Action::executeProcess(string cmd){
 	{
 		//Create Process failed.
 		cout<<"Create Process Failed! Error:"<<GetLastError()<<endl;
+		return false;
 	}	
 
-
+	return true;
 	
 }
 
-void Action::act()
+bool Action::act()
 {
 	if(m_symantecCfg.length())
-		executeProcess("\""+exePath+exeName+"\""+" "+m_symantecCfg);
+		return executeProcess("\""+exePath+exeName+"\""+" "+m_symantecCfg);
 	else
 	{
 		string cmd = "";
@@ -112,7 +113,7 @@ void Action::act()
 		{	
 			cmd+=(" " + *it);	
 		}
-		executeProcess("\""+exePath+exeName+"\""+cmd);
+		return executeProcess("\""+exePath+exeName+"\""+cmd);
 	}
 }
 

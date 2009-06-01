@@ -95,8 +95,8 @@ protected:  // control bar embedded members
 
 // Generated message map functions
 protected:
-	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
-	afx_msg void OnSetFocus(CWnd *pOldWnd);
+	virtual afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
+	virtual afx_msg void OnSetFocus(CWnd *pOldWnd);
 
 	// Action handling functions
 	afx_msg void OnViewGoodware();
@@ -150,7 +150,7 @@ private:
 	MPane m_mPane;
 	HancockLog m_log;
 	LogUI *m_logUI;
-	Scheduler m_scheduler;
+	Scheduler *m_scheduler;
 };
 
 

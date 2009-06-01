@@ -31,7 +31,7 @@ public:
 	Action(string path, string name, string cfg);	//used for most actions
 	Action(string path, string name, string cfg, string optionalOutfile);	//used for Cluster File and Find Signatures actions
 	Action(string path, string name, vector<string> &params); //the last parameter is a vector of arguments for the executable.
-	virtual void act();					//builds the cmd and runs the action
+	virtual bool act();					//builds the cmd and runs the action
 	virtual string getName();			//returns the name of the executable
 	virtual bool isComplete();			//tells if process is done
 	virtual int getStatus();
@@ -44,7 +44,7 @@ public:
 	string m_optionalOutfile;			//Specifies the optional output file to save the action out in
 
 protected:
-	void executeProcess(string cmd);
+	bool executeProcess(string cmd);
 	char buf[MAX_BUF_LEN];		// i/o buffer
 	HANDLE stdout_in_child, stdout_from_child;
 	PROCESS_INFORMATION pi;
