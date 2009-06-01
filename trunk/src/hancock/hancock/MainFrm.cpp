@@ -83,12 +83,14 @@ END_MESSAGE_MAP()
 // CMainFrame construction/destruction
 
 CMainFrame::CMainFrame()
-: m_wndView(&m_log, &m_rPane, &m_mPane), m_scheduler(&m_log, &m_mPane)
+: m_wndView(&m_log, &m_rPane, &m_mPane)
 {
+	m_scheduler = new Scheduler(&m_log, &m_mPane);
 }
 
 CMainFrame::~CMainFrame()
 {
+	delete m_scheduler;
 }
 
 int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
@@ -443,6 +445,17 @@ void CMainFrame::InitializeRibbon()
 
 	m_wndRibbonBar.SetQuickAccessCommands(lstQATCmds);
 	m_wndRibbonBar.AddToTabs(new CMFCRibbonButton(ID_APP_ABOUT, _T("\na"), m_PanelImages.ExtractIcon (0)));
+	
+	// Making sure all file types are initially selected
+	OnViewGoodware();
+	OnViewModel();
+	OnViewIndex();
+	OnViewMalware();
+	OnViewPreMalware();
+	OnViewCluster();
+	OnViewFindSigs();
+	OnViewStubMap();
+	OnViewOther();
 }
 
 BOOL CMainFrame::CreateOutlookBar(CMFCOutlookBar& bar, UINT uiID, CMFCShellTreeCtrl& tree, int nInitialWidth)
@@ -647,21 +660,21 @@ void CMainFrame::OnViewType(UINT nID)
 // Action functions
 void CMainFrame::OnMakeModel()
 {
-	MakeModelDlg myDlg(&m_scheduler);
+	MakeModelDlg myDlg(m_scheduler);
 	if (myDlg.DoModal() == IDOK)
 		m_log.write("Created Make Model action");
 }
 
 void CMainFrame::OnExtractBuffers()
 {
-	ExtrBuffersDlg myDlg(&m_scheduler);
+	ExtrBuffersDlg myDlg(m_scheduler);
 	if (myDlg.DoModal() == IDOK)
 		m_log.write("Created Extract Buffers action");
 }
 
 void CMainFrame::OnMakeIndex()
 {
-	MakeIndexDlg myDlg(&m_scheduler);
+	MakeIndexDlg myDlg(m_scheduler);
 	if (myDlg.DoModal() == IDOK)
 		m_log.write("Created Make Index action");
 }
@@ -673,28 +686,28 @@ void CMainFrame::OnLabelGood()
 
 void CMainFrame::OnPrune()
 {
-	PruneDlg myDlg(&m_scheduler);
+	PruneDlg myDlg(m_scheduler);
 	if (myDlg.DoModal() == IDOK)
 		m_log.write("Created Prune Model action");
 }
 
 void CMainFrame::OnMerge()
 {
-	MergeDlg myDlg(&m_scheduler);
+	MergeDlg myDlg(m_scheduler);
 	if (myDlg.DoModal() == IDOK)
 		m_log.write("Created Merge Model action");
 }
 
 void CMainFrame::OnModelCompile()
 {
-	ModCompileDlg myDlg(&m_scheduler);
+	ModCompileDlg myDlg(m_scheduler);
 	if (myDlg.DoModal() == IDOK)
 		m_log.write("Created Compile Model action");
 }
 
 void CMainFrame::OnMakeStub()
 {
-	StubMapDlg myDlg(&m_scheduler);
+	StubMapDlg myDlg(m_scheduler);
 	if (myDlg.DoModal() == IDOK)
 		m_log.write("Created Make Stub Map action");
 }
@@ -706,7 +719,7 @@ void CMainFrame::OnLabelModel()
 
 void CMainFrame::OnFindSigs()
 {
-	FindSigsDlg myDlg(&m_scheduler);
+	FindSigsDlg myDlg(m_scheduler);
 	if (myDlg.DoModal() == IDOK)
 		m_log.write("Created Find Signatures action");
 }
@@ -718,7 +731,7 @@ void CMainFrame::OnLabelIndex()
 
 void CMainFrame::OnPreprocess()
 {
-	PreprocDlg myDlg(&m_scheduler);
+	PreprocDlg myDlg(m_scheduler);
 	if (myDlg.DoModal() == IDOK)
 		m_log.write("Created Preprocess Malware action");
 }
@@ -730,7 +743,7 @@ void CMainFrame::OnLabelMalware()
 
 void CMainFrame::OnClusterFiles()
 {
-	ClstDlg myDlg(&m_scheduler);
+	ClstDlg myDlg(m_scheduler);
 	if (myDlg.DoModal() == IDOK)
 		m_log.write("Created Cluster Files action");
 }
@@ -759,13 +772,13 @@ void CMainFrame::OnLabelFindSigs()
 void CMainFrame::OnViewScheduler()
 {
 	m_log.write("Opened Scheduler UI.");
-	ScheduleUI sched(FALSE, &m_scheduler);
+	ScheduleUI sched(FALSE, m_scheduler);
 	sched.DoModal();
 }
 
 void CMainFrame::OnSetThreshold()
 {
-	ThresholdDlg tDlg(&m_scheduler, &m_log);
+	ThresholdDlg tDlg(m_scheduler, &m_log);
 	tDlg.DoModal();
 }
 
