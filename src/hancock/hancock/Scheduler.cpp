@@ -164,6 +164,9 @@ int Scheduler::getThresholdFromFile()
 		toLog = "Error: Threshold file does not exist.";
 		m_log->write(toLog.c_str());
 		threshold = 25;			// this is an arbitrary limit I am setting
+		thresh = 25;
+		ofstream outFile("threshold.txt");
+		outFile << thresh << endl;
 	}
 	else
 	{
