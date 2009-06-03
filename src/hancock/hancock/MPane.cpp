@@ -141,7 +141,7 @@ void MPane::AssocToDirInternal(string path, string extension)
 						tempfn = data.name;
 					map<int,set<string>*>::iterator mit;
 					mit = m_masterMap.find(type);
-					if(tempfn.compare("conf_files")!=0)		// do not add the conf_files folder to the master map
+					if(tempfn.compare("cnf_files")!=0)		// do not add the conf_files folder to the master map
 					{
 						if(mit != m_masterMap.end()) // this is not the first item of this type to be added to the map
 						{
