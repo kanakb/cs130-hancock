@@ -436,14 +436,14 @@ void CMainFrame::InitializeRibbon()
 	pPanelData->Add(pBtnFileData);
 
 	// Add quick access toolbar commands:
-	CList<UINT, UINT> lstQATCmds;
+	//CList<UINT, UINT> lstQATCmds;
 
-	lstQATCmds.AddTail(ID_FILE_NEW);
-	lstQATCmds.AddTail(ID_FILE_OPEN);
-	lstQATCmds.AddTail(ID_FILE_SAVE);
-	lstQATCmds.AddTail(ID_FILE_PRINT_DIRECT);
+	//lstQATCmds.AddTail(ID_FILE_NEW);
+	//lstQATCmds.AddTail(ID_FILE_OPEN);
+	//lstQATCmds.AddTail(ID_FILE_SAVE);
+	//lstQATCmds.AddTail(ID_FILE_PRINT_DIRECT);
 
-	m_wndRibbonBar.SetQuickAccessCommands(lstQATCmds);
+	//m_wndRibbonBar.SetQuickAccessCommands(lstQATCmds);
 	m_wndRibbonBar.AddToTabs(new CMFCRibbonButton(ID_APP_ABOUT, _T("\na"), m_PanelImages.ExtractIcon (0)));
 	
 	// Making sure all file types are initially selected

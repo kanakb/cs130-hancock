@@ -53,6 +53,7 @@ DWORD WINAPI Scheduler::Thread_Loop (LPVOID lpParam)
 
 				// For Cluster File and Find Signature actions, we must also write the output
 				// of the actions to the file specified by optionalOutfile
+				// Otherwise, save output to the AppOutput directory
 				if((*it)->status == COMPLETED)
 				{
 					if((*it)->m_action->exeName == "FileClust.exe" || (*it)->m_action->exeName == "FindSigs.exe")
@@ -60,7 +61,7 @@ DWORD WINAPI Scheduler::Thread_Loop (LPVOID lpParam)
 						ofstream output((*it)->m_action->m_optionalOutfile.c_str(),ios_base::app|ios_base::out);
 						if(output.is_open())	// file opened successfully
 						{
-							output << endl;		// begin adding output to the next line
+							//output << endl;		// begin adding output to the next line
 							output << (*it)->m_action->output;	// write the output to the file
 							output.close();		// close file
 							// log that the action output was saved to the user specified file
@@ -71,6 +72,33 @@ DWORD WINAPI Scheduler::Thread_Loop (LPVOID lpParam)
 							// there was an error in opening the file, output an error to the log file
 							((Scheduler*)lpParam)->m_log->write("The following file could not be opened for writing: ");
 							((Scheduler*)lpParam)->m_log->write("      "+(*it)->m_action->m_optionalOutfile);
+						}
+					}
+					else
+					{
+						CString directory(_T("AppOutput"));
+						CreateDirectory(directory, 0);
+						string fileTime = (*it)->startTime;
+						for (size_t ind = 0; ind < fileTime.size(); ind++)
+						{
+							if (fileTime[ind] == ' ' || fileTime[ind] == ':' || fileTime[ind] == '/')
+								fileTime[ind] = '_';
+						}
+						string outFileName = "AppOutput\\" + (*it)->m_action->exeName + "_" + fileTime + ".txt";
+						ofstream output(outFileName.c_str(), ios_base::app | ios_base::out);
+						if(output.is_open())	// file opened successfully
+						{
+							//output << endl;		// begin adding output to the next line
+							output << (*it)->m_action->output;	// write the output to the file
+							output.close();		// close file
+							// log that the action output was saved to the user specified file
+							((Scheduler*)lpParam)->m_log->write("Output of action saved in the file: "+outFileName);
+						}
+						else
+						{
+							// there was an error in opening the file, output an error to the log file
+							((Scheduler*)lpParam)->m_log->write("The following file could not be opened for writing: ");
+							((Scheduler*)lpParam)->m_log->write("      "+outFileName);
 						}
 					}
 				}
