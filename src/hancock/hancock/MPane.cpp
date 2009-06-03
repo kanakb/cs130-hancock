@@ -141,15 +141,18 @@ void MPane::AssocToDirInternal(string path, string extension)
 						tempfn = data.name;
 					map<int,set<string>*>::iterator mit;
 					mit = m_masterMap.find(type);
-					if(mit != m_masterMap.end()) // this is not the first item of this type to be added to the map
+					if(tempfn.compare("conf_files")!=0)		// do not add the conf_files folder to the master map
 					{
-						mit->second->insert(tempfn);
-					}
-					else // this is the first item of this type we have encountered
-					{
-						set<string>* strset = new set<string>;
-						strset->insert(tempfn);
-						m_masterMap.insert(make_pair(type,strset));
+						if(mit != m_masterMap.end()) // this is not the first item of this type to be added to the map
+						{
+							mit->second->insert(tempfn);
+						}
+						else // this is the first item of this type we have encountered
+						{
+							set<string>* strset = new set<string>;
+							strset->insert(tempfn);
+							m_masterMap.insert(make_pair(type,strset));
+						}
 					}
 				}
 				if(extension != "conf")	// we do not want to add the .cnf files into the directory listing
