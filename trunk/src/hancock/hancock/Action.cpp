@@ -121,6 +121,7 @@ bool Action::act()
 
 bool Action::isComplete()
 {
+	string txtout = "";
 	DWORD retCode = 0;	
 	if(!GetExitCodeProcess(pi.hProcess, &retCode))
 	{
@@ -145,9 +146,15 @@ bool Action::isComplete()
 			cout<<"Error reading pipe: "<<GetLastError()<<endl;
 			return true;
 		}
-		output+=buf;
+		txtout+=buf;
 		memset(buf,0,MAX_BUF_LEN);
 	}while(bread==MAX_BUF_LEN - 1);
+
+	for (size_t ind = 0; ind < txtout.length(); ind++)
+	{
+		if (txtout[ind] != '\r')
+			output += txtout[ind];
+	}
 	
 	// Close process and thread handles. 
 	CloseHandle( pi.hProcess );
