@@ -52,6 +52,7 @@ int RPane::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	}
 
 	m_text.SetFont(&m_Font);
+	m_text.SubclassDlgItem(ID_RPANE_BOX, this);
 
 	return 0;
 }

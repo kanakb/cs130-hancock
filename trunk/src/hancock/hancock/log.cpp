@@ -30,7 +30,7 @@ HancockLog::HancockLog(string path)
 
 HancockLog::~HancockLog()
 {
-	delete filename;
+	delete [] filename;
 }
 
 string HancockLog::getTimestamp(){
