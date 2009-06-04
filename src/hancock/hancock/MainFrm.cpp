@@ -86,7 +86,7 @@ END_MESSAGE_MAP()
 CMainFrame::CMainFrame()
 : m_wndView(&m_log, &m_rPane, &m_mPane)
 {
-	m_scheduler = new Scheduler(&m_log, &m_mPane);
+	m_scheduler = new Scheduler(&m_log, &m_mPane, &m_wndView);
 }
 
 CMainFrame::~CMainFrame()

@@ -5,6 +5,7 @@
 #include "Action.h"
 #include "MPane.h"
 #include "log.h"
+#include "ChildView.h"
 #include <string>
 #include <list>
 #include <windows.h>
@@ -33,8 +34,9 @@ public:
 
 	HancockLog* m_log;				// pointer to the instance of the current log
 	MPane* m_mpane;					// pointer to MPane instance
+	CChildView* m_view;				// pointer to the main view class
 
-	Scheduler(HancockLog* hlog, MPane* mpane);
+	Scheduler(HancockLog* hlog, MPane* mpane, CChildView *view);
 	~Scheduler();
 	
 	//Adds a new action, starts if no dependencies, under threshold.
