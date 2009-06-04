@@ -50,7 +50,10 @@ DWORD WINAPI Scheduler::Thread_Loop (LPVOID lpParam)
 				
 				// Send a status update to the MPane
 				if ((*it)->status == COMPLETED)
+				{
 					((Scheduler*)lpParam)->m_mpane->updateCnfAction(((Scheduler*)lpParam)->getActionInt((*it)->m_action->exeName),(*it)->inputs,(*it)->outputs);
+					((Scheduler*)lpParam)->m_view->updateCurrentFolder();
+				}
 
 				// For Cluster File and Find Signature actions, we must also write the output
 				// of the actions to the file specified by optionalOutfile
@@ -149,8 +152,8 @@ DWORD WINAPI Scheduler::Thread_Loop (LPVOID lpParam)
 	}
 }
 
-Scheduler::Scheduler(HancockLog* hlog,MPane* mpane)
-:m_log(hlog),m_mpane(mpane)
+Scheduler::Scheduler(HancockLog* hlog, MPane* mpane, CChildView* view)
+:m_log(hlog), m_mpane(mpane), m_view(view)
 {
 	threshold = getThresholdFromFile();
 	activeCount = 0;
