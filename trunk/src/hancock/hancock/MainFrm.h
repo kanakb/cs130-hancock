@@ -42,6 +42,7 @@
 #define WM_LABELCLUSTER (WM_USER + 124)
 #define WM_LABELSTUBMAP (WM_USER + 125)
 #define WM_LABELFINDSIGS (WM_USER + 126)
+#define WM_LABELUNC (WM_USER + 136)
 #define WM_VIEWSCHED (WM_USER + 127)
 #define WM_VIEWLOG (WM_USER + 128)
 #define WM_LOGSAVE (WM_USER + 129)
@@ -50,7 +51,7 @@
 #define WM_FILEDATA (WM_USER + 134)
 #define WM_THRESHOLD (WM_USER + 135)
 
-//next = 136
+//next = 137
 
 class COutlookBar : public CMFCOutlookBar
 {
@@ -126,6 +127,7 @@ protected:
 	afx_msg void OnLabelCluster();
 	afx_msg void OnLabelStubMap();
 	afx_msg void OnLabelFindSigs();
+	afx_msg void OnLabelUnc();
 	afx_msg void OnViewScheduler();
 	afx_msg void OnViewLogger();
 	afx_msg void OnSaveLog();

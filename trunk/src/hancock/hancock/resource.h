@@ -43,6 +43,7 @@
 #define IDS_RIBBON_THRESHOLD            127
 #define IDR_MAINFRAME                   128
 #define IDR_MAINFRAME_256               129
+#define IDS_RIBBON_LABELUNC             129
 #define IDR_hancockTYPE                 130
 #define IDR_PASTE_MENU                  151
 #define IDR_WINDOWS_MENU                152

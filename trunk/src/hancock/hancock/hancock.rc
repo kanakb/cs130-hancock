@@ -723,6 +723,7 @@ END
 STRINGTABLE 
 BEGIN
     IDR_MAINFRAME           "Project Hancock Software Manager"
+    IDS_RIBBON_LABELUNC     "Label as Unclassified"
 END
 
 STRINGTABLE 

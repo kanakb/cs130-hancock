@@ -62,6 +62,7 @@ BEGIN_MESSAGE_MAP(CMainFrame, CFrameWndEx)
 	ON_COMMAND(WM_LABELCLUSTER, &CMainFrame::OnLabelCluster)
 	ON_COMMAND(WM_LABELSTUBMAP, &CMainFrame::OnLabelStubMap)
 	ON_COMMAND(WM_LABELFINDSIGS, &CMainFrame::OnLabelFindSigs)
+	ON_COMMAND(WM_LABELUNC, &CMainFrame::OnLabelUnc)
 	ON_COMMAND(WM_VIEWSCHED, &CMainFrame::OnViewScheduler)
 	ON_COMMAND(WM_VIEWLOG, &CMainFrame::OnViewLogger)
 	ON_COMMAND(WM_LOGSAVE, &CMainFrame::OnSaveLog)
@@ -388,6 +389,14 @@ void CMainFrame::InitializeRibbon()
 	bNameValid = strTemp.LoadString(IDS_RIBBON_UNLABELED);
 	ASSERT(bNameValid);
 	CMFCRibbonButton* pBtnUnlabeled = new CMFCRibbonButton(WM_UNCLASSIFIED, strTemp, -1, 1);
+
+	// Can label as unclassified
+	bNameValid = strTemp.LoadString(IDS_RIBBON_LABELUNC);
+	ASSERT(bNameValid);
+	CMFCRibbonButton* pBtnLabelUnc = new CMFCRibbonButton(WM_LABELUNC, strTemp);
+	pBtnUnlabeled->AddSubItem(pBtnLabelUnc);
+
+	//Add unclassified files button to panel
 	pPanelView->Add(pBtnUnlabeled);
 
 	// Create and add a "Scheduler" panel:
@@ -766,6 +775,11 @@ void CMainFrame::OnLabelStubMap()
 void CMainFrame::OnLabelFindSigs()
 {
 	m_wndView.updateFile(SIGNATURE);
+}
+
+void CMainFrame::OnLabelUnc()
+{
+	m_wndView.updateFile(UNKNOWN);
 }
 
 // Functions to bring up scheduling and logging GUI
