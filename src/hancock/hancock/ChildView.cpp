@@ -141,9 +141,9 @@ BOOL CChildView::isItemSelected()
 {
 	POSITION pos = m_wndWatch.GetFirstSelectedItemPosition();
 	if (pos == NULL)
-		return false;
+		return FALSE;
 	else
-		return true;
+		return TRUE;
 }
 
 void CChildView::recalcList()
