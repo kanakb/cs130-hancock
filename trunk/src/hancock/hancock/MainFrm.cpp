@@ -78,6 +78,15 @@ BEGIN_MESSAGE_MAP(CMainFrame, CFrameWndEx)
 	ON_UPDATE_COMMAND_UI(WM_FINDSIGS, &CMainFrame::OnUpdateViewFiles)
 	ON_UPDATE_COMMAND_UI(WM_UNCLASSIFIED, &CMainFrame::OnUpdateViewFiles)
 	ON_UPDATE_COMMAND_UI(WM_FILEDATA, &CMainFrame::OnUpdateViewFiles)
+	ON_UPDATE_COMMAND_UI(WM_LABELGOOD, &CMainFrame::OnUpdateLabelButtons)
+	ON_UPDATE_COMMAND_UI(WM_LABELMODEL, &CMainFrame::OnUpdateLabelButtons)
+	ON_UPDATE_COMMAND_UI(WM_LABELINDEX, &CMainFrame::OnUpdateLabelButtons)
+	ON_UPDATE_COMMAND_UI(WM_LABELMALWARE, &CMainFrame::OnUpdateLabelButtons)
+	ON_UPDATE_COMMAND_UI(WM_LABELPREMALWARE, &CMainFrame::OnUpdateLabelButtons)
+	ON_UPDATE_COMMAND_UI(WM_LABELCLUSTER, &CMainFrame::OnUpdateLabelButtons)
+	ON_UPDATE_COMMAND_UI(WM_LABELSTUBMAP, &CMainFrame::OnUpdateLabelButtons)
+	ON_UPDATE_COMMAND_UI(WM_LABELFINDSIGS, &CMainFrame::OnUpdateLabelButtons)
+	ON_UPDATE_COMMAND_UI(WM_LABELUNC, &CMainFrame::OnUpdateLabelButtons)
 	ON_NOTIFY(TVN_SELCHANGED, ID_CMFCTREECTRL, &CMainFrame::OnChangeFolder)
 END_MESSAGE_MAP()
 
@@ -837,6 +846,14 @@ void CMainFrame::OnUpdateViewFiles(CCmdUI* pCmdUI)
 	
 	if(m_selectedItems.find(pCmdUI->m_nID) != m_selectedItems.end())
 		pCmdUI->SetCheck(m_selectedItems[pCmdUI->m_nID]);
+}
+
+// Only let user execute labels if MPane item selected
+void CMainFrame::OnUpdateLabelButtons(CCmdUI* pCmdUI)
+{
+	//MessageBox(_T("In label check."));
+	BOOL labelStatus = m_wndView.isItemSelected();
+	pCmdUI->Enable(labelStatus);
 }
 
 BOOL CMainFrame::OnCmdMsg(UINT nID, int nCode, void* pExtra, AFX_CMDHANDLERINFO* pHandlerInfo)

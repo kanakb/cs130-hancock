@@ -41,6 +41,7 @@ public:
 	void updateFile(int type);
 	void recalcList();
 	void setRelabeled(BOOL status);
+	BOOL isItemSelected();
 	virtual ~CChildView();
 
 	// Generated message map functions

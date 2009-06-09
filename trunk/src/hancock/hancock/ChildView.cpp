@@ -137,6 +137,15 @@ void CChildView::OnChangeFileList(NMHDR * pNotifyStruct, LRESULT * result)
 	*result = 0;
 }
 
+BOOL CChildView::isItemSelected()
+{
+	POSITION pos = m_wndWatch.GetFirstSelectedItemPosition();
+	if (pos == NULL)
+		return false;
+	else
+		return true;
+}
+
 void CChildView::recalcList()
 {
 	// clear the file list
