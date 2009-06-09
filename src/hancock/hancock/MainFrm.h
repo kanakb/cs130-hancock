@@ -135,6 +135,7 @@ protected:
 	afx_msg void OnSetThreshold();
 	afx_msg void OnViewType(UINT nID);
 	afx_msg void OnUpdateViewFiles(CCmdUI* pCmdUI);
+	afx_msg void OnUpdateLabelButtons(CCmdUI* pCmdUI);
 	afx_msg void OnChangeFolder(NMHDR * pNotifyStruct, LRESULT * result);
 	DECLARE_MESSAGE_MAP()
 
