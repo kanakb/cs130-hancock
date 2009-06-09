@@ -162,6 +162,19 @@ BEGIN
     MENUITEM "&New Window",                 ID_WINDOW_NEW
 END
 
+IDR_RCLICK_MENU MENU 
+BEGIN
+    MENUITEM "Label as &Goodware",          0
+    MENUITEM "Label as &Model",             0
+    MENUITEM "Label as &Index",             0
+    MENUITEM "Label as M&alware",           0
+    MENUITEM "Label as &Preprocessed Malware", 0
+    MENUITEM "Label as &Clustering",        0
+    MENUITEM "Label as &Stub Map",          0
+    MENUITEM "Label as &Find Signatures Output", 0
+    MENUITEM "Label as &Unclassified",      0
+END
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
