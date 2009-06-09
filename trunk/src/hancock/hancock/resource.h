@@ -114,6 +114,8 @@
 #define IDD_SCHEDUI                     325
 #define IDD_DIALOG1                     326
 #define IDD_SELDEP                      326
+#define IDR_MENU1                       327
+#define IDR_RCLICK_MENU                 327
 #define IDC_LOGLIST                     1001
 #define IDC_LOGTEXT                     1002
 #define IDC_EDIT1                       1003
@@ -209,7 +211,7 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        327
+#define _APS_NEXT_RESOURCE_VALUE        328
 #define _APS_NEXT_COMMAND_VALUE         32789
 #define _APS_NEXT_CONTROL_VALUE         1053
 #define _APS_NEXT_SYMED_VALUE           310
