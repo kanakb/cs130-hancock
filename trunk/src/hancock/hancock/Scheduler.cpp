@@ -22,8 +22,19 @@ DWORD WINAPI Scheduler::Thread_Loop (LPVOID lpParam)
 				it = actionList->begin();
 				Sleep(SLEEP_TIME);
 			}
+
+			// Make sure all dependents of failed tasks also are marked as failed
+			if ((*it)->status == UNSUCCESSFUL)
+			{
+				list<actData*>::iterator dit;
+				for (dit = (*it)->dependents.begin(); dit != (*it)->dependents.end(); dit++)
+				{
+					(*dit)->status = UNSUCCESSFUL;
+					(*dit)->endTime = (*it)->endTime;
+				}
+			}
 	        
-			if ((*it)->status == RUNNING && (*it)->m_action->isComplete())		// if task has completed
+			else if ((*it)->status == RUNNING && (*it)->m_action->isComplete())		// if task has completed
 			{
 				list<actData*>::iterator dit;
 				
@@ -35,7 +46,17 @@ DWORD WINAPI Scheduler::Thread_Loop (LPVOID lpParam)
 				if((*it)->m_action->status == 0)		// action returned with 0 status, completed sucessfully
 					(*it)->status = COMPLETED;
 				else
+				{
 					(*it)->status = UNSUCCESSFUL;
+
+					// Mark dependents as unsuccessful
+					for (dit = (*it)->dependents.begin(); dit != (*it)->dependents.end(); dit++)
+					{
+						(*dit)->status = UNSUCCESSFUL;
+						string logStr = (*dit)->m_action->exeName + " could not be started.";
+						((Scheduler*)lpParam)->m_log->write(logStr);
+					}
+				}
 				activeCount--;
 
 				// Logs the status of the completed action
@@ -133,6 +154,7 @@ DWORD WINAPI Scheduler::Thread_Loop (LPVOID lpParam)
 					{
 						(*it)->status = UNSUCCESSFUL;
 						string logStr = (*it)->m_action->exeName+" could not be started.";
+						(*it)->endTime = ((Scheduler*)lpParam)->formatTime();
 					}
 				}
 				list<actData*>::iterator itDep = (*it)->dependencies.begin();
