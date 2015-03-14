@@ -1,0 +1,3 @@
+This is Windows software designed to be used as an internal tool. It is used to help developers manage various tasks on large sets of input, intermediate, and output files. These include, but are not limited to: exploring directories and identifying files, queuing commands to run, scheduling sessions, error detection analysis, and running processes.
+
+This is a project run by UCLA's CS 130 Spring 09 Group 6.
